@@ -1,0 +1,32 @@
+
+
+/**********     Font [install]     **********/
+/*@font-face {
+  font-family: ShangShouRuiYuan;
+  src: url("./../custom-fonts/ShangShouRuiYuanTi-2.woff2");
+  src: url("./../custom-fonts/ShangShouRuiYuanTi-2.ttf");
+}*/
+/*@font-face {
+  font-family: ShangShouRuiYuan;
+  src: url("custom-fonts/ShangShouRuiYuanTi-2.woff2");
+  font-weight: bold;
+}*/
+/** {
+  font-family: ShangShouRuiYuan;
+}*/
+/*body{ font-family: "STHeiti" !important; }*/
+
+/*@font-face {
+  font-family: FangZhengZongYiJianTi;
+  src: url('custom-fonts/FangZhengZongYiJianTi.ttf');
+}*/
+
+
+/****************************************     Font [main]     ****************************************/
+	body{ font-family: "Microsoft Yahei" !important; }
+	.kingster-body h1, .kingster-body h2, .kingster-body h3, .kingster-body h4, .kingster-body h5, .kingster-body h6, .kingster-body .kingster-title-font,.kingster-body .gdlr-core-title-font{ font-family: "Microsoft Yahei" !important; }
+	/*.kingster-body .gdlr-core-info-font, .kingster-body .kingster-info-font{ font-family: "Microsoft Yahei" !important; }*/
+/*****************************************************************************************************/
+
+/**********     Font [Navbar]     **********/
+.kingster-navigation .sf-menu > li > a{ font-family: "Microsoft Yahei" }

@@ -1,0 +1,31 @@
+<?php
+require_once dirname(__FILE__) . './../include/config.inc.php';
+$arr = [];
+$id = isset($state) ? intval($state) : 0;
+if ($id) {
+
+    $dosql->Execute("SELECT * FROM `#@__infolist` WHERE `immigration`=1 AND `state`=$id");
+
+    $arr = array();
+    $resarr = array();
+    $i = 0;
+
+    while ($row = $dosql->GetArray()) {
+        if (!in_array($row['type'], $resarr)) {
+            $r = $dosql->GetOne("SELECT `fieldsel` FROM `#@__diyfield` WHERE `id`=6");
+            $fieldsel = explode(',', $r['fieldsel']);
+
+            foreach ($fieldsel as $value) {
+                $va = explode('=', $value);
+
+                if (strstr($row['type'], $va[1])) {
+                    $arr[$i] = $va;
+                }
+            }
+            $resarr[$i] = $row['type'];
+        }
+        $i++;
+    }
+}
+
+echo json_encode($arr);

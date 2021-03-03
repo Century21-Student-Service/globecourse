@@ -1,0 +1,54 @@
+
+.CatTit{ height:32px; line-height:30px; padding:4px 8px 4px 12px; font-weight:bold;  background:url(../images/newsTitbg.jpg) no-repeat 8px 34px ; font-size:16px;  }
+.MainCont{ padding:0px 20px 20px 20px ; line-height:24px;}
+ .NewsTit{ font-size:20px; font-weight:600; line-height:40px; height:40px; padding:20px 15px 10px 15px; text-align:center; color:#545F85; }
+ .NewsBar{ border-top:1px solid  #C1C9D0; background:#F7F8F9;  border-bottom:1px solid  #C1C9D0; height:34px; line-height:34px; text-align:center;color:#545F85;  }
+.NewsBody{ padding:20px 5px;color:#545F85; }
+.NewsBody img{ width:660px; }
+.PageBar{ border-top:1px solid  #C1C9D0; background:#F7F8F9;  border-bottom:1px solid  #C1C9D0; height:44px; line-height:22px; text-align:left; padding:5px 0px; padding-left:20px;  margin:40px 0px;}
+.NewsList{ padding:5px 0px;}
+.NewsList li{line-height: 36px;  height: 36px;  border-bottom: 1px dashed #aaa; background:url(../images/newsDot.jpg) no-repeat 12px center; padding-left: 32px;  }
+.NewsList li:hover{background:url(../images/newsDot.jpg) no-repeat 12px center #f0f0f0; }
+ .NewsList li a{ color:#666;width:100%;}
+.NewsList li a:hover{ color:#F33; background:#f0f0f0; width:100%;}
+
+
+/*****分页样式****/
+.PageBox{ height: 26px; margin: 5px 0px; text-align: left; }
+.PageBox  span{ line-height:26px; height:26px; padding: 0px 10px; margin: 0px 3px; float:left; background:#f6f6f6; font-size:14px; border: 1px solid #ddd; }
+.PageBox  span:hover{ background: #e3e3e3;  }
+.PageBox  .On{ border:1px solid #04689D; background:#40465E; cursor:pointer; color:#FFF;}
+.PageBox  .On:hover{border:1px solid #04689D; background:#40465E; cursor:pointer; color:#FFF;}
+.PageBox  a { color:#666;}
+.PageBox .On .on{ color: #fff;}
+.PageBox .On .on:link{ color: #fff;}
+.PageBox .On .on:hover{ color: #ddd;}
+
+/**********评论***********/
+.PingBox{}
+.Ping_AddBox{ height:220px;width:100%; border:1px solid #ddd; padding:8px;}
+.Ping_AddMsg{ height:160px;}
+.Ping_Tit{ line-height:30px; height:36px; font-weight:500; font-size:16px;}
+.Ping_AddCont{ height:150px; width:99%;}
+.Ping_Bar{ height:32px; line-height:32px;}
+.Ping_BarTxt{ line-height:32px; font-size:14px; }
+.Ping_Btn{ height:28px; line-height:22px; background:#1A9B4E; color:#FFF; border:0px; width:100px; float:right;}
+.Ping_Btn .On{ background: #060; color:#CCC; }
+
+/*******************/
+.DescTit{ font-size:18px; font-weight:600; line-height:32px; height:32px; text-align:left; color:#3C7D5C}
+.DescWx{ line-height:26px; height:26px; font-size:15px;  color:#333; text-align:left; }
+.DescVip{ line-height:26px; height:26px; font-size:15px;  color:#333; text-align:left; }
+.CkEwm{ margin:5px 0px;}
+.Btn_Ewm{ height:30px; line-height:30px; text-align:center; width:174px;  float:left; font-size:14px; background:#eee; color:#060;}
+.Btn_Ewm:hover{ background:#328352; color:#fff; cursor:pointer;}
+.Btn_QQ{ height:30px; line-height:30px; text-align:center; width:100px; margin-left:10px; float:left; font-size:14px; background:#eee; color:#060;}
+.Btn_QQ:hover{ background:#328352; color:#fff; cursor:pointer;}
+
+
+.ImgHg{}
+.ImgHg li{ height:150px; width:120px; margin:5px 5px ; float:left;}
+.ImgHg li:hover{background: #568046;  color:#FFF;}
+.ImgHg li div{ height:26px; line-height:26px; text-align:center; font-size:14px; margin:0px 0px;}
+.ImgHg li img{ height:118px; width:114px; padding:2px; border:1px solid #ddd;}
+.ImgHg li div:hover{ height:26px; line-height:26px; text-align:center; font-size:14px; cursor:pointer; }

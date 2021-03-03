@@ -1,0 +1,147 @@
+@charset "utf-8";
+/* CSS Document */
+body{ padding:0px; margin:0px; font-size:12px; background:#FFF; font-family:'Microsoft Yahei'; }
+div,ul,li,td,tr,table,span,dd,dt,dl,h3{margin:0px; padding:0px; border:0px;}
+img{border:0px;}
+ul,li{ list-style:none;}
+a{ text-decoration:none;}
+a:link{color:#000;}
+a:visited{ color:#000;}
+a:hover{ color:#C00;}
+a:actived{color:#900;}
+.R1{ float:right;}
+
+/*******网站主体样式*********/
+
+/***-----头部样式-----***/
+/****--头部条---***/
+#topbar{  height:100px; background:#0A85CB;}
+.topbar_content{ width:1100px; margin:0px auto;}
+.topbar_left{ padding-left:25px; line-height:50px; float:left; font-size:14px; font-weight:bold; color:#F87E1C;}
+.topbar_ul{}
+.topbar_ul li{ float:left; line-height:50px; font-weight:bold; font-size:15px; }
+.topbar_ul li a{color:#FFF; margin:0px 10px;}
+.topbar_ul li a:hover{ color:#c30;}
+
+.topbar_ul li.B a{color:#ffff00; margin:0px 10px 0px 20px;}
+.topbar_ul li.B a:hover{ color:#c30;}
+.topbar_right{ float:right; margin-right:25px; width:550px;}
+.topbar_img1{ padding-top:12px; float:left}
+.topbar_a1{ line-height:50px; color:#FFF; float:left; padding-left:4px; font-size:13px; width:50px}
+.topbar_a1 a{ color:#FFF;}
+.topbar_a1 a:hover{ color:#c30;}
+.topbar_img2{ padding-top:12px; float:left}
+
+.BoxW{ width:1100px;  margin:0px auto;}
+.kstd{ line-height:46px; height:46px; font-size:16px; color: #FF3300; font-weight:600;}
+.navTit{ color:#FFFFFF; font-size:15px; line-height:46px; height:46px; font-weight:600;}
+
+/*================课程搜索============*/
+
+.courTit{ font-size:15px; font-weight:600; line-height:46px; padding-right:10px; text-align:right;}
+.courSoBtn{background:url(../images/courSoBtn.jpg) repeat-x; width:420px; margin:0px auto; line-height:38px; height:38px; font-size:16px; color:#FFFFFF; font-weight:600; text-align:center; border-radius:10px; cursor:pointer; border:0px;}
+.courSoLb{ height:30px; line-height:30px; border:1px solid  #ddd; width:200px; }
+.courSoTf{ height:26px; line-height:26px; border:1px solid  #ddd; width:200px;}
+
+/*================搜索结果Box=================*/
+#JgBox{ margin-top:15px; background:#f3f3f3; border:1px solid #CCC; display:none;}
+.JgS{ line-height:40px; height:40px; font-size:14px; font-weight:600; padding-left:20px;}
+.JgTit{ font-size:14px; font-weight:600; padding-left:20px;}
+.JgTxt{ font-size:12px; font-weight:400; padding-left:20px;}
+.JgTr{ background:#FFF;}
+.JgTr:hover{ background:#F3F9FE;}
+
+/**-----内容-----**/
+.main_top{ width:1200px; margin:0px auto;}
+.main_center{ height:215px; margin:0px auto; width:1200px;}
+.main_ul{ padding-top:24px; width:888px; margin:0px auto;}
+.main_ul li{ margin:0px 35px; float:left}
+.main_ul li div{ width:226px; text-align:center; height:45px; line-height:45px;  font-size:13px; font-weight:bold}
+.main_ul li div a{ color:#00508D;}
+.main_ul li div a:hover{ color:#c30;}
+.main_bottom{ width:1200px; margin:0px auto;}
+/**-----底部-----**/
+.foot{ background:url(../images/footbg.jpg) repeat-x #0C85CC; height:90px; clear:both; margin-top:20px}
+.foot_content{ width:990px; margin:0px auto; padding-top:22px; color:#FFF; line-height:20px; text-align:center;}
+
+/***学校网页 ***/
+.NavBox{ height:37px; line-height:37px; border-bottom:1px solid #E1E1E1; border-top:1px solid #E1E1E1;}
+.NavBox li{ height:36px; line-height:36px; width:120px; float:left; text-align:center; font-size:14px; }
+.NavBox li.On{border-bottom:2px #49A7DA solid; font-weight:600; background: #D9E8F4;}
+.NavBox li:hover{border-bottom:2px #49A7DA solid; font-weight:600; background:#F3F8FC;}
+.NavBox li a{ font-size:14px; display:block; }
+
+.SchTit{ line-height:32px; font-size:14px; }
+.SchBar{}
+
+/******学校概况***/
+.ScBox{ padding:15px 5px; border-bottom:1px solid #ddd; margin-bottom:5px;}
+.ScTit{ line-height:40px; height:40px; font-size:16px; font-weight:600;}
+.ScTxt{ line-height:24px; text-indent:2em;}
+.ScImgUl{}
+.ScImgUl li{ height:150px; border-bottom:1px solid #ddd; margin-bottom:2px; margin-top:6px; }
+.ScImgUl li .ScLiTit{ font-size:14px; line-height:30px; height:30px; font-weight:600;}
+.ScImgUl li .ScLiTxt{ font-size:12px; line-height:24px;}
+
+.ScNewsUl { padding:5px 0px;}
+.ScNewsUl li{ height:30px; line-height:30px; padding-left:15px; background:url(../images/newsDot.gif) no-repeat center left;}
+.schImgUl{}
+.schImgUl li{ height:150px; width:210px; float:left; border:1px  solid #ddd; margin:10px 5px ;}
+.schImgUl li img{ width:204px; height:120px; padding:3px; }
+.schImgUl li div{ height:20px; line-height:20px; text-align:center;}
+.schImgUl li:hover{ background:#E9F4FE; cursor:pointer;}
+.schNewsUl{ padding:10px 0px;}
+.schNewsUl li{ height:140px; line-height:32px; border-bottom:1px solid #eee;  padding:5px 10px; margin:8px 0px;}
+.schNewsUl .Tit{ height:30px; line-height:30px; margin-top:5px; font-size:14px; font-weight:600;}
+.schNewsUl .Cont{ line-height:25px; text-indent:2em; }
+.schNewsUl .Txt{ line-height: 30px;}
+.schNewsUl li:hover{ background:#F8FAFC;}
+.scZyUl { margin:10px 15px;}
+.scZyUl li{ height:26px; line-height:26px; padding:0px 10px; margin:6px ; float:left; background: #f9f9f9;}
+.scZyBar{ height:94px; line-height:32px; margin-top:15px; border-bottom:1px solid #ccc; border-top:1px solid #ccc;background: #F0FAFF; padding:5px;}
+.scZyBar span{  padding:2px 3px; }
+.scZyBar span:hover,.scZyBar span.On{ background:#349CDA; cursor:pointer;  color:#fff;}
+
+.scSwBar{ height:32px; line-height:32px; margin-top:15px; border-bottom:1px solid #ccc; border-top:1px solid #ccc;background: #F0FAFF; padding:5px;}
+.scSwBar span,.scSwBar a{  padding:2px 3px; }
+.scSwBar span:hover,.scSwBar span.On{ background:#349CDA; cursor:pointer;  color:#fff;}
+
+.scBtn{ background:#488AE3; padding:0px 15px; height:22px; margin:5px 8px ; line-height:22px; border-radius:3px;}
+.scBtn:hover{ background:#039;}
+.scA:link{ color:#fff;}
+.scA:hover{ color:#fff;}
+.scA:visited{ color:#fff;}
+
+.S1{ width:264px; height:266px; margin:20px 51px; float:left; }
+.S1 .Tit{ height:60px; line-height:60px; font-size:24px; font-weight:600; text-align:center;}
+.S1 .Sb{ height:208px;}
+.S1 .Sb .Tb{ height:32px; line-height:32px;  background:#fff; filter:alpha(opacity=90);	-moz-opacity:0.9; -khtml-opacity: 0.9; opacity: 0.9; position: relative; top:140px; text-align:center; font-size:16px;}
+.S1 .Sb .Btn_t{ width:132px; height:26px; margin:3px auto; position:relative; top:141px; background:#09F; filter:alpha(opacity=90);	-moz-opacity:0.9; -khtml-opacity: 0.9; opacity: 0.9; line-height:26px; text-align:center; color:#fff; font-size:16px; border:1px solid #fff; cursor:pointer;}
+
+.styled-select select { background: url(../images/icon_x.png) no-repeat 240px 10px transparent;  width: 264px; padding: 0px 0px; height: 32px; font-size:14px;  -webkit-appearance: none; /*for chrome*/
+}
+.Inpt{ height:22px; line-height:22px; border:1px solid #ddd;}
+.Txt{ height:22px; line-height:22px; font-size:14px;}
+
+.schUl{ width:998px;}
+.schUl li{ width:228px; margin:5px 10px 20px 10px  ; height:160px; float:left;}
+
+.PaiUl{ }
+.PaiUl li{ width:156px; height:40px; margin:5px ; color:#FFF; float:left; background:#74ADE7; line-height:40px; font-size:14px; font-weight:600;}
+.PaiUl li:hover,.PaiUl li.On{ background:#2E84DA; cursor:pointer;}
+.PaiUl li.end{ width:490px;}
+.PaiUl li.End{ width:985px;}
+.Mu1{ background: #74ADE7; height:40px; line-height:40px;  font-size:14px; font-weight:600;color:#FFF;}
+.Mu1:hover,.MuOn{background:#2E84DA; cursor:pointer; font-size:14px; font-weight:600;color:#FFF; }
+
+.SMTit{ height:40px; line-height:40px; border-bottom:1px solid #ddd; font-size:16px; font-weight:600;}
+.SMul{}
+.SMul li{ height:150px; width:180px; float:left; margin:20px 9px;}
+.SMul li img{ height:90px; width:176px; padding:1px ; border:1px solid #CCC; }
+.SMul li div{ height:52px; line-height:26px; padding:4px 0;}
+
+.SoInp{ height:26px; line-height:26px; width:160px; margin:0; padding:0;}
+.SoTy { height:28px; line-height:28px; width:80px; margin:0; padding:0;}
+.SoBtn{ height:30px; width:60px; line-height:30px; background:#06C; color:#FFF; border:1px solid #039;}
+.Tab{ width:120px; float:left; height:40px; text-align:center; line-height:40px; font-size:16px; font-weight:600; background: #88B1F0; color:#FFF; margin-right:6px; cursor:pointer;}
+.TabOn{ width:120px; float:left; height:40px; text-align:center; line-height:40px; font-size:16px; font-weight:600;  color:#FFF; margin-right:6px;background:#618FDC; cursor:pointer;}

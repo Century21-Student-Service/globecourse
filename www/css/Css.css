@@ -1,0 +1,51 @@
+
+/****常用页面公共样式****/
+body { margin:0px; padding:0px; font-size:12px; color:#000;font-family:'Microsoft YaHei';}
+ul,ol,li,div{ padding:0px; margin:0px; list-style:none; border:0px;}
+img{ border:0px;}
+.clear{ clear:both; }
+/***超链接样式**/
+a{ color:#000; text-decoration:none; font-family:'microsoft yahei';}
+a:hover{ color:#C30; font-family:'microsoft yahei'; }
+/********二级页面通用样式*********/
+/***通用样式1**/
+#header{}
+#topbar{  height:50px; background:#0A85CB;}
+#head{ background:#FFF; height:125px; clear:both}
+#ad{ height:450px; background:url(../images/adbg.jpg) repeat-x center top; clear:both}
+#main{}
+#foot{ height:310px; background:#942929;}
+#footbar{ height:130px; background:#640000;}
+/***通用样式2**/
+
+/************************************/
+/********------首页样式------********/
+/************************************/
+
+/***-----头部样式-----***/
+.topbar_content{ width:1200px; margin:0px auto;}
+.topbar_left{ padding-left:25px; line-height:50px; float:left; font-size:16px; font-weight:bold; color:#F87E1C;}
+.topbar_ul{}
+.topbar_ul li{ float:left; line-height:50px; font-weight:bold; font-size:16px; }
+.topbar_ul li a{color:#FFF; margin:0px 15px;}
+.topbar_ul li a:hover{ color:#c30;}
+
+.topbar_right{ float:right; margin-right:25px; width:165px;}
+.topbar_img1{ padding-top:12px; float:left}
+.topbar_a1{ line-height:50px; color:#FFF; float:left; padding-left:4px; font-size:13px;}
+.topbar_a1 a{ color:#FFF;}
+.topbar_a1 a:hover{ color:#c30;}
+.topbar_img2{ padding-top:12px; float:left}
+
+/**-----内容-----**/
+.main_top{ width:1200px; margin:0px auto;}
+.main_center{ height:215px; margin:0px auto; width:1200px;}
+.main_ul{ padding-top:24px; width:888px; margin:0px auto;}
+.main_ul li{ margin:0px 35px; float:left}
+.main_ul li div{ width:226px; text-align:center; height:45px; line-height:45px;  font-size:13px; font-weight:bold}
+.main_ul li div a{ color:#00508D;}
+.main_ul li div a:hover{ color:#c30;}
+.main_bottom{ width:1200px; margin:0px auto;}
+/**-----底部-----**/
+.foot{ background:url(../images/footbg.jpg) repeat-x; height:84px; clear:both}
+.foot_content{ width:670px; margin:0px auto; padding-top:22px; color:#FFF; line-height:24px;}
