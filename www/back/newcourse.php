@@ -194,7 +194,7 @@ getjs("js/layer/layer.js", true);
             if (res.inst_id && res.institution) {
               $("#input_course_inst_id").html(`<option value='${res.inst_id}'>${res.institution}</option>`);
             }
-            console.log($("#input_course_inst_id").val());
+            // console.log($("#input_course_inst_id").val());
           });
       });
 
@@ -206,7 +206,7 @@ getjs("js/layer/layer.js", true);
 
       $("#input_course_fees").keyup(e => {
         const reg = /^\d+$/g;
-        console.log(e.currentTarget.value);
+        // console.log(e.currentTarget.value);
         if (!reg.test(e.currentTarget.value)) $(e.currentTarget).addClass("error");
         else $(e.currentTarget).removeClass("error");
       });
@@ -257,12 +257,12 @@ getjs("js/layer/layer.js", true);
               title: "错误",
               icon: 2
             });
-            console.log(res);
+            // console.log(res);
             return;
           }
           if (res.code == 0) {
             parent.layer.close(parent.form);
-            //TODO 更新原有的表
+            parent.refresh();
           } else {
             layer.alert(res.msg, {
               title: "错误",

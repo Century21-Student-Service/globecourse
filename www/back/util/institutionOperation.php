@@ -355,6 +355,7 @@ function saveInstitution()
         die;
     }
     // echo json_encode($data);
+
     // echo PHP_EOL;
 
     if (!empty($data['id'])) {
@@ -386,7 +387,7 @@ function saveInstitution()
         // echo $sql;die;
     } else {
         // 插入新数据
-        $sql = "INSERT INTO institution (`name`,`ename`,`intro`,`description`,`state_id`,`badge`,`pics`,`video`)VALUE(:name,:ename,:intro,:description,:state_id,:badge,:pics,:video);";
+        $sql = "INSERT INTO institution (`name`,`ename`,`intro`,`description`,`state_id`,`badge`,`pics`,`video`,`regional`)VALUE(:name,:ename,:intro,:description,:state_id,:badge,:pics,:video,:regional);";
         if (!empty($data['pics'])) {
             $result = [];
             foreach (array_filter($data['pics']) as $v) {
@@ -397,7 +398,7 @@ function saveInstitution()
             $data['pics'] = '';
         }
     }
-
+    // die($sql);
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute($data);

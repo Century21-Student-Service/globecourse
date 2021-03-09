@@ -2,14 +2,6 @@
 include "checksession.php";
 require '../../../config/conn.php';
 
-define('PHPMYWIND_ROOT', substr(dirname(__FILE__), 0, -9));
-define('PHPMYWIND_DATA', PHPMYWIND_ROOT . 'data');
-define('PHPMYWIND_TEMP', PHPMYWIND_ROOT . 'templates');
-define('PHPMYWIND_UPLOAD', PHPMYWIND_ROOT . 'uploads');
-define('UPLOAD_IMG', PHPMYWIND_UPLOAD . '/image');
-define('UPLOAD_SOFT', PHPMYWIND_UPLOAD . '/soft');
-define('UPLOAD_MEDIA', PHPMYWIND_UPLOAD . '/media');
-
 $fields = [];
 
 //function names
@@ -19,6 +11,8 @@ $funcArr = [
     'getFields',
     'getLevels',
     'saveCourse',
+    'getStatesAndInstitutions',
+    'quickSaveCourse',
 ];
 
 $op = 0;
@@ -36,15 +30,19 @@ call_user_func($funcArr[$op]);
 function getCourses()
 {
     global $conn;
-    $instId = $_REQUEST['inst'];
     $limit = empty($_POST['limit']) ? "0" : $_POST['limit'];
     $offset = empty($_POST['offset']) ? "0" : $_POST['offset'];
     $orderName = 'id';
     $sortOrder = " DESC ";
     if (!empty($_REQUEST['sort'])) {
         $orderName = $_REQUEST['sort'];
+        if ($orderName == 'field') {
+            $orderName = 'field_id_c';
+        }
+
     }
-    $orderName = "c." . $orderName;
+
+    // $orderName = "c." . $orderName;
 
     if (!empty($_REQUEST['order'])) {
         $sortOrder = strtoupper($_REQUEST['order']);
@@ -54,6 +52,9 @@ function getCourses()
                            c.name,
                            c.ename,
                            l.name AS `level`,
+                           i.name AS `inst`,
+                           s.name AS `state`,
+                           c.inst_id,
                            c.field_id_p,
                            c.field_id_c,
                            c.hours,
@@ -62,30 +63,85 @@ function getCourses()
                            c.status
                     FROM course c
                     LEFT JOIN `level` l ON c.level_id = l.id
-                    WHERE c.inst_id = ?
-                   -- WHERE c.id IN REPLACEME
-                    ORDER BY c.id DESC
+                    LEFT JOIN `institution` i ON i.id = c.inst_id
+                    LEFT JOIN `state` s ON i.state_id = s.id
+                    WHERE c.id IN REPLACEME
+                    ORDER BY $orderName $sortOrder, c.id DESC
                     LIMIT $offset, $limit ;";
-    $sql = "SELECT id FROM course WHERE inst_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$instId]);
-    $total = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt_detail = $conn->prepare($sql_detail);
-    $stmt_detail->execute([$instId]);
-    $result_detail = $stmt_detail->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "SELECT id FROM course ";
+    $whereClause = " WHERE 1=1 ";
+
+    $param = [];
+
+    if (!empty($_REQUEST['inst'])) {
+        $param['instId'] = $_REQUEST['inst'];
+        $whereClause .= " AND inst_id = :instId ";
+    }
+
+    if (!empty($_REQUEST['state'])) {
+        $param['stateId'] = $_REQUEST['state'];
+        $whereClause .= " AND inst_id IN(SELECT id FROM institution WHERE state_id = :stateId) ";
+    }
+
+    if (!empty($_REQUEST['level'])) {
+        $param['levelId'] = $_REQUEST['level'];
+        $whereClause .= " AND level_id = :levelId ";
+    }
+
+    if (!empty($_REQUEST['field_p']) && $_REQUEST['field_p'] > 0) {
+        $param['fieldPId'] = $_REQUEST['field_p'];
+        $whereClause .= " AND field_id_p = :fieldPId ";
+        if (!empty($_REQUEST['field_c'])) {
+            $param['fieldCId'] = $_REQUEST['field_c'];
+            $whereClause .= " AND field_id_c = :fieldCId ";
+        }
+    } else if (!empty($_REQUEST['field_p']) && $_REQUEST['field_p'] == -1) {
+        $whereClause .= " AND (field_id_c IS NULL OR field_id_p IS NULL) ";
+    }
+
+    if (!empty($_POST['keyword'])) {
+        $whereClause .= " AND c.name LIKE :keyword ";
+        $query = trim($_POST['keyword']);
+        $param['keyword'] = "%$query%";
+        $stmt1 = $conn->prepare($sql . $whereClause);
+        $stmt1->execute($param);
+
+        $whereClause = str_replace("c.name LIKE :keyword", "c.ename LIKE :keyword", $whereClause);
+
+        $stmt2 = $conn->prepare($sql . $whereClause);
+        $stmt2->execute($param);
+
+        $result = array_merge(
+            $stmt1->fetchAll(PDO::FETCH_COLUMN),
+            $stmt2->fetchAll(PDO::FETCH_COLUMN)
+        );
+    } else {
+        // echo $sql . $whereClause;die;
+        $stmt1 = $conn->prepare($sql . $whereClause);
+        $stmt1->execute($param);
+        $result = $stmt1->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    if (count($result) > 0) {
+        $ids = "(" . implode(",", $result) . ")";
+        $stmt_detail = $conn->query(str_replace("REPLACEME", $ids, $sql_detail));
+        $result_detail = $stmt_detail->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $result_detail = [];
+    }
 
     foreach ($result_detail as &$r) {
         $r['field'] = getField($r['field_id_p'], $r['field_id_c']);
     }
 
-    // echo json_encode($result_detail, JSON_UNESCAPED_UNICODE);
     echo json_encode(
         [
-            "total" => count($total),
+            "total" => count($result),
             "rows" => $result_detail,
         ], JSON_UNESCAPED_UNICODE
     );
+
 }
 
 function getField($p_id, $c_id)
@@ -94,14 +150,14 @@ function getField($p_id, $c_id)
     if (empty($fields)) {
         $fields = getFields(true);
     }
-    $result = '';
+    $result = ["p" => "", "c" => ""];
 
     foreach ($fields as $f) {
         if ($f['id'] == $p_id) {
-            $result .= ":" . $f['name'];
+            $result['p'] = $f['name'];
             foreach ($f['children'] as $c) {
                 if ($c['id'] == $c_id) {
-                    $result .= ":" . $c['name'];
+                    $result['c'] = $c['name'];
                     break;
                 }
             }
@@ -152,12 +208,24 @@ function getFields($return = false)
         $stmt_child->execute([$p['id']]);
         $p['children'] = $stmt_child->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    if (getCourseNoField() > 0) {
+        array_push($parents, ['id' => '-1', 'name' => '未知', 'children' => []]);
+    }
     if ($return) {
         return $parents;
     } else {
         echo json_encode($parents, JSON_UNESCAPED_UNICODE);
     }
+}
+
+function getCourseNoField()
+{
+    global $conn;
+    $sql = "SELECT count(id) FROM course WHERE field_id_c IS NULL;";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $count = $stmt->fetchColumn();
+    return $count;
 }
 
 function getLevels()
@@ -207,6 +275,48 @@ function saveCourse()
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute($data);
+        echo json_encode(['code' => 0, 'msg' => '成功'], JSON_UNESCAPED_UNICODE);
+    } catch (Exception $e) {
+        echo json_encode(['code' => -20, 'msg' => '数据库错误' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+    }
+}
+
+function getStatesAndInstitutions()
+{
+    global $conn;
+    $sql_state = "SELECT id,name FROM `state` WHERE id IN(SELECT state_id FROM institution);";
+    $stmt_state = $conn->prepare($sql_state);
+    $stmt_state->execute();
+    $result_state = $stmt_state->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql_inst = "SELECT `id`,`name` FROM institution WHERE state_id = ?";
+    $stmt_inst = $conn->prepare($sql_inst);
+
+    foreach ($result_state as &$s) {
+        $stmt_inst->execute([$s['id']]);
+        $s['inst'] = $stmt_inst->fetchAll(PDO::FETCH_ASSOC);
+    }
+    echo json_encode($result_state, JSON_UNESCAPED_UNICODE);
+}
+
+function quickSaveCourse()
+{
+    global $conn;
+    if (empty($_REQUEST['method']) || empty($_REQUEST['id']) || !isset($_REQUEST['value'])) {
+        echo json_encode(['code' => -1, 'msg' => '请求体错误'], JSON_UNESCAPED_UNICODE);
+        die;
+    }
+
+    $method = $_REQUEST['method'];
+    $value = $_REQUEST['value'];
+    $id = $_REQUEST['id'];
+    $param[$method] = $value;
+    $param['id'] = $id;
+
+    $sql = "UPDATE course SET $method = :$method WHERE id = :id ;";
+    $stmt = $conn->prepare($sql);
+    try {
+        $stmt->execute($param);
         echo json_encode(['code' => 0, 'msg' => '成功'], JSON_UNESCAPED_UNICODE);
     } catch (Exception $e) {
         echo json_encode(['code' => -20, 'msg' => '数据库错误' . $e->getMessage()], JSON_UNESCAPED_UNICODE);

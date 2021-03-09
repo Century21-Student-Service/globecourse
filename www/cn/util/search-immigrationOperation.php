@@ -6,6 +6,7 @@ $funcArr = [
     'getLevels',
     'getStates',
     'getFields',
+    'getFieldsCOnly',
 ];
 
 $op = 0;
@@ -68,12 +69,14 @@ function getStates()
     }
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);
 }
+
 function getFields($return = false)
 {
     global $conn;
     $state = $_REQUEST['state'];
     $regional = isset($_REQUEST['regional']) ? $_REQUEST['regional'] : "";
     $level = $_REQUEST['level'];
+    $field_p = isset($_REQUEST['field_p']) ? $_REQUEST['field_p'] : "";
 
     $param = [];
     $sql_parents = "SELECT `id`,`name` FROM field WHERE deep = 0 ";
@@ -106,6 +109,7 @@ function getFields($return = false)
             $sql_child .= "AND id IN(SELECT field_id FROM immi_field_state WHERE state_id = 0) ";
         }
     }
+
     $sql_child .= "ORDER BY id;";
     $stmt_child = $conn->prepare($sql_child);
     foreach ($parents as &$p) {
@@ -117,5 +121,45 @@ function getFields($return = false)
         return $parents;
     } else {
         echo json_encode($parents, JSON_UNESCAPED_UNICODE);
+    }
+}
+
+function getFieldsCOnly($return = false)
+{
+    global $conn;
+    $regional = isset($_REQUEST['regional']) ? $_REQUEST['regional'] : "";
+    $field_p = $_REQUEST['field_p'];
+    $level = $_REQUEST['level'];
+    $state = $_REQUEST['state'];
+
+    $param['field_p'] = $field_p;
+
+    $sql_child = "SELECT `id`,`name` FROM field WHERE p_id = :field_p ";
+    if (strlen($regional)) {
+        if ($regional) {
+            $sql_child .= " AND id IN(SELECT field_id FROM immi_field_state WHERE state_id <> 0) ";
+        } else {
+            $sql_child .= " AND id IN(SELECT field_id FROM immi_field_state WHERE state_id = 0) ";
+        }
+    }
+
+    if ($level) {
+        $sql_child .= " AND id IN (SELECT field_id_c FROM course WHERE level_id=:level) ";
+        $param['level'] = $level;
+    }
+
+    if ($state) {
+        $sql_parents .= "AND id IN(SELECT field_id_c FROM course WHERE inst_id IN(SELECT id FROM institution WHERE state_id=:state)) ";
+        $param['state'] = $state;
+    }
+
+    $stmt_child = $conn->prepare($sql_child);
+    $stmt_child->execute($param);
+    $children = $stmt_child->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($return) {
+        return $children;
+    } else {
+        echo json_encode($children, JSON_UNESCAPED_UNICODE);
     }
 }

@@ -134,7 +134,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 										<!-- =============================================        Form [for submit button]        ============================================= -->
 
 										<form action="search-immigration__result" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post">
-											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;;;;;;;;;;;;?>search-immigration__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
+											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;;;;;;;;;;;;;?>search-immigration__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
 											<input name="regional" type="hidden" id=i_regional>
 											<!-- =============================================        Form [for submit button]        ============================================= -->
 											<!-- ================================================================================================================================== -->
@@ -755,27 +755,31 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 				method: 'post',
 				dataType: 'json',
 				success: function (ops) {
-					var str = '';
 					$("#schoolType").html("<option value='0' selected='selected'>请选择「课程类别」</option>");
 					for (var i in ops) {
-						str = "<option value='" + ops[i]['id'] + "'>" + ops[i]['name'] + "</option>";
-						$("#schoolType").append(str);
+						$("#schoolType").append(`<option value='${ops[i]['id']}'>${ops[i]['name']}</option>`);
 					}
 				}
 			});
-
 		});
 
 		$('input[name=area][value=0]').prop('checked', true).change();
 
 		$('#broadField').change(function (e) {
-			const field_id_p = e.currentTarget.value;
+			const field_p = e.currentTarget.value;
+			const state = $("#state").children("option:selected").val();
+			const regional = $(".radio-area:checked")[0].value;
+			const level = $("#schoolType").val();
+
 			$("#narrowField").html('<option value="0">请选择「主修」</option>')
-			allFields.forEach(f => {
-				if (f.id == field_id_p)
-					f.children.forEach(c => {
-						$("#narrowField").append(`<option value="${c.id}">${c.name}</option>`);
-					});
+			$.post('util/search-immigrationOperation?op=3', {
+				field_p,
+				regional,
+				state,
+				level,
+			}, res => {
+				res = JSON.parse(res);
+				res.forEach(c => $("#narrowField").append(`<option value="${c.id}">${c.name}</option>`));
 			});
 
 			if ($('#broadField').val() != '') {

@@ -1,5 +1,7 @@
 <?php
+
 session_start();
+
 require_once dirname(__FILE__) . './../include/config.inc.php';
 require '../../config/conn.php';
 
@@ -19,13 +21,24 @@ $_SESSION['field_c'] = $field_c;
 
 $where = "";
 
-$sql = "SELECT id FROM institution WHERE regional=$regional";
+// $sql = "SELECT id FROM institution WHERE regional=$regional";
+// $stmt = $conn->prepare($sql);
+// $stmt->execute();
+// $rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
+// if (count($rows)) {
+//     $where .= "AND inst_id IN(" . implode(",", $rows) . ") ";
+// }
+
+if ($regional) {
+    $sql = "SELECT field_id FROM immi_field_state WHERE state_id <> 0";
+} else {
+    $sql = "SELECT field_id FROM immi_field_state WHERE state_id = 0";
+}
+
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
-if (count($rows)) {
-    $where .= "AND inst_id IN(" . implode(",", $rows) . ") ";
-}
+$where .= " AND c.field_id_c IN(" . implode(",", $rows) . ") ";
 
 if ($state) {
     $sql = "SELECT id FROM institution WHERE state_id=$state";
@@ -34,9 +47,8 @@ if ($state) {
     $rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     if (count($rows)) {
-        $where .= "AND inst_id IN(" . implode(",", $rows) . ") ";
+        $where .= " AND inst_id IN(" . implode(",", $rows) . ") ";
     }
-
 }
 
 if ($level) {
@@ -62,6 +74,8 @@ $sql = "SELECT c.id,c.name,c.hours,c.inst_id,i.name AS inst ,l.name AS `level`,s
       WHERE 1 = 1
       $where
       ";
+
+// die($sql);
 // $stmt = $conn->prepare($sql);
 // $stmt->execute();
 // $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -80,7 +94,7 @@ $dopage->GetPage($sql, 10);
 <!-- ______________________________        Table [responsive]        ______________________________ -->
 <!-- ============================================================================================== -->
 <div class="ctm-table__container">
-  <h2><small>为您找到相关结果</small>"<?php echo count($rows); // echo $dopage->GetResult_num(); ;;;;;;;;                     ?>"<small>个</small></h2>
+  <h2><small>为您找到相关结果</small>"<?php echo $dopage->GetResult_num(); ?>"<small>个</small></h2>
   <ul class="ctm__responsive-table">
     <li class="ctm-table__header">
       <div class="ctm-table__col ctm-table__5col-1 ctm-table__col-1">课程名称</div>
@@ -93,7 +107,7 @@ $dopage->GetPage($sql, 10);
     <?php
 while ($row = $dosql->GetArray()) {; // foreach ($rows as $row) {
     ?>
-        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
+        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
         <li class="ctm-table__row" onclick="parent.location.href='course-info.php?cid=<?php echo ($row['inst_id']); ?>&id=<?php echo ($row['id']); ?>';">
           <div class="ctm-table__col ctm-table__5col-1 ctm-table__col-1" data-label=""><?php echo ($row['name']); ?></div>
           <div class="ctm-table__col ctm-table__5col-2 ctm-table__embed-School" data-label=""><?php echo ($row['inst']); ?></div>
@@ -105,7 +119,7 @@ while ($row = $dosql->GetArray()) {; // foreach ($rows as $row) {
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>
