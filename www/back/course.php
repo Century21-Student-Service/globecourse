@@ -118,7 +118,14 @@ getjs("js/layer/layer.js", true);
       formatter: function (value, row, index) {
         return `<a href='#' onClick='FormCourse(${row.inst_id},${row.id})'>${value}</a>`;
       }
-    }, {
+    },  {
+      title: '英文名称',
+      field: 'ename',
+      align: 'left',
+      valign: 'middle',
+      width: 240,
+      sortable: true,
+    },{
       title: '院校',
       field: 'inst',
       align: 'left',
