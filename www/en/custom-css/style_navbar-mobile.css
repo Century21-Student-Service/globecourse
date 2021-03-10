@@ -1,0 +1,7 @@
+
+
+/*kingster-mobile*/
+@media only screen and (max-width: 1260px){ .kingster-mobile-header .kingster-logo-inner{ max-width: 300px; } } /*250px*/
+@media only screen and (max-width: 767px){ .kingster-mobile-header .kingster-logo-inner{ max-width: 220px; } } /*180px*/
+.kingster-top-menu-button i, .kingster-mobile-menu-button i{ color: #333333; }.kingster-mobile-button-hamburger:before, .kingster-mobile-button-hamburger:after, .kingster-mobile-button-hamburger span{ background: #333333; } 
+.kingster-main-menu-right .kingster-top-menu-button, .kingster-mobile-menu .kingster-mobile-menu-button{ border-color: #333333; } 

@@ -1,0 +1,292 @@
+/*body {
+  font-family: 'ShangShouRuiYuan', sans-serif;
+}*/
+body::-webkit-scrollbar {
+  width: 5px;               /* width of the entire scrollbar */
+}
+body::-webkit-scrollbar-track {
+  /*background: orange;*/        /* color of the tracking area */
+}
+body::-webkit-scrollbar-thumb {
+  background-color: ;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  /* creates padding around scroll thumb */
+}
+
+.ctm-table__container {
+  max-width: 90%;  /*1000px*/
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.ctm-table__container>h2 {
+  color: white;
+  font-size: 26px;
+  margin: 20px 0;
+  text-align: center;
+}
+.ctm-table__container>h2>small {
+  font-size: 0.5em;
+}
+
+.ctm__responsive-table>li {
+  border-radius: 6px;  /*3px*/
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.ctm-table__header {
+  background-color: #95a2a6;  /*#95A5A6*/
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.ctm-table__row {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+}
+.ctm-table__row:hover {
+  background-color: #027dfa;
+
+  cursor: pointer;
+}
+.ctm-table__col-1 {
+  flex-basis: 75%;  /*10%*/
+}
+.ctm-table__col-2 {
+  flex-basis: 25%;  /*40%*/
+}
+.ctm-table__col-3 {
+  flex-basis: 25%;  /*25%*/
+}
+.ctm-table__col-4 {
+  flex-basis: 25%;  /*25%*/
+}
+
+@media all and (max-width: 767px) {
+  .ctm-table__header {
+    display: none;
+  }
+  .ctm-table__row{
+    display: block !important;
+  }
+  li {
+    display: block;
+
+    padding: 25px 5% !important;
+  }
+  .ctm-table__col {
+    /*flex-basis: 100%;*/
+    display: block;
+    padding: 10px 0;
+    font-size: 2.5vw;
+  }
+  .ctm-table__col:before {
+    color: #6C7A89;
+    /*padding-right: 10px;*/
+    content: attr(data-label);
+    flex-basis: 50%;
+    text-align: right;
+  }
+
+  .ctm-table__col-1 {
+    font-weight: bold;
+  }
+  .ctm-table__row >.ctm-table__col-2:before{
+    content: "所在州：";
+    font-size: 2vw;
+  }
+}
+
+
+
+/****************************************     [Table 2]     ****************************************/
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+table * {
+  position: relative;
+}
+table td, table th {
+  padding-left: 8px;
+}
+table thead tr {
+  height: 60px;
+  background: #36304a;
+}
+table tbody tr {
+  height: 50px;
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td, table th {
+  text-align: left;
+}
+table td.l, table th.l {
+  text-align: right;
+}
+table td.c, table th.c {
+  text-align: center;
+}
+table td.r, table th.r {
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+tbody tr {
+  /*font-family: OpenSans-Regular;*/
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+tbody tr:hover {
+  color: #555555;
+  background-color: #A4CFFB;  /*#f5f5f5*/
+  cursor: pointer;
+}
+
+.ctm-table__column1 {
+  width: 260px;
+  padding-left: 40px;
+}
+
+.ctm-table__column2 {
+  width: 160px;
+}
+
+.ctm-table__column3 {
+  width: 245px;
+}
+
+.ctm-table__column4 {
+  width: 110px;
+  text-align: right;
+}
+
+.ctm-table__column5 {
+  width: 170px;
+  text-align: right;
+}
+
+.ctm-table__column6 {
+  width: 222px;
+  text-align: right;
+  padding-right: 62px;
+}
+
+
+@media screen and (max-width: 992px) {
+  table {
+    display: block;
+  }
+  table > *, table tr, table td, table th {
+    display: block;
+  }
+  table thead {
+    display: none;
+  }
+  table tbody tr {
+    height: auto;
+    padding: 37px 0;
+  }
+  table tbody tr td {
+    padding-left: 40% !important;
+    margin-bottom: 24px;
+  }
+  table tbody tr td:last-child {
+    margin-bottom: 0;
+  }
+  table tbody tr td:before {
+    font-family: OpenSans-Regular;
+    font-size: 14px;
+    color: #999999;
+    line-height: 1.2;
+    font-weight: unset;
+    position: absolute;
+    width: 40%;
+    left: 30px;
+    top: 0;
+  }
+  table tbody tr td:nth-child(1):before {
+    content: "学校名称";
+  }
+  table tbody tr td:nth-child(2):before {
+    content: "所在州";
+  }
+  table tbody tr td:nth-child(3):before {
+    content: "";
+  }
+  table tbody tr td:nth-child(4):before {
+    content: "";
+  }
+  table tbody tr td:nth-child(5):before {
+    content: "";
+  }
+  table tbody tr td:nth-child(6):before {
+    content: "";
+  }
+
+  .ctm-table__column4,
+  .ctm-table__column5,
+  .ctm-table__column6 {
+    text-align: left;
+  }
+
+  .ctm-table__column4,
+  .ctm-table__column5,
+  .ctm-table__column6,
+  .ctm-table__column1,
+  .ctm-table__column2,
+  .ctm-table__column3 {
+    width: 100%;
+  }
+
+  tbody tr {
+    font-size: 14px;
+  }
+}
+
+
+@media screen and (max-width: 1240px) {  /*Desktop*/
+  table {
+    display: none !important;
+  }
+  .table_h2 {
+    display: none;
+  }
+  /*.ctm-table__pageBtn{
+    display: none !important;
+  }*/
+}
+@media screen and (min-width: 1240px) {  /*Mobile*/
+  .ctm-table__container {
+    display: none !important;
+  }
+  .table_h2 {
+    color: white;
+    text-align: center;
+    font-size: 24px;
+
+    margin: 20px 0;
+  }
+  /*.ctm-table__pageBtn-Mobile{
+    display: none !important;
+  }*/
+}

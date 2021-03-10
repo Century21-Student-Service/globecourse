@@ -1,0 +1,344 @@
+.ctm-appear{display: default !important;}
+.ctm-disappear{display: none !important;}
+.ctm-disable{ opacity: .4; pointer-events: none; }
+
+
+
+
+/****************************************     [Home]     ****************************************/
+.ctm-responsvie-size{
+
+}
+
+.ctm-overlay_blue { position: absolute; width: 80%; height: 100%; background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(6, 36, 91, 1)); opacity: 1; }
+
+.ctm-section__searchBtn { margin: 1.5%; }
+.ctm-lowerSection__searchBtn {  }
+.ctm-lowerSection__searchBtn_img { transition: all .5s }
+.ctm-lowerSection__searchBtn_img:hover { transform: scale(1.1); transition: all .5s }
+.ctm-lowerSection__searchBtn_txt {  }
+
+
+/****************************************     [Search-Course]     ****************************************/
+.ctm-txtField {
+
+  width: 80%;
+
+  border-radius: 8px;
+  box-shadow: -2px 4px 5px #b5b5b566;
+
+  margin: 2%;
+  padding: 12px; /*2%*/
+
+  transition: all .3s ease;
+}
+.ctm-txtField:hover {
+  box-shadow: -2px 4px 5px #b5b5b5cc;
+}
+.ctm-txtField:focus {
+  border: 1.1px solid #027dfa;
+  box-shadow: 0px 0px 6px #027dfa66;
+
+  transition: all .3s ease;
+}
+
+/****************************************     [Search-Fees]     ****************************************/
+.ctm__disable {
+  color: #bababa !important;
+  background-color: #f0f0f0 !important;
+
+  pointer-events: none !important;
+}
+
+.ctm-txtField_25 {
+
+  width: 20%;
+
+  border-radius: 8px;
+  box-shadow: -2px 4px 5px #b5b5b566;
+
+  margin: 2%;
+  padding: 12px; /*2%*/
+
+  transition: all .3s ease;
+}
+.ctm-txtField_25:hover {
+  box-shadow: -2px 4px 5px #b5b5b5cc;
+}
+.ctm-txtField_25:focus {
+  border: 1.1px solid #027dfa;
+  box-shadow: 0px 0px 6px #027dfa66;
+
+  transition: all .3s ease;
+}
+
+/****************************************     [Search-School]     ****************************************/
+.custom-button_noBorder{
+	border: none;
+  box-shadow: -2px 3px 6px #b5b5b5;
+
+	cursor: pointer;
+}
+.custom-button_noBorder:hover{
+  box-shadow: 0px 3px 10px #939393;
+  background-color: #2F2F2F !important;
+  transform: scale(1.02);
+}
+
+.custom-overlay {
+    background-color: rgba(0,0,0,0.8);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 10;
+}
+.custom-overlay--hidden{
+  display: none;
+}
+
+.custom-popup__Frame {
+  display: flex;
+  position: fixed;
+
+  /*position: absolute;
+  transform: translate(-50%, -50%);*/
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  padding-top: 15%;
+  padding-bottom: 15%;
+  
+  transition: all .3s ease;
+
+  z-index: 11;
+}
+.custom-popup__Frame--hidden{
+  display: none;
+}
+
+@media screen and (max-width: 1240px) {
+  .custom-popup__content {
+    width: 80%;
+    height: 100%;
+  }
+
+  #Result_Popup{
+    padding-bottom: 20%
+  }
+}
+@media screen and (min-width: 1240px) {
+  .custom-popup__content{
+    /*background-color: #fff;*/
+
+    width: 80%;
+    height: 700px;
+
+    max-width: 1600px;
+
+    /*border-radius: 10px;*/
+  }
+}
+
+.custom-popup__close-bar {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  /*margin-right: -2rem;
+  margin-top: -1rem;*/
+}
+
+/****************************************     [School-Info]     ****************************************/
+.ctm-header__content {
+  text-align: center;
+  height: 245px;
+}
+
+@media only screen and (max-width: 767px) {  /*mobile*/
+  .ctm-header__content {
+    height: 110px;
+
+    padding-top: 5% !important;
+    padding-bottom: 5% !important;
+  }
+}
+
+.ctm-pgSchool__section { padding: 50px; }
+
+.ctm-header__logo {
+  /*width: auto;*/
+  height: 100% !important;
+  transition: all .2s ease;
+}
+.ctm-header__logo:hover {
+  transform: scale(1.02);
+}
+
+.ctm-widget-title {
+  position: relative;
+  
+  color: #333;
+  font-size: 24px !important;
+  font-family: 'Montserrat', sans-serif;
+
+  margin: 0;
+      margin-bottom: 45px !important;
+  padding-top: 7px;
+
+  line-height: 19px !important;
+  text-transform: uppercase;
+}
+.ctm-widget-title::before {
+  position: absolute;
+  left: 0;
+  bottom: -18px;
+  content: "";
+  width: 40px;  /*35px*/
+  height: 2px;
+  background-color: #027dfa;  /*#333*/
+}
+
+.ctm-tab-top {
+  margin-bottom: 20px;
+  padding: 20px 0;
+}
+.ctm-tab-top__title {
+  display: inline-block;
+  font-size: 18px !important;
+  text-align: center;
+  
+  margin-bottom: 0 !important;
+  padding: 10px 3%;
+
+  border-radius: 6px 6px 0 0;
+
+  transition: all .2s ease;
+  cursor: pointer;
+}
+@media only screen and (min-width: 448px) {  /*desktop*/
+  .ctm-tab-top__title:hover {
+    background-color: #A4CFFB;
+    transition: all .3s ease;
+  }
+}
+
+.ctm-tab-top__title-active {
+  color: white !important;
+  background-color: #027dfa;
+
+  pointer-events: none;
+}
+
+@media only screen and (max-width: 740px) {  /*mobile*/
+  .ctm-tab-top {
+    overflow-x: scroll;
+  }
+  .ctm-tab-top >div {
+    min-width: max-content;
+  }
+
+  .ctm-tab-top__title {
+    /*width: 5vw;*/
+  }
+
+  .ctm-tab-top::-webkit-scrollbar {
+    height: 1px;               /* width of the entire scrollbar */
+  }
+  .ctm-tab-top::-webkit-scrollbar-track {
+    /*background: orange;*/        /* color of the tracking area */
+  }
+  .ctm-tab-top::-webkit-scrollbar-thumb {
+    background-color: ;    /* color of the scroll thumb */
+    border-radius: 5px;       /* roundness of the scroll thumb */
+    /* creates padding around scroll thumb */
+  }
+}
+
+@media only screen and (max-width: 448px) {  /*mobile*/
+  .ctm-pgSchool__section {
+    padding-left: 1.8%;
+    padding-right: 1.8%;
+  }
+
+  .ctm-pgSchool__title {
+    font-size: 35px !important;
+  }
+  .ctm-pgSchool__title-en {
+    font-size: 30px !important;
+  }
+  .author >p {
+    font-size: 10px !important;
+    line-height: 20px !important;
+  }
+  .author >a {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+
+  .ctm-pgSchool__itemList {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+  }
+
+  .ctm-tab-top__title:hover {
+    background-color: ;
+  }
+
+  /*Sidebar*/
+  .sidebar {
+    display: none;
+  }
+}
+
+.ctm-tab-side__title {
+  position: relative;
+  margin: 0;
+      margin-bottom: 35px !important;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  font-size: 18px !important;
+  line-height: 19px !important;
+  text-transform: uppercase;
+  margin-bottom: 54px;
+  padding-top: 7px;
+
+  cursor: pointer;
+}
+
+.ctm-itemList__sidebar:hover {
+  transform: scale(1.05);
+  transition: all .2s ease;
+}
+.ctm-itemList__sidebar:hover >a>span {
+  color: #027dfa !important;
+}
+
+.ctm-nearbyUni__img {
+  object-fit: contain;
+  width: 80% !important;
+  height: 150px !important;
+
+  border: 1px solid #f6f6f6;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px #b8b8b866;
+
+  transition: all .4s ease;
+  cursor: pointer;
+}
+
+.ctm-nearbyUni__img:hover {
+  transform: scale(1.05);
+}
+
+/****************************************     [Immigration-Info]     ****************************************/
+.ctm-itemList:hover {
+  transform: scale(1.01);
+  transition: all .3s ease;
+}
+.ctm-itemList:hover >a>span {
+  color: #027dfa !important;
+}

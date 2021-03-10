@@ -1,0 +1,168 @@
+
+
+/* Bootstrap
+-------------------------------------------------------------- */
+/*.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+.clearfix::before, .clearfix::after, .dl-horizontal dd::before, .dl-horizontal dd::after, .container::before, .container::after, .container-fluid::before, .container-fluid::after, .row::before, .row::after, .form-horizontal .form-group::before, .form-horizontal .form-group::after, .btn-toolbar::before, .btn-toolbar::after, .btn-group-vertical > .btn-group::before, .btn-group-vertical > .btn-group::after, .nav::before, .nav::after, .navbar::before, .navbar::after, .navbar-header::before, .navbar-header::after, .navbar-collapse::before, .navbar-collapse::after, .pager::before, .pager::after, .panel-body::before, .panel-body::after, .modal-header::before, .modal-header::after, .modal-footer::before, .modal-footer::after {
+    display: table;
+    content: " ";
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+@media (min-width: 992px) {
+  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    float: left;
+  }
+  .col-md-12 {
+    width: 100%;
+  }
+}*/
+
+/* Educate-Style
+-------------------------------------------------------------- */
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, caption, canvas, center, cite, code,
+dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, form, footer, header, hgroup, h1, h2, h3, h4, h5, h6, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav,object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, tt, table, tbody, textarea, tfoot, thead, time, tr, th, td, u, ul, var, video  { 
+    font-family: inherit; 
+    font-size: 100%; 
+    font-weight: inherit; 
+    font-style: inherit; 
+    vertical-align: baseline; 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    outline: 0;
+    background: transparent;
+}
+ol, ul {
+    list-style: none;
+}
+ul, ol {
+    padding: 0;
+}
+.container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+/* Flat tabs
+-------------------------------------------------------------- */
+.flat-tabs ul.menu-tab {
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.flat-tabs ul.menu-tab:after {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background-color: #eeeeee;
+    content: "";
+    z-index: 2;
+}
+
+.flat-tabs ul.menu-tab li {
+    display: inline-block;    
+}
+
+.flat-tabs ul.menu-tab li a {
+    position: relative;
+    z-index: 10;
+    background-color: #fff;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;    
+    border: 2px solid #eeeeee;
+    list-style-type: none;
+    border-radius: 50%;
+    margin-right: 290px;
+    display: block;
+}
+
+.flat-tabs ul.menu-tab li a:before,
+.flat-tabs ul.menu-tab li a:after {
+    width: 20px;
+    height: 2px;
+    background-color: #fff;
+    content: "";
+    top: 50%;
+    left: -22px;
+    position: absolute;
+}
+
+.flat-tabs ul.menu-tab li a:after {
+    left: 100%;
+    margin-left: 2px;
+}
+
+.flat-tabs ul.menu-tab li.active a,
+.flat-tabs ul.menu-tab li a:hover {
+    border: 2px solid #027dfa;
+    color: #fff; 
+    background-color: #027dfa;
+    color: #fff;
+}
+
+.flat-tabs ul.menu-tab li:last-child a {
+    margin-right: 0;
+}
+
+.flat-tabs ul.menu-tab li a {
+    font-family: "montserrat", sans-serif;
+    font-weight: 700;  
+    color: #999999;
+    font-size: 16px;
+}
+
+.flat-tabs .flat-title {
+    margin-bottom: 34px;
+}
+
+.flat-tabs .content-tab .text-tab {
+    width: 59.82905982905983%;
+    float: left;
+    padding-right: 60px;
+    padding-top: 5px;
+}
+
+.flat-tabs .content-tab .images-tab {
+    width: 40.17094017094017%;
+    float: left;
+}
+
+.flat-tabs .content-tab p {
+    margin-bottom: 20px;
+}

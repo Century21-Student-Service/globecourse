@@ -1,0 +1,30 @@
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
+	RewriteRule (.*?)index\.php/*(.*) /$1$2 [R=301,NE,L]
+	
+</IfModule>
+
+# Remove file extension
+<IfModule mod_rewrite.c>
+	# RewriteEngine On
+	# RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(([^/]+/)*([^/.]+))\.php[\ ?]
+	# RewriteRule \.php$ /%1/ [R=301,NC,L]
+	# RewriteRule ^(.*)/$ /$1.php [NC,L]
+
+	RewriteEngine On
+	RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(([^/]+/)*([^/.]+))\.php[\ ?]
+	RewriteRule \.php$ /%1 [R=301,NC,L]
+	RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+</IfModule>
+
+# RewriteEngine On
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# RewriteEngine on
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME}.php -f
+# RewriteRule ^(.*)$ $1.php
