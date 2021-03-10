@@ -73,48 +73,53 @@ function getStates()
 function getFields($return = false)
 {
     global $conn;
-    $state = $_REQUEST['state'];
     $regional = isset($_REQUEST['regional']) ? $_REQUEST['regional'] : "";
     $level = $_REQUEST['level'];
-    $field_p = isset($_REQUEST['field_p']) ? $_REQUEST['field_p'] : "";
+    $state = $_REQUEST['state'];
 
-    $param = [];
-    $sql_parents = "SELECT `id`,`name` FROM field WHERE deep = 0 ";
-
+    $sql_child = "SELECT `id`,`name`,`p_id` FROM field WHERE 1 = 1 ";
+    if (strlen($regional)) {
+        if ($regional) {
+            $sql_child .= " AND id IN(SELECT field_id FROM immi_field_state WHERE state_id <> 0) ";
+        } else {
+            $sql_child .= " AND id IN(SELECT field_id FROM immi_field_state WHERE state_id = 0) ";
+        }
+    }
     if ($level) {
-        $sql_parents .= "AND id IN(SELECT field_id_p FROM course WHERE level_id=:level_id) ";
-        $param['level_id'] = $level;
+        $sql_child .= " AND id IN (SELECT field_id_c FROM course WHERE level_id=:level) ";
+        $param['level'] = $level;
     }
+
     if ($state) {
-        $sql_parents .= "AND id IN(SELECT field_id_p FROM course WHERE inst_id IN(SELECT id FROM institution WHERE state_id=:state_id)) ";
-        $param['state_id'] = $state;
-    }
-    if (strlen($regional)) {
-        if ($regional) {
-            $sql_parents .= "AND id IN(SELECT p_id FROM field WHERE id IN(SELECT field_id FROM immi_field_state WHERE state_id <> 0)) ";
-        } else {
-            $sql_parents .= "AND id IN(SELECT p_id FROM field WHERE id IN(SELECT field_id FROM immi_field_state WHERE state_id = 0)) ";
-        }
-    }
-    $sql_parents .= " ORDER BY id;";
-
-    $stmt_parents = $conn->prepare($sql_parents);
-    $stmt_parents->execute($param);
-    $parents = $stmt_parents->fetchAll(PDO::FETCH_ASSOC);
-    $sql_child = "SELECT `id`,`name` FROM field WHERE p_id = ? ";
-    if (strlen($regional)) {
-        if ($regional) {
-            $sql_child .= "AND id IN(SELECT field_id FROM immi_field_state WHERE state_id <> 0) ";
-        } else {
-            $sql_child .= "AND id IN(SELECT field_id FROM immi_field_state WHERE state_id = 0) ";
-        }
+        $sql_child .= "AND id IN(SELECT field_id_c FROM course WHERE inst_id IN(SELECT id FROM institution WHERE state_id=:state)) ";
+        $param['state'] = $state;
     }
 
-    $sql_child .= "ORDER BY id;";
     $stmt_child = $conn->prepare($sql_child);
-    foreach ($parents as &$p) {
-        $stmt_child->execute([$p['id']]);
-        $p['children'] = $stmt_child->fetchAll(PDO::FETCH_ASSOC);
+    $stmt_child->execute($param);
+    $children = $stmt_child->fetchAll(PDO::FETCH_ASSOC);
+
+    $pids = array_map(function ($c) {
+        return $c['p_id'];
+    }, $children);
+
+    $pids = array_unique($pids);
+
+    $sql_parent = "SELECT `id`,`name` FROM field WHERE deep = 0 AND id IN(" . implode(',', $pids) . ");";
+    $stmt_parent = $conn->prepare($sql_parent);
+    $stmt_parent->execute();
+    $parents = $stmt_parent->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($children as $c) {
+        foreach ($parents as &$p) {
+            if ($c['p_id'] == $p['id']) {
+                if (!isset($p['children'])) {
+                    $p['children'] = [];
+                }
+                array_push($p['children'], ['id' => $c['id'], 'name' => $c['name']]);
+            }
+            break;
+        }
     }
 
     if ($return) {
@@ -134,7 +139,7 @@ function getFieldsCOnly($return = false)
 
     $param['field_p'] = $field_p;
 
-    $sql_child = "SELECT `id`,`name` FROM field WHERE p_id = :field_p ";
+    $sql_child = "SELECT `id`,`name`,`p_id` FROM field WHERE p_id = :field_p ";
     if (strlen($regional)) {
         if ($regional) {
             $sql_child .= " AND id IN(SELECT field_id FROM immi_field_state WHERE state_id <> 0) ";
@@ -149,7 +154,7 @@ function getFieldsCOnly($return = false)
     }
 
     if ($state) {
-        $sql_parents .= "AND id IN(SELECT field_id_c FROM course WHERE inst_id IN(SELECT id FROM institution WHERE state_id=:state)) ";
+        $sql_child .= "AND id IN(SELECT field_id_c FROM course WHERE inst_id IN(SELECT id FROM institution WHERE state_id=:state)) ";
         $param['state'] = $state;
     }
 
