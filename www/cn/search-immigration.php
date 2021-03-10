@@ -134,7 +134,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 										<!-- =============================================        Form [for submit button]        ============================================= -->
 
 										<form action="search-immigration__result" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post">
-											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;;;;;;;;;;;;;?>search-immigration__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
+											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;;;;;;;;;;;;;;?>search-immigration__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
 											<input name="regional" type="hidden" id=i_regional>
 											<!-- =============================================        Form [for submit button]        ============================================= -->
 											<!-- ================================================================================================================================== -->
@@ -206,7 +206,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 																				<label>
 																					<input type="radio" class='radio-area' id="area" name="area" value="0" checked="">
 																					<div class="tab-box_2">
-																						<div><span>「非」偏远地区</span><br></div>
+																						<div><span>非偏远地区</span><br></div>
 																					</div>
 																				</label>
 
