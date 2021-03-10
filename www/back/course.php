@@ -392,7 +392,7 @@ getjs("js/layer/layer.js", true);
             $("#input_field_c_" + id).html("<option value='0'>请选择子领域</option>");
 
             FIELDS.forEach(e => {
-              $("#input_field_p_" + id).append(`<option value='${e.id}'>${e.name}</option>`);
+              if (e.id > 0) $("#input_field_p_" + id).append(`<option value='${e.id}'>${e.name}</option>`);
             });
 
             $("#input_field_p_" + id).off('change').change(e => {
@@ -408,8 +408,10 @@ getjs("js/layer/layer.js", true);
                 }
               }
             });
-            $("#input_field_p_" + id).val(data.field_id_p).change();
-            $("#input_field_c_" + id).val(data.field_id_c);
+            if (data.field_id_p && data.field_id_c) {
+              $("#input_field_p_" + id).val(data.field_id_p).change();
+              $("#input_field_c_" + id).val(data.field_id_c);
+            }
           });
         },
         rowStyle: function rowStyle(row, index) {
