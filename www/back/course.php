@@ -57,7 +57,7 @@ getcss("js/layer/theme/default/layer.css", true);
       width: 90%;
     }
 
-    input.invalid {
+    .invalid {
       border: solid 2px red;
       box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px pink
     }
@@ -547,6 +547,17 @@ getjs("js/layer/layer.js", true);
     function saveField(id) {
       const field_p = $("#input_field_p_" + id).val();
       const field_c = $("#input_field_c_" + id).val();
+      $("#input_field_p_" + id).removeClass('invalid');
+      $("#input_field_c_" + id).removeClass('invalid');
+      if (field_p < 1) {
+        $("#input_field_p_" + id).addClass('invalid');
+      }
+      if (field_c < 1) {
+        $("#input_field_c_" + id).addClass('invalid');
+      }
+      if (field_p < 1 || field_c < 1) {
+        return;
+      }
       $.post("util/courseOperation.php?op=6", {
           id: id,
           method: "field",
@@ -557,7 +568,14 @@ getjs("js/layer/layer.js", true);
           res = JSON.parse(res);
           if (res.code == 0) {
             $('#toggle_field_' + id).popover('hide');
-            refresh();
+            FIELDS.forEach(f => {
+              if (f.id == field_p) {
+                f.children.forEach(c => {
+                  if (c.id == field_c) $('#toggle_field_' + id).html(c.name);
+                })
+              }
+            })
+            // refresh();
           } else {
             alert(res.msg);
           }
