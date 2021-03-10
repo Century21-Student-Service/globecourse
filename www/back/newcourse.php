@@ -96,18 +96,18 @@ getcss("js/layer/theme/default/layer.css", true);
     </div>
 
     <ul class="nav nav-tabs" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="intro_tab" data-toggle="tab" href="#input_intro" role="tab" aria-controls="intro" aria-selected="true">简介</a>
+      <li class="nav-item" style="display:none">
+        <a class="nav-link " id="intro_tab" data-toggle="tab" href="#input_intro" role="tab" aria-controls="intro" aria-selected="true">简介</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " id="description_tab" data-toggle="tab" href="#input_description" role="tab" aria-controls="description"
+        <a class="nav-link active" id="description_tab" data-toggle="tab" href="#input_description" role="tab" aria-controls="description"
           aria-selected="true">详细介绍</a>
       </li>
     </ul>
 
     <div class="tab-content">
-      <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="intro_tab" id="input_intro"></div>
-      <div class="tab-pane fade " role="tabpanel" aria-labelledby="description_tab" id="input_description"></div>
+      <div class="tab-pane fade " role="tabpanel" aria-labelledby="intro_tab" id="input_intro"></div>
+      <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="description_tab" id="input_description"></div>
     </div>
 
     <div style="float: right; margin-top: 15px;">

@@ -54,6 +54,7 @@ function getCourses()
                            l.name AS `level`,
                            i.name AS `inst`,
                            s.name AS `state`,
+                           c.level_id,
                            c.inst_id,
                            c.field_id_p,
                            c.field_id_c,
@@ -302,18 +303,26 @@ function getStatesAndInstitutions()
 function quickSaveCourse()
 {
     global $conn;
-    if (empty($_REQUEST['method']) || empty($_REQUEST['id']) || !isset($_REQUEST['value'])) {
+    if (empty($_REQUEST['method']) || empty($_REQUEST['id']) || ($_REQUEST['method'] != 'field' && !isset($_REQUEST['value']))) {
         echo json_encode(['code' => -1, 'msg' => '请求体错误'], JSON_UNESCAPED_UNICODE);
         die;
     }
 
-    $method = $_REQUEST['method'];
-    $value = $_REQUEST['value'];
     $id = $_REQUEST['id'];
-    $param[$method] = $value;
+    $method = $_REQUEST['method'];
     $param['id'] = $id;
+    if ($method != 'field') {
+        $param[$method] = $_REQUEST['value'];
+    } else {
+        $param['field_p'] = $_REQUEST['field_p'];
+        $param['field_c'] = $_REQUEST['field_c'];
+    }
 
-    $sql = "UPDATE course SET $method = :$method WHERE id = :id ;";
+    if ($method != 'field') {
+        $sql = "UPDATE course SET $method = :$method WHERE id = :id ;";
+    } else {
+        $sql = "UPDATE course SET field_id_p = :field_p, field_id_c = :field_c  WHERE id = :id ;";
+    }
     $stmt = $conn->prepare($sql);
     try {
         $stmt->execute($param);

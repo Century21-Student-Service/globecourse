@@ -56,6 +56,11 @@ getcss("js/layer/theme/default/layer.css", true);
     .container {
       width: 90%;
     }
+
+    input.invalid {
+      border: solid 2px red;
+      box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px pink
+    }
   </style>
 </head>
 
@@ -129,7 +134,7 @@ getjs("js/layer/layer.js", true);
       sortable: true,
       formatter: function (value, row, index) {
         let content =
-          `<select id='input_level_${row.id}' class='form-control change-level' type='text'></select>
+          `<select id='input_level_${row.id}' class='form-control change-level'></select>
           <button type='button' class='btn btn-success btn-sm btn-update' onclick='saveLevel(${row.id})'>
           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
           <button type='button' class='btn btn-danger btn-sm btn-update' onclick='dismissLevel(${row.id})'>
@@ -144,11 +149,17 @@ getjs("js/layer/layer.js", true);
       width: 150,
       sortable: true,
       formatter: function (value, row, index) {
-        if (value.c.length > 0) {
-          return value.c;
-        } else {
-          return "-";
-        }
+        value = value.c.length > 0 ? value.c : "-";
+        let content =
+          `<select id='input_field_p_${row.id}' class='form-control change-field change-field-p'></select>
+          <select id='input_field_c_${row.id}' class='form-control change-field change-field-c'></select>
+          <button type='button' class='btn btn-success btn-sm btn-update' onclick='saveField(${row.id})'>
+          <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
+          <button type='button' class='btn btn-danger btn-sm btn-update' onclick='dismissField(${row.id})'>
+          <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>`
+        return `<span id="toggle_field_${row.id}" class="toggle toggle-field" data-toggle="popover" title="修改领域" data-content="${content}">${value}</span>`;
+
+
       }
     }, {
       title: '课时',
@@ -304,6 +315,7 @@ getjs("js/layer/layer.js", true);
           .append('<option value="0">全部子领域</option>')
           .hide().change(refresh);
       });
+
       Promise.all([institutions, level, fields]).then(function (res) {
         refresh();
       });
@@ -358,6 +370,7 @@ getjs("js/layer/layer.js", true);
             var matches = /^toggle_(\w+)_(\d+)/.exec(e.currentTarget.id);
             var action = matches[1],
               id = matches[2];
+            const data = $("#courseTab").bootstrapTable('getRowByUniqueId', id)
             $.get('util/courseOperation?op=3', function (res) {
               res = JSON.parse(res);
               let html = "";
@@ -365,10 +378,39 @@ getjs("js/layer/layer.js", true);
               res.forEach(t => {
                 $("#input_level_" + id).append(`<option value='${t.id}'>${t.name}</option>`);
               });
+              $("#input_level_" + id).val(data.level_id);
             });
+
           });
 
+          $('.toggle-field').on('shown.bs.popover', function (e) {
+            var matches = /^toggle_(\w+)_(\d+)/.exec(e.currentTarget.id);
+            var action = matches[1],
+              id = matches[2];
+            const data = $("#courseTab").bootstrapTable('getRowByUniqueId', id)
+            $("#input_field_p_" + id).html("<option value='0'>请选择领域</option>");
+            $("#input_field_c_" + id).html("<option value='0'>请选择子领域</option>");
 
+            FIELDS.forEach(e => {
+              $("#input_field_p_" + id).append(`<option value='${e.id}'>${e.name}</option>`);
+            });
+
+            $("#input_field_p_" + id).off('change').change(e => {
+              const p_id = e.currentTarget.value;
+              for (let i = 0; i < FIELDS.length; i++) {
+                let field_p = FIELDS[i];
+                if (field_p.id == p_id) {
+                  $("#input_field_c_" + id).html("<option value='0'>请选择子领域</option>");
+                  field_p.children.forEach(e => {
+                    $("#input_field_c_" + id).append(`<option value='${e.id}'>${e.name}</option>`);
+                  });
+                  break;
+                }
+              }
+            });
+            $("#input_field_p_" + id).val(data.field_id_p).change();
+            $("#input_field_c_" + id).val(data.field_id_c);
+          });
         },
         rowStyle: function rowStyle(row, index) {
           var result = {
@@ -383,11 +425,6 @@ getjs("js/layer/layer.js", true);
           return result;
         },
       });
-    }
-
-
-    function changetypegoahead(target) {
-      $(target).parent().parent().remove();
     }
 
     function cellStyle(value) {
@@ -414,6 +451,10 @@ getjs("js/layer/layer.js", true);
 
     function dismissHours(id) {
       $('#toggle_hours_' + id).popover('hide');
+    }
+
+    function dismissField(id) {
+      $('#toggle_field_' + id).popover('hide');
     }
 
     function saveFees(id) {
@@ -499,6 +540,27 @@ getjs("js/layer/layer.js", true);
             alert(res.msg);
           }
         });
+    }
+
+    function saveField(id) {
+      const field_p = $("#input_field_p_" + id).val();
+      const field_c = $("#input_field_c_" + id).val();
+      $.post("util/courseOperation.php?op=6", {
+          id: id,
+          method: "field",
+          field_p,
+          field_c,
+        },
+        function (res) {
+          res = JSON.parse(res);
+          if (res.code == 0) {
+            $('#toggle_field_' + id).popover('hide');
+            refresh();
+          } else {
+            alert(res.msg);
+          }
+        });
+      $('#toggle_field_' + id).popover('hide');
     }
 
     function deleteInstitution(id) {
