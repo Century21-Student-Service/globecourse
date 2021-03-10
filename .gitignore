@@ -1,2 +1,4 @@
 vendor
-
+config/conn.php
+www/include/conn.inc.php
+web.config
