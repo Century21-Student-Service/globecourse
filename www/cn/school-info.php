@@ -173,8 +173,6 @@ if (empty($picarr)) {
 
 								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo" src="./../<?php echo ($sch['badge']); ?>"
 										width="" height="" style="border-radius: 10px;" loading="lazy" /></a> <!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
 
 							</div>
 						</div>
@@ -214,7 +212,7 @@ if (empty($picarr)) {
 
 									<h5 id="tab-overview" class="ctm-tab-top__title <?php echo $onTab_overview; ?>">概况</h5>
 									<!-- <h5 id="tab-description" class="ctm-tab-top__title">介绍</h5> -->
-									<h5 id="tab-gallery" class="ctm-tab-top__title">图片</h5>
+									<!-- <h5 id="tab-gallery" class="ctm-tab-top__title">图片</h5> -->
 									<h5 id='tab-cList' class='ctm-tab-top__title $onTab_cList'>课程列表</h5>
 
 									<?php
@@ -250,9 +248,9 @@ if ($sch['id'] == 13) {
 											<?php
 if (!empty($sch['video'])) {
     echo '<video class="video" controls="controls" src="' . ($sch['video']) . '" width="100%" id="promotionVid" loading="lazy">';
-    ?>
+}?>
 
-											<img src="./../<?php echo $v[0]; ?>" loading="lazy" />
+											<!-- <img src="./../<?php //echo $v[0]; ;;;;;;?>" loading="lazy" /> -->
 											<!-- <img src="educate-images/blog/bs1.jpg" alt="image"> -->
 										</div><!-- /.feature-post -->
 
@@ -262,37 +260,14 @@ if (!empty($sch['video'])) {
 											<?php echo ($sch['description']); ?>
 										</p>
 
-									</div><!-- /blog-title-single -->
-								</div><!-- /col-md-8 -->
-
-
-								<!-- ====================     << Description >>     ==================== -->
-								<!-- <div class="col-md-8" id="bodyDescription" style="display: none;">
-			                        <div class="blog-title-single">
-
-			                            <h4 class="title-1 bold ctm-widget-title">院校介绍</h4>
-
-		                                <p style="margin-bottom: 30px; padding: 0 2%;">
-		                                    <?php //echo($sch['content']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>
-		                                </p>
-
-			                        </div>
-			                    </div> -->
-
-
-								<!-- ====================     << Gallery >>     ==================== -->
-								<div class="col-md-8" id="bodyGallery" style="display: none;" loading="lazy">
-									<div class="blog-title-single">
-
-										<h4 class="title-1 bold ctm-widget-title">图片</h4>
 
 										<div class="gdlr-core-portfolio-item-holder gdlr-core-js-2  filter-container clearfix" data-layout="fitrows">
 
 											<?php
 foreach ($picarr as $k) {
-        $v = explode(',', $k);
-        ?>
-											<!-- <li><img src="<?php //echo($v[0]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>" width="204" height="125" /><div><?php //echo($v[1]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div></li> -->
+    $v = explode(',', $k);
+    ?>
+											<!-- <li><img src="<?php //echo($v[0]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>" width="204" height="125" /><div><?php //echo($v[1]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div></li> -->
 											<div class="gdlr-core-item-list class1 gdlr-core-item-pdlr gdlr-core-column-20" style="padding-left: 10px; padding-right: 10px;">
 												<div class="gdlr-core-portfolio-grid  gdlr-core-center-align gdlr-core-style-normal">
 													<div class="gdlr-core-portfolio-thumbnail gdlr-core-media-image  gdlr-core-style-icon">
@@ -316,21 +291,18 @@ foreach ($picarr as $k) {
 														</div>
 													</div>
 													<!-- <div class="gdlr-core-portfolio-content-wrap gdlr-core-skin-divider">
-	                                                        <h3 class="gdlr-core-portfolio-title gdlr-core-skin-title" style="font-size: 19px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;"><a href="#" >Charity &#038; Voluntary For Social</a></h3></div> -->
+																														<h3 class="gdlr-core-portfolio-title gdlr-core-skin-title" style="font-size: 19px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;"><a href="#" >Charity &#038; Voluntary For Social</a></h3></div> -->
 												</div>
 											</div>
 											<?php
 }
-    ?>
+?>
 
 										</div>
 
 									</div><!-- /blog-title-single -->
 								</div><!-- /col-md-8 -->
 
-
-								<!-- ====================     << Course-List >>     ==================== -->
-								<!-- ====================     << Course-List >>     ==================== -->
 								<!-- ====================     << Course-List >>     ==================== -->
 								<div class="col-md-8" id="bodyCList" style="<?php echo $displayCList; ?>" loading="lazy">
 									<div class="blog-title-single">
@@ -400,33 +372,33 @@ foreach ($picarr as $k) {
 											<?php
 $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=2  AND delstate='' AND cbh='" . $id . "' AND checkinfo=true ORDER BY orderid DESC", 5);
 
-    while ($row = $dosql->GetArray()) {
-        if ($row['linkurl'] == '' and $cfg_isreurl != 'Y') {
-            $gourl = 'newsshow.php?cid=' . $row['classid'] . '&id=' . $row['id'];
-        } else if ($cfg_isreurl == 'Y') {
-            $gourl = 'newsshow-' . $row['classid'] . '-' . $row['id'] . '-1.html';
-        } else {
-            $gourl = $row['linkurl'];
-        }
+while ($row = $dosql->GetArray()) {
+    if ($row['linkurl'] == '' and $cfg_isreurl != 'Y') {
+        $gourl = 'newsshow.php?cid=' . $row['classid'] . '&id=' . $row['id'];
+    } else if ($cfg_isreurl == 'Y') {
+        $gourl = 'newsshow-' . $row['classid'] . '-' . $row['id'] . '-1.html';
+    } else {
+        $gourl = $row['linkurl'];
+    }
 
-        $row2 = $dosql->GetOne("SELECT `classname` FROM `#@__infoclass` WHERE `id`=" . $row['classid']);
-        if ($cfg_isreurl != 'Y') {
-            $gourl2 = 'news.php?cid=' . $row['classid'];
-        } else {
-            $gourl2 = 'news-' . $row['classid'] . '-1.html';
-        }
+    $row2 = $dosql->GetOne("SELECT `classname` FROM `#@__infoclass` WHERE `id`=" . $row['classid']);
+    if ($cfg_isreurl != 'Y') {
+        $gourl2 = 'news.php?cid=' . $row['classid'];
+    } else {
+        $gourl2 = 'news-' . $row['classid'] . '-1.html';
+    }
 
-        ?>
+    ?>
 											<div class="gdlr-core-course-item-list ctm-itemList__sidebar"><a class="gdlr-core-course-item-link"
 													href="course-info.php?cid=<?php echo ($id); ?>&id=<?php echo ($row['id']); ?>">
 													<!-- <span class="gdlr-core-course-item-id gdlr-core-skin-caption" ></span> -->
 													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($row['title']); ?></span>
-													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
+													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
 													<i class="gdlr-core-course-item-icon gdlr-core-skin-icon fa fa-long-arrow-right" style="font-size: 16px;"></i></a>
 											</div>
 											<?php
 }
-    ?>
+?>
 										</div>
 
 									</div>
@@ -439,16 +411,16 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=2  AND delstate='' 
 											<?php
 $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=8  AND delstate='' AND checkinfo=true ORDER BY orderid DESC", 5);
 
-    while ($row = $dosql->GetArray()) {
-        if ($row['linkurl'] == '' and $cfg_isreurl != 'Y') {
-            $gourl = 'newsshow.php?cid=' . $row['classid'] . '&id=' . $row['id'];
-        } else if ($cfg_isreurl == 'Y') {
-            $gourl = 'newsshow-' . $row['classid'] . '-' . $row['id'] . '-1.html';
-        } else {
-            $gourl = $row['linkurl'];
-        }
+while ($row = $dosql->GetArray()) {
+    if ($row['linkurl'] == '' and $cfg_isreurl != 'Y') {
+        $gourl = 'newsshow.php?cid=' . $row['classid'] . '&id=' . $row['id'];
+    } else if ($cfg_isreurl == 'Y') {
+        $gourl = 'newsshow-' . $row['classid'] . '-' . $row['id'] . '-1.html';
+    } else {
+        $gourl = $row['linkurl'];
+    }
 
-        ?>
+    ?>
 											<div class="gdlr-core-course-item-list ctm-itemList__sidebar"><a class="gdlr-core-course-item-link"
 													href="info-immigration-article.php?cid=<?php echo ($row['id']); ?>">
 													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($row['title']); ?></span>
@@ -456,7 +428,7 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=8  AND delstate='' 
 											</div>
 											<?php
 }
-    ?>
+?>
 										</div>
 
 									</div>
@@ -470,22 +442,22 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=8  AND delstate='' 
 											<?php
 $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=10 AND delstate='' AND checkinfo=true ORDER BY posttime DESC", 6);
 
-    while ($sugSchool = $dosql->GetArray()) {
-        $data = $sugSchool['linkurl'];
-        $get_sID = substr($data, strpos($data, "?id=") + 1);
-        $get_sID_filter = filter_var($get_sID, FILTER_SANITIZE_NUMBER_INT);
-        // echo '<script>alert('.intval($tst).');</script>';
+while ($sugSchool = $dosql->GetArray()) {
+    $data = $sugSchool['linkurl'];
+    $get_sID = substr($data, strpos($data, "?id=") + 1);
+    $get_sID_filter = filter_var($get_sID, FILTER_SANITIZE_NUMBER_INT);
+    // echo '<script>alert('.intval($tst).');</script>';
 
-        $db = new MySql(false);
-        $db->Execute("SELECT * FROM `#@__infoimg` WHERE classid=3 AND id=" . intval($get_sID_filter) . " AND checkinfo=true ORDER BY hits ASC");
+    $db = new MySql(false);
+    $db->Execute("SELECT * FROM `#@__infoimg` WHERE classid=3 AND id=" . intval($get_sID_filter) . " AND checkinfo=true ORDER BY hits ASC");
 
-        while ($nearbySchool = $db->GetArray()) {
+    while ($nearbySchool = $db->GetArray()) {
 
-            // $nUni_img = unserialize($nearbySchool['picarr']);
-            // $img_V = explode(',', $nUni_img[0]);
+        // $nUni_img = unserialize($nearbySchool['picarr']);
+        // $img_V = explode(',', $nUni_img[0]);
 
-            $page = "school-info.php";
-            ?>
+        $page = "school-info.php";
+        ?>
 											<div class="animated fadeIn gdlr-core-pbf-column gdlr-core-column-60" style="text-align: center; margin-bottom: 10px;"
 												onclick="parent.location.href='<?php echo ($page); ?>?id=<?php echo ($nearbySchool['id']); ?>';">
 												<div>
@@ -496,7 +468,7 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=10 AND delstate='' 
 											</div>
 											<?php
 }
-    }}
+}
 ?>
 										</div>
 
@@ -524,24 +496,8 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=10 AND delstate='' 
 		</div>
 	</div>
 
-
-	<!-- <script type='text/javascript' src='kingster-js/jquery/jquery.js'></script> -->
 	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-
 	<script type='text/javascript' src='kingster-js/jquery/jquery-migrate.min.js'></script>
-	<!-- <script type='text/javascript' src='kingster-plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js'></script>
-    <script type='text/javascript' src='kingster-plugins/revslider/public/assets/js/jquery.themepunch.revolution.min.js'></script>
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.slideanims.min.js"></script>
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.layeranimation.min.js"></script>
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.kenburn.min.js"></script>
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.navigation.min.js"></script>
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.parallax.min.js"></script>
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.actions.min.js"></script>
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.video.min.js"></script> -->
-
-
-	<!-- <script type='text/javascript' src='kingster-plugins/goodlayers-core/plugins/combine/script.js'></script>
-    <script type='text/javascript' src='kingster-plugins/goodlayers-core/include/js/page-builder.js'></script> -->
 	<script type='text/javascript' src='kingster-js/jquery/ui/effect.min.js'></script>
 	<script type='text/javascript' src='kingster-js/plugins.min.js'></script>
 
@@ -732,9 +688,13 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=10 AND delstate='' 
 		});
 
 		function refreshCourse(page) {
+			if (ALLCOURSE.length == 0) {
+				$("#tab-cList").hide();
+				return;
+			}
 			const fieldid = $(".btn-filter-field.ctm-btnFilter__active").data("fieldid");
 			const levelid = $(".btn-filter-level.ctm-btnFilter__active").data("levelid");
-			console.log(fieldid, levelid);
+			// console.log(fieldid, levelid);
 			let data = [...ALLCOURSE];
 			$(".courses-list").html("");
 
@@ -762,7 +722,7 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=10 AND delstate='' 
 					$(`.a-page[data-page=${p}]`).addClass("active");
 					renderCourse(data.slice(10 * p - 10, 10 * p));
 				});
-			}else{
+			} else {
 				$(".ctm-table__pageBtn").html("");
 			}
 		}
@@ -776,7 +736,8 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=10 AND delstate='' 
 					field_c = "暂无",
 					field_p = "暂无",
 					hours = isNaN(e.hours) ? "暂无" : e.hours + " 周 / 约 " + Math.ceil(e.hours / 52) + " 年",
-					fees = e.fees == 0 ? "无法显示" : "$" + formatMoney(e.fees, 0, '.', ',');
+					months = isNaN(e.months) ? "暂无" : e.months + " 个月 / 约 " + Math.round(e.months / 12) + " 年",
+					fees = e.fees == 0 ? "无法显示" : "$" + formatMoney(e.fees, 0, '.', ',') + " / 年";
 
 				for (let i = 0; i < ALLFIELDS.length; i++) {
 					if (ALLFIELDS[i].id == e.field_id_p) {
@@ -809,7 +770,7 @@ $dopage->GetPage("SELECT * FROM `#@__infolist` WHERE classid=10 AND delstate='' 
 														<div class="gdlr-core-course-item-info course-info-detail"><span class="gdlr-core-head">主修领域 : </span><span
 																class="gdlr-core-tail">${field_c}</span></div>
 														<div class="gdlr-core-course-item-info course-info-detail"><span class="gdlr-core-head">课时 : </span><span
-																class="gdlr-core-tail">${hours}</span></div>
+																class="gdlr-core-tail">${months}</span></div>
 														<div class="gdlr-core-course-item-info course-info-detail"><span class="gdlr-core-head">学费 : </span><span
 																class="gdlr-core-tail">${fees}</span></div>
 													</div>

@@ -71,7 +71,7 @@ $sql = "SELECT c.id,c.name,c.hours,c.inst_id,i.name AS inst ,l.name AS `level`,s
       LEFT JOIN institution i ON i.id = c.inst_id
       LEFT JOIN `level` l ON l.id = c.level_id
       LEFT JOIN `state` s ON s.id = i.state_id
-      WHERE 1 = 1
+      WHERE c.status > 0
       $where
       ";
 
@@ -107,7 +107,7 @@ $dopage->GetPage($sql, 10);
     <?php
 while ($row = $dosql->GetArray()) {; // foreach ($rows as $row) {
     ?>
-        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
+        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
         <li class="ctm-table__row" onclick="parent.location.href='course-info.php?cid=<?php echo ($row['inst_id']); ?>&id=<?php echo ($row['id']); ?>';">
           <div class="ctm-table__col ctm-table__5col-1 ctm-table__col-1" data-label=""><?php echo ($row['name']); ?></div>
           <div class="ctm-table__col ctm-table__5col-2 ctm-table__embed-School" data-label=""><?php echo ($row['inst']); ?></div>
@@ -119,7 +119,7 @@ while ($row = $dosql->GetArray()) {; // foreach ($rows as $row) {
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>

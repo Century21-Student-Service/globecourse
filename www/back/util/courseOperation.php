@@ -13,6 +13,8 @@ $funcArr = [
     'saveCourse',
     'getStatesAndInstitutions',
     'quickSaveCourse',
+    'deleteCourse',
+    'swapCourse',
 ];
 
 $op = 0;
@@ -59,6 +61,7 @@ function getCourses()
                            c.field_id_p,
                            c.field_id_c,
                            c.hours,
+                           c.months,
                            c.fees,
                            c.immigration,
                            c.status
@@ -181,6 +184,7 @@ function getCoursesById()
                     i.name AS `institution`,
                     c.inst_id,
                     c.hours,
+                    c.months,
                     c.fees,
                     c.immigration,
                     c.intro,
@@ -330,5 +334,38 @@ function quickSaveCourse()
     } catch (Exception $e) {
         echo json_encode(['code' => -20, 'msg' => '数据库错误' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
     }
+}
 
+function deleteCourse()
+{
+    global $conn;
+    $sql_delete = "DELETE FROM course WHERE id=:id;";
+    $stmt_delete = $conn->prepare($sql_delete);
+    $stmt_delete->bindValue(":id", $_POST['id'], PDO::PARAM_INT);
+    $conn->beginTransaction();
+    try {
+        $stmt_delete->execute();
+        $conn->commit();
+        echo json_encode(['code' => 0, 'msg' => 'success']);
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo json_encode(['code' => -103, 'msg' => $e->getMessage()]);
+    }
+}
+
+function swapCourse()
+{
+    global $conn;
+    $sql_delete = "UPDATE course SET `status`= -1 * `status` WHERE id=:id;";
+    $stmt_delete = $conn->prepare($sql_delete);
+    $stmt_delete->bindValue(":id", $_POST['id'], PDO::PARAM_INT);
+    $conn->beginTransaction();
+    try {
+        $stmt_delete->execute();
+        $conn->commit();
+        echo json_encode(['code' => 0, 'msg' => 'success']);
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo json_encode(['code' => -103, 'msg' => $e->getMessage()]);
+    }
 }

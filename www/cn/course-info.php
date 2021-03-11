@@ -6,7 +6,7 @@ $cid = empty($cid) ? 5 : intval($cid);
 $sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $cid);
 
 //检测文档正确性
-$row = $dosql->GetOne("SELECT c.id,c.name,c.ename,c.fees,c.hours,c.intro,c.description,c.field_id_p,c.field_id_c,l.name AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
+$row = $dosql->GetOne("SELECT c.id,c.name,c.ename,c.fees,c.hours,c.months,c.intro,c.description,c.field_id_p,c.field_id_c,l.name AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
 
 #region philip 2021-02-19
 if (is_array($row)) {
@@ -28,10 +28,10 @@ if (is_array($row)) {
 #endregion
 
 // check if duration contain '-'
-if (strpos($row['hours'], '-')) {
+if (strpos($row['months'], '-')) {
     $cDuration_yr = '';
 } else {
-    $cDuration_yr = ' / 大约 ' . ceil($row['hours'] / 52) . ' 年';
+    $cDuration_yr = ' / 大约 ' . round($row['months'] / 12) . ' 年';
 }
 
 // formatting 'fees' to $2,000 etc
@@ -200,8 +200,8 @@ $v = explode(',', $picarr[0]);
 								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo"
 										src="./../<?php echo ($sch['badge']); ?>" width="" height="" style="border-radius: 10px;" loading="lazy"
 										title="院校 - <?php echo ($sch['name']); ?>" /></a> <!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
+								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
 
 							</div>
 						</div>
@@ -274,7 +274,7 @@ $v = explode(',', $picarr[0]);
 											<li>
 												<i class="fa fa-clock-o" aria-hidden="true"></i> <!-- fa-leanpub -->
 												<span><b>学时（周/年）</b></span>
-												<span class="time"><?php echo ($row['hours']); ?> 周<?php echo $cDuration_yr; ?></span>
+												<span class="time"><?php echo ($row['months']); ?> 个月<?php echo $cDuration_yr; ?></span>
 											</li>
 											<li>
 												<i class="fa fa-file-pdf-o" aria-hidden="true"></i>

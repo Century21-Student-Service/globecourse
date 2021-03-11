@@ -118,14 +118,14 @@ getjs("js/layer/layer.js", true);
       formatter: function (value, row, index) {
         return `<a href='#' onClick='FormCourse(${row.inst_id},${row.id})'>${value}</a>`;
       }
-    },  {
+    }, {
       title: '英文名称',
       field: 'ename',
       align: 'left',
       valign: 'middle',
       width: 240,
       sortable: true,
-    },{
+    }, {
       title: '院校',
       field: 'inst',
       align: 'left',
@@ -170,13 +170,13 @@ getjs("js/layer/layer.js", true);
       }
     }, {
       title: '课时',
-      field: 'hours',
+      field: 'months',
       align: 'center',
       valign: 'middle',
       width: 80,
       sortable: true,
       formatter: function (value, row, index) {
-        if (value != 0) value = value + '周';
+        if (value != 0) value = value + '月';
         else value = '-';
 
         var content = `<input id='input_hours_${row.id}' class='form-control update' type='text'>
@@ -185,7 +185,7 @@ getjs("js/layer/layer.js", true);
           <button type='button' class='btn btn-danger btn-sm btn-update' onclick='dismissHours(${row.id})'>
           <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>`;
         return `<span id="toggle_hours_${row.id}" class="toggle toggle-text" data-toggle="popover"
-                title="修改课时（周）" data-content="${content}">${value}</span>`;
+                title="修改课时（月）" data-content="${content}">${value}</span>`;
       }
     }, {
       title: '学费',
@@ -219,21 +219,18 @@ getjs("js/layer/layer.js", true);
       field: 'id',
       align: 'center',
       valign: 'middle',
-      width: 50,
+      width: 90,
       formatter: function (value, row, index) {
-        var content =
-          "<button type='button' class='btn btn-success btn-sm btn-update' onclick='deleteInstitution(" +
-          row['id'] +
-          ")' > " + "<span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>" +
-          "<button type='button' class='btn btn-danger btn-sm btn-update' onclick='dismissDelete(" +
-          row[
-            'id'] + ")'> " +
-          "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>";
-        var del = '<span id="toggle_delete_' + row['id'] +
-          '" class="toggle" data-toggle="popover" title="确认删除吗" data-content="' +
-          content +
-          '"><button class="btn btn-danger btn-sm btn-delete btn-op"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></span>';
-        return del;
+        const content =
+          `<button type='button' class='btn btn-success btn-sm btn-update' onclick='deleteCourse(${row.id})' >
+          <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
+          <button type='button' class='btn btn-danger btn-sm btn-update' onclick='dismissDelete(${row.id})'>
+          <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>`;
+        const swap =
+          `<button class="btn btn-primary btn-sm btn-delete btn-op" onclick='swapCourse(${row.id})'><span class="glyphicon glyphicon-flash" aria-hidden="true"></span></button>`;
+        var del = `<span id="toggle_delete_${row.id}" class="toggle" data-toggle="popover" title="确认删除吗" data-content="${content}">
+          <button class="btn btn-danger btn-sm btn-delete btn-op"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></span>`;
+        return swap + del;
       }
     }, ];
 
@@ -365,7 +362,7 @@ getjs("js/layer/layer.js", true);
             var matches = /^toggle_(\w+)_(\d+)/.exec(e.currentTarget.id);
             var action = matches[1],
               id = matches[2];
-            $("#input_" + action + "_" + id).val(e.currentTarget.innerHTML.replace(/[周,\$]/g, ''));
+            $("#input_" + action + "_" + id).val(e.currentTarget.innerHTML.replace(/[月,\$]/g, ''));
             $("input.update").keypress(function (e) {
               if (e.keyCode === 13) {
                 if (action == "fees") saveFees(id);
@@ -497,7 +494,9 @@ getjs("js/layer/layer.js", true);
               $('#toggle_fees_' + id).html(result);
               $('#toggle_fees_' + id).popover('hide');
             } else {
-              alert(res.msg);
+              layer.alert(res.msg, {
+                icon: 2
+              });
             }
           });
       }
@@ -513,17 +512,19 @@ getjs("js/layer/layer.js", true);
         $("#input_hours_" + id).removeClass('invalid');
         $.post("util/courseOperation.php?op=6", {
             id: id,
-            method: "hours",
+            method: "months",
             value: value
           },
           function (res) {
             res = JSON.parse(res);
             if (res.code == 0) {
-              $("#input_hours_" + id).val(value + "周");
-              $('#toggle_hours_' + id).html(value + "周");
+              $("#input_hours_" + id).val(value + "月");
+              $('#toggle_hours_' + id).html(value + "月");
               $('#toggle_hours_' + id).popover('hide');
             } else {
-              alert(res.msg);
+              layer.alert(res.msg, {
+                icon: 2
+              });
             }
           });
       }
@@ -546,7 +547,9 @@ getjs("js/layer/layer.js", true);
             $("#input_level_" + id).val(value);
             $('#toggle_level_' + id).popover('hide');
           } else {
-            alert(res.msg);
+            layer.alert(res.msg, {
+              icon: 2
+            });
           }
         });
     }
@@ -584,14 +587,39 @@ getjs("js/layer/layer.js", true);
             })
             // refresh();
           } else {
-            alert(res.msg);
+            layer.alert(res.msg, {
+              icon: 2
+            });
           }
         });
       $('#toggle_field_' + id).popover('hide');
     }
 
-    function deleteInstitution(id) {
-      $.post("util/institutionOperation.php?op=2", {
+    function swapCourse(id) {
+      $.post("util/courseOperation?op=8", {
+          id: id,
+        },
+        function (res) {
+          res = JSON.parse(res);
+          if (res.code == 0) {
+            const data = $("#courseTab").bootstrapTable('getRowByUniqueId', id);
+            $("#courseTab").bootstrapTable('updateByUniqueId', {
+              id,
+              row: {
+                ...data,
+                status: -1 * data.status
+              }
+            });
+          } else {
+            layer.alert(res.msg, {
+              icon: 2
+            });
+          }
+        });
+    }
+
+    function deleteCourse(id) {
+      $.post("util/courseOperation?op=7", {
           id: id,
         },
         function (res) {
@@ -600,7 +628,9 @@ getjs("js/layer/layer.js", true);
             $('#toggle_delete_' + id).popover('hide');
             $("#courseTab").bootstrapTable("removeByUniqueId", id);
           } else {
-            alert(res.msg);
+            layer.alert(res.msg, {
+              icon: 2
+            });
           }
         });
     }

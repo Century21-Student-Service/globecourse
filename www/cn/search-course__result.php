@@ -84,12 +84,13 @@ $sql = "SELECT c.id,
                 c.inst_id,
                 s.name AS `state`,
                 c.hours,
+                c.months,
                 c.fees
         FROM course c
         LEFT JOIN `level` l ON l.id = c.level_id
         LEFT JOIN `institution` i ON i.id = c.inst_id
         LEFT JOIN `state` s ON s.id = i.state_id
-        WHERE 1 = 1
+        WHERE c.status > 0
         $where
         ORDER BY id ";
 $dopage->GetPage($sql, 10);
@@ -111,7 +112,7 @@ $dopage->GetPage($sql, 10);
       <div class="ctm-table__col ctm-table__6col-2">课程类别</div>
       <div class="ctm-table__col ctm-table__6col-3">所属学府</div>
       <div class="ctm-table__col ctm-table__6col-4">所在州</div>
-      <div class="ctm-table__col ctm-table__6col-5">课时（周）</div>
+      <div class="ctm-table__col ctm-table__6col-5">课时（月）</div>
       <div class="ctm-table__col ctm-table__6col-6">费用</div>
     </li>
 
@@ -123,20 +124,21 @@ while ($row = $dosql->GetArray()) {
         $fees_format = '$' . number_format($row['fees'], 0, '', ',');
     }
     $link = 'course-info.php?cid=' . $row['inst_id'] . '&id=' . $row['id'];
+    $months = $row['months'] ? $row['months'] . "个月" : "无";
     ?>
         <li class="ctm-table__row" onclick="parent.location.href='<?php echo $link; ?>';">
           <div class="ctm-table__col ctm-table__6col-1 ctm-table__col-1" data-label=""><?php echo ($row['name']); ?></div>
           <div class="ctm-table__col ctm-table__6col-2 ctm-table__embed-courseType" data-label=""><?php echo $row['level']; ?></div>
           <div class="ctm-table__col ctm-table__6col-3 ctm-table__embed-School" data-label=""><?php echo ($row['inst']); ?></div>
           <div class="ctm-table__col ctm-table__6col-4 ctm-table__embed-State" data-label=""><?php echo ($row['state']); ?></div>
-          <div class="ctm-table__col ctm-table__6col-5 ctm-table__embed-Duration" data-label=""><?php echo ($row['hours']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-5 ctm-table__embed-Duration" data-label=""><?php echo ($months); ?></div>
           <div class="ctm-table__col ctm-table__6col-6 ctm-table__embed-Fes" data-label=""><?php echo $fees_format; ?></div>
         </li>
     <?php
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>
