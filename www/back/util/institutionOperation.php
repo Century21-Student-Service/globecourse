@@ -80,8 +80,10 @@ function getInstitutionById()
                             i.pics,
                             i.video,
                             i.regional,
-                            i.state_id
+                            i.state_id,
+                            s.name AS `state`
                     FROM institution i
+                    LEFT JOIN `state` s ON s.id = i.state_id
                     WHERE i.id = ?
                     LIMIT 1 ;";
     $stmt = $conn->prepare($sql_detail);

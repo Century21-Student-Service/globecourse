@@ -28,8 +28,9 @@ getcss("js/layer/theme/default/layer.css", true);
       margin-top: 15px;
     }
 
-    .form-control.error {
+    .invalid {
       border: solid 2px #F45866;
+      box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px pink
     }
   </style>
 </head>
@@ -38,10 +39,18 @@ getcss("js/layer/theme/default/layer.css", true);
   <div class='container'>
     <div class="input-group input-select">
       <div class="input-group-prepend">
+        <label class="input-group-text" for="input_course_state_id">所在州</label>
+      </div>
+      <select class="custom-select disabled" id="input_course_state_id" disabled="disabled">
+        <option>新南威尔士州</option>
+      </select>
+    </div>
+    <div class="input-group input-select">
+      <div class="input-group-prepend">
         <label class="input-group-text" for="input_course_inst_id">所属学院</label>
       </div>
       <select class="custom-select disabled" id="input_course_inst_id" disabled="disabled">
-        <option>奥克兰理工大学</option>
+        <option>新南威尔士大学</option>
       </select>
     </div>
     <div class="input-group ">
@@ -152,15 +161,12 @@ getjs("js/layer/layer.js", true);
     }
 
     $(function () {
+      let STATESANDINST = [];
+      let pro_inst;
       const pro_levels = $.get('util/courseOperation.php?op=3', function (res) {
         res = JSON.parse(res);
         $("#input_course_level").html(res.map(s => "<option value='" + s.id + "'>" + s.name + "</option>").join(''));
       });
-      const pro_inst = $.get('util/institutionOperation.php?op=4&instid=' + inst_id, function (res) {
-        res = JSON.parse(res);
-        $("#input_course_inst_id").html(`<option value='${res.id}'>${res.name}</option>`);
-      });
-
       const pro_field = $.get('util/courseOperation.php?op=2', function (res) {
         res = JSON.parse(res);
         $("#input_course_field_p").html(res.map(s => "<option value='" + s.id + "'>" + s.name + "</option>").join(''));
@@ -175,9 +181,52 @@ getjs("js/layer/layer.js", true);
           });
         })
       });
+      if (inst_id == 0) {
+        pro_inst = $.get('./util/courseOperation.php?op=5', function (res) {
+          res = JSON.parse(res);
+          STATESANDINST = res;
+          $("#input_course_state_id")
+            .empty()
+            .append('<option value="0">请选择州</option>').append(res.map(function (e) {
+              return '<option value="' + e['id'] + '">' + e['name'] + '</option>';
+            }).join(''))
+            .change(function (op) {
+              if ($(this).val() == 0) {
+                $("#input_course_inst_id").html('<option value="0">全部院校</option>');
+              } else {
+                let inst = [];
+                for (let i = 0; i < STATESANDINST.length; i++) {
+                  if (STATESANDINST[i].id == $(this).val()) {
+                    inst = STATESANDINST[i].inst;
+                    break;
+                  }
+                }
+                $("#input_course_inst_id")
+                  .html('<option value="0">全部院校</option>')
+                  .append(inst.map(f => "<option value='" + f.id + "'>" + f.name + "</option>").join(''))
+                  .off('change')
+                  .change(e => {
+                    if (e.currentTarget.value != 0) {
+                      $(e.currentTarget).removeClass('invalid');
+                    }
+                  });
+              }
+            });
+          $("#input_course_inst_id").html('<option value="0">请选择院校</option>');
+          $("#input_course_state_id").prop("disabled", false);
+          $("#input_course_inst_id").prop("disabled", false);
+        });
+      } else {
+        pro_inst = $.get('util/institutionOperation.php?op=4&instid=' + inst_id, function (res) {
+          res = JSON.parse(res);
+          $("#input_course_state_id").html(`<option value='${res.state_id}'>${res.state}</option>`);
+          $("#input_course_inst_id").html(`<option value='${res.id}'>${res.name}</option>`);
+        });
+      }
 
-      // Promise.all([pro_levels, pro_inst, pro_field]).then(function (res) {
-      Promise.all([pro_levels, pro_field]).then(function (res) {
+
+      Promise.all([pro_levels, pro_inst, pro_field]).then(function (res) {
+        // Promise.all([pro_levels, pro_field]).then(function (res) {
         if (course_id)
           $.get('util/courseOperation.php?op=1&id=' + course_id, function (res) {
             res = JSON.parse(res);
@@ -197,18 +246,23 @@ getjs("js/layer/layer.js", true);
             // console.log($("#input_course_inst_id").val());
           });
       });
+      $("#input_course_name").keyup(e => {
+        if (e.currentTarget.value.trim().length > 0) {
+          $(e.currentTarget).removeClass("invalid");
+        }
+      });
 
       $("#input_course_hours").keyup(e => {
         const reg = /^[\d-]+$/g;
-        if (!reg.test(e.currentTarget.value)) $(e.currentTarget).addClass("error");
-        else $(e.currentTarget).removeClass("error");
+        if (!reg.test(e.currentTarget.value)) $(e.currentTarget).addClass("invalid");
+        else $(e.currentTarget).removeClass("invalid");
       });
 
       $("#input_course_fees").keyup(e => {
         const reg = /^\d+$/g;
         // console.log(e.currentTarget.value);
-        if (!reg.test(e.currentTarget.value)) $(e.currentTarget).addClass("error");
-        else $(e.currentTarget).removeClass("error");
+        if (!reg.test(e.currentTarget.value)) $(e.currentTarget).addClass("invalid");
+        else $(e.currentTarget).removeClass("invalid");
       });
 
       $("#btn_save").click(e => {
@@ -224,11 +278,40 @@ getjs("js/layer/layer.js", true);
         data_new.months = $("#input_course_hours").val();
         data_new.fees = $("#input_course_fees").val();
 
+        let error = false;
+
+        if (data_new.inst_id == 0) {
+          $("#input_course_inst_id").addClass('invalid');
+          error = true;
+        }
+
+        if (data_new.name == '') {
+          $("#input_course_name").addClass('invalid');
+          error = true;
+        }
+
+        if (!(/^[\d-]+$/g).test(data_new.months)) {
+          $("#input_course_hours").addClass('invalid');
+          error = true;
+        }
+
+        if (!(/^\d+$/g).test(data_new.fees)) {
+          $("#input_course_fees").addClass('invalid');
+          error = true;
+        }
+
+        if (error) {
+          layer.alert('请输入必要的信息', {
+            icon: 0
+          });
+          return;
+        }
+
         if (sameValue(data_new.name, data_old.name)) data_new.name = null;
         if (sameValue(data_new.ename, data_old.ename)) data_new.ename = null;
         if (sameValue(data_new.field_id_p, data_old.field_p)) data_new.field_id_p = null;
         if (sameValue(data_new.field_id_c, data_old.field_c)) data_new.field_id_c = null;
-        if (sameValue(data_new.description, data_old.description)) data_new.name = null;
+        if (sameValue(data_new.description, data_old.description)) data_new.description = null;
         if (sameValue(data_new.intro, data_old.intro)) data_new.intro = null;
         if (sameValue(data_new.level_id, data_old.level_id)) data_new.level_id = null;
         if (sameValue(data_new.months, data_old.months)) data_new.months = null;
@@ -301,7 +384,7 @@ getjs("js/layer/layer.js", true);
             if (!sameValue(data_new.ename, data_old.ename)) console.log('ename', data_new.ename, data_old.ename);
             if (!sameValue(data_new.field_id_p, data_old.field_p)) console.log('field_id_p', data_new.field_id_p, data_old.field_p);
             if (!sameValue(data_new.field_id_c, data_old.field_c)) console.log('field_id_c', data_new.field_id_c, data_old.field_c);
-            if (!sameValue(data_new.description, data_old.description)) console.log('description', data_new.description, data_old.description);
+            // if (!sameValue(data_new.description, data_old.description)) console.log('description', data_new.description, data_old.description);
             if (!sameValue(data_new.intro, data_old.intro)) console.log('intro', data_new.intro, data_old.intro);
             if (!sameValue(data_new.level_id, data_old.level_id)) console.log('level_id', data_new.level_id, data_old.level_id);
             if (!sameValue(data_new.hours, data_old.hours)) console.log('hours', data_new.hours, data_old.hours);
