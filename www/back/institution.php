@@ -179,12 +179,12 @@ getjs("js/layer/layer.js", true);
       }
     }, {
       title: '课时',
-      field: 'hours',
+      field: 'months',
       align: 'center',
       valign: 'middle',
       width: 100,
       formatter: function (value, row, index) {
-        if (value > 0) return value + '周';
+        if (value > 0) return value + '个月';
         else return '-';
       }
     }, {
