@@ -104,8 +104,12 @@ function getFields($return = false)
     }, $children);
 
     $pids = array_unique($pids);
+    $pids = array_filter($pids, function ($pid) {
+        return !empty($pid);
+    });
 
     $sql_parent = "SELECT `id`,`name` FROM field WHERE deep = 0 AND id IN(" . implode(',', $pids) . ");";
+    // echo $sql_parent;die;
     $stmt_parent = $conn->prepare($sql_parent);
     $stmt_parent->execute();
     $parents = $stmt_parent->fetchAll(PDO::FETCH_ASSOC);
@@ -117,8 +121,8 @@ function getFields($return = false)
                     $p['children'] = [];
                 }
                 array_push($p['children'], ['id' => $c['id'], 'name' => $c['name']]);
+                break;
             }
-            break;
         }
     }
 
