@@ -274,7 +274,7 @@ function saveCourse()
         // echo $sql;die;
     } else {
         // 插入新数据
-        $sql = "INSERT INTO course (`name`,`ename`,`level_id`,`field_id_p`,`field_id_c`,`hours`,`fees`,`intro`,`description`,`inst_id`)VALUE(:name,:ename,:level_id,:field_id_p,:field_id_c,:hours,:fees,:intro,:description,:inst_id);";
+        $sql = "INSERT INTO course (`name`,`ename`,`level_id`,`field_id_p`,`field_id_c`,`months`,`fees`,`intro`,`description`,`inst_id`)VALUE(:name,:ename,:level_id,:field_id_p,:field_id_c,:months,:fees,:intro,:description,:inst_id);";
     }
 
     try {

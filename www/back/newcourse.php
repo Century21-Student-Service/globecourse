@@ -83,9 +83,9 @@ getcss("js/layer/theme/default/layer.css", true);
 
     <div class="input-group " style="width: 20%;">
       <div class="input-group-prepend">
-        <span class="input-group-text">课时(周)</span>
+        <span class="input-group-text">课时(月)</span>
       </div>
-      <input type="text" class="form-control" aria-label="课时(周)" id="input_course_hours">
+      <input type="text" class="form-control" aria-label="课时(月)" id="input_course_hours">
     </div>
 
     <div class="input-group " style="width: 20%;">
@@ -187,7 +187,7 @@ getjs("js/layer/layer.js", true);
             $("#input_course_field_p").val(res.field_p).change();
             $("#input_course_field_c").val(res.field_c);
             $("#input_course_level").val(res.level_id);
-            $("#input_course_hours").val(res.hours);
+            $("#input_course_hours").val(res.months);
             $("#input_course_fees").val(res.fees);
             editor_description.txt.html(res.description);
             editor_intro.txt.html(res.intro);
@@ -221,7 +221,7 @@ getjs("js/layer/layer.js", true);
         data_new.field_id_p = $("#input_course_field_p").val();
         data_new.field_id_c = $("#input_course_field_c").val();
         data_new.level_id = $("#input_course_level").val();
-        data_new.hours = $("#input_course_hours").val();
+        data_new.months = $("#input_course_hours").val();
         data_new.fees = $("#input_course_fees").val();
 
         if (sameValue(data_new.name, data_old.name)) data_new.name = null;
@@ -231,7 +231,7 @@ getjs("js/layer/layer.js", true);
         if (sameValue(data_new.description, data_old.description)) data_new.name = null;
         if (sameValue(data_new.intro, data_old.intro)) data_new.intro = null;
         if (sameValue(data_new.level_id, data_old.level_id)) data_new.level_id = null;
-        if (sameValue(data_new.hours, data_old.hours)) data_new.hours = null;
+        if (sameValue(data_new.months, data_old.months)) data_new.months = null;
         if (sameValue(data_new.fees, data_old.fees)) data_new.fees = null;
 
         if (
@@ -242,7 +242,7 @@ getjs("js/layer/layer.js", true);
           data_new.name == null &&
           data_new.intro == null &&
           data_new.level_id == null &&
-          data_new.hours == null &&
+          data_new.months == null &&
           data_new.fees == null
         ) {
           parent.layer.close(parent.form);

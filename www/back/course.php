@@ -176,7 +176,7 @@ getjs("js/layer/layer.js", true);
       width: 80,
       sortable: true,
       formatter: function (value, row, index) {
-        if (value != 0) value = value + '月';
+        if (value != 0) value = value + '个月';
         else value = '-';
 
         var content = `<input id='input_hours_${row.id}' class='form-control update' type='text'>
@@ -362,7 +362,7 @@ getjs("js/layer/layer.js", true);
             var matches = /^toggle_(\w+)_(\d+)/.exec(e.currentTarget.id);
             var action = matches[1],
               id = matches[2];
-            $("#input_" + action + "_" + id).val(e.currentTarget.innerHTML.replace(/[月,\$]/g, ''));
+            $("#input_" + action + "_" + id).val(e.currentTarget.innerHTML.replace(/[个月,\$]/g, ''));
             $("input.update").keypress(function (e) {
               if (e.keyCode === 13) {
                 if (action == "fees") saveFees(id);
@@ -518,8 +518,8 @@ getjs("js/layer/layer.js", true);
           function (res) {
             res = JSON.parse(res);
             if (res.code == 0) {
-              $("#input_hours_" + id).val(value + "月");
-              $('#toggle_hours_' + id).html(value + "月");
+              $("#input_hours_" + id).val(value + "个月");
+              $('#toggle_hours_' + id).html(value + "个月");
               $('#toggle_hours_' + id).popover('hide');
             } else {
               layer.alert(res.msg, {
