@@ -65,7 +65,7 @@ getcss("js/layer/theme/default/layer.css", true);
       </div>
       <input type="text" class="form-control" aria-label="英文名称" id="input_course_ename">
     </div>
-    <div class="input-group input-select" style="width: 25%;">
+    <div class="input-group input-select" style="width: 25%;min-width:250px;">
       <div class="input-group-prepend">
         <label class="input-group-text" for="input_course_field_p">所属领域</label>
       </div>
@@ -74,7 +74,7 @@ getcss("js/layer/theme/default/layer.css", true);
       </select>
     </div>
 
-    <div class="input-group input-select" style="width: 25%;">
+    <div class="input-group input-select" style="width: 25%;min-width:250px;">
       <div class="input-group-prepend">
         <label class="input-group-text" for="input_course_field_c">子领域</label>
       </div>
@@ -82,7 +82,7 @@ getcss("js/layer/theme/default/layer.css", true);
       </select>
     </div>
 
-    <div class="input-group" style="width: 25%;">
+    <div class="input-group" style="width: 25%;min-width:250px;">
       <div class="input-group-prepend">
         <label class="input-group-text" for="input_course_level">级别</label>
       </div>
@@ -90,14 +90,14 @@ getcss("js/layer/theme/default/layer.css", true);
       </select>
     </div>
 
-    <div class="input-group " style="width: 20%;">
+    <div class="input-group " style="width: 20%; min-width:200px;">
       <div class="input-group-prepend">
         <span class="input-group-text">课时(月)</span>
       </div>
       <input type="text" class="form-control" aria-label="课时(月)" id="input_course_hours">
     </div>
 
-    <div class="input-group " style="width: 20%;">
+    <div class="input-group " style="width: 20%; min-width:200px;">
       <div class="input-group-prepend">
         <span class="input-group-text">学费(AUD)</span>
       </div>
