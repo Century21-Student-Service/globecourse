@@ -73,7 +73,7 @@ function getCourses()
                     ORDER BY $orderName $sortOrder, c.id DESC
                     LIMIT $offset, $limit ;";
 
-    $sql = "SELECT id FROM course ";
+    $sql = "SELECT c.id FROM course c ";
     $whereClause = " WHERE 1=1 ";
 
     $param = [];
@@ -294,7 +294,7 @@ function getStatesAndInstitutions()
     $stmt_state->execute();
     $result_state = $stmt_state->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql_inst = "SELECT `id`,`name` FROM institution WHERE state_id = ?";
+    $sql_inst = "SELECT `id`,`name` FROM institution WHERE state_id = ? ORDER BY `name` ";
     $stmt_inst = $conn->prepare($sql_inst);
 
     foreach ($result_state as &$s) {
