@@ -30,9 +30,9 @@ $where = "";
 // }
 
 if ($regional) {
-    $sql = "SELECT field_id FROM immi_field_state WHERE state_id <> 0";
+    $sql = "SELECT DISTINCT field_id FROM immi_field_state WHERE state_id <> 0";
 } else {
-    $sql = "SELECT field_id FROM immi_field_state WHERE state_id = 0";
+    $sql = "SELECT DISTINCT field_id FROM immi_field_state WHERE state_id = 0";
 }
 
 $stmt = $conn->prepare($sql);
@@ -109,7 +109,7 @@ $dopage->GetPage($sql, 10);
     <?php
 while ($row = $dosql->GetArray()) {; // foreach ($rows as $row) {
     ?>
-        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
+        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
         <li class="ctm-table__row" onclick="parent.location.href='course-info.php?cid=<?php echo ($row['inst_id']); ?>&id=<?php echo ($row['id']); ?>';">
           <div class="ctm-table__col ctm-table__5col-1 ctm-table__col-1" data-label=""><?php echo ($row['name']); ?></div>
           <div class="ctm-table__col ctm-table__5col-2 ctm-table__embed-School" data-label=""><?php echo ($row['inst']); ?></div>
@@ -121,7 +121,7 @@ while ($row = $dosql->GetArray()) {; // foreach ($rows as $row) {
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>

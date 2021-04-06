@@ -85,16 +85,41 @@ function getFields($return = false)
             $sql_child .= " AND id IN(SELECT field_id FROM immi_field_state WHERE state_id = 0) ";
         }
     }
+
+    $sql_course = "SELECT DISTINCT field_id_c FROM course WHERE status > 0 ";
     if ($level) {
-        $sql_child .= " AND id IN (SELECT field_id_c FROM course WHERE level_id=:level) ";
+        $sql_course .= " AND level_id=:level ";
         $param['level'] = $level;
     }
 
     if ($state) {
-        $sql_child .= "AND id IN(SELECT field_id_c FROM course WHERE inst_id IN(SELECT id FROM institution WHERE state_id=:state)) ";
+        $sql_course .= " AND inst_id IN(SELECT id FROM institution WHERE state_id=:state) ";
         $param['state'] = $state;
     }
+    if (strlen($regional)) {
+        if ($regional) {
+            $sql_course .= " AND inst_id IN(SELECT id FROM institution WHERE regional=1) ";
+        } else {
+            $sql_course .= " AND inst_id IN(SELECT id FROM institution WHERE regional=0) ";
+        }
+    }
 
+    $stmt_course = $conn->prepare($sql_course);
+    $stmt_course->execute($param);
+    $course = $stmt_course->fetchAll(PDO::FETCH_COLUMN);
+    $course = array_filter($course, function ($c) {
+        return !empty($c);
+    });
+    if (count($course) == 0) {
+        if ($return) {
+            return [];
+        } else {
+            echo json_encode([], JSON_UNESCAPED_UNICODE);
+        }
+        die;
+    }
+
+    $sql_child .= " AND id IN(" . implode(',', $course) . ")";
     $stmt_child = $conn->prepare($sql_child);
     $stmt_child->execute($param);
     $children = $stmt_child->fetchAll(PDO::FETCH_ASSOC);
@@ -113,7 +138,6 @@ function getFields($return = false)
     $stmt_parent = $conn->prepare($sql_parent);
     $stmt_parent->execute();
     $parents = $stmt_parent->fetchAll(PDO::FETCH_ASSOC);
-
     foreach ($children as $c) {
         foreach ($parents as &$p) {
             if ($c['p_id'] == $p['id']) {

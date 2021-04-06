@@ -134,7 +134,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 										<!-- =============================================        Form [for submit button]        ============================================= -->
 
 										<form action="search-immigration__result" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post">
-											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;;;;;;;;;;;;;;?>search-immigration__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
+											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>search-immigration__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
 											<input name="regional" type="hidden" id=i_regional>
 											<!-- =============================================        Form [for submit button]        ============================================= -->
 											<!-- ================================================================================================================================== -->
@@ -643,6 +643,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 	<!-- ______________________________        (custom) Type of Courses        ______________________________ -->
 	<!-- ==================================================================================================== -->
 	<script type="text/javascript">
+		let allFields = [];
 		$('#state').change(function () {
 			var state = $("#state").children("option:selected").val();
 			var regional = $(".radio-area:checked")[0].value;
@@ -767,19 +768,15 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 
 		$('#broadField').change(function (e) {
 			const field_p = e.currentTarget.value;
-			const state = $("#state").children("option:selected").val();
-			const regional = $(".radio-area:checked")[0].value;
-			const level = $("#schoolType").val();
+			// const state = $("#state").children("option:selected").val();
+			// const regional = $(".radio-area:checked")[0].value;
+			// const level = $("#schoolType").val();
 
-			$("#narrowField").html('<option value="0">请选择「主修」</option>')
-			$.post('util/search-immigrationOperation?op=3', {
-				field_p,
-				regional,
-				state,
-				level,
-			}, res => {
-				res = JSON.parse(res);
-				res.forEach(c => $("#narrowField").append(`<option value="${c.id}">${c.name}</option>`));
+			$("#narrowField").html('<option value="0">请选择「主修」</option>');
+			allFields.forEach(p => {
+				if (p.id == field_p) {
+					p.children.forEach(c => $("#narrowField").append(`<option value="${c.id}">${c.name}</option>`));
+				}
 			});
 
 			if ($('#broadField').val() != '') {
