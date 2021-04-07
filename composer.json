@@ -2,6 +2,7 @@
     "require": {
         "catfan/medoo": "^1.7",
         "geoip2/geoip2": "^2.11",
-        "aws/aws-sdk-php": "^3.176"
+        "aws/aws-sdk-php": "^3.176",
+        "ramsey/uuid": "^4.1"
     }
 }

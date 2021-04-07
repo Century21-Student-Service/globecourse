@@ -200,8 +200,8 @@ $v = explode(',', $picarr[0]);
 								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo"
 										src="./../<?php echo ($sch['badge']); ?>" width="" height="" style="border-radius: 10px;" loading="lazy"
 										title="院校 - <?php echo ($sch['name']); ?>" /></a> <!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
+								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
 
 							</div>
 						</div>
@@ -304,8 +304,10 @@ $v = explode(',', $picarr[0]);
 										</ul>
 
 										<h5 class="bt-course">学费: <span><?php echo $fees_format; ?></span></h5>
-										<a class="flat-button bg-orange custom-button_noBorder" style="color: white; font-weight: bold; font-size:18px;padding:0px 25px;"
-											href="http://www.ct21.com.cn/online/online.php?zy=<?php echo urlencode(($newsTit)); ?>&sx=<?php echo urlencode(($sch['name'])); ?>">申请课程</a>
+										<!-- <a class="flat-button bg-orange custom-button_noBorder" style="color: white; font-weight: bold; font-size:18px;padding:0px 25px;"
+											href="http://www.ct21.com.cn/online/online.php?zy=<?php echo urlencode(($newsTit)); ?>&sx=<?php echo urlencode(($sch['name'])); ?>">申请课程</a> -->
+											<a class="flat-button bg-orange custom-button_noBorder course-apply" style="color: white; font-weight: bold; font-size:18px;padding:0px 25px;"
+											href="#">申请课程</a>
 									</div>
 
 								</div>
@@ -371,9 +373,10 @@ while ($sugSchool = $dosql->GetArray()) {
 		<!-- ============================================================================================== -->
 	</div>
 	</div>
-
-
-	<script type='text/javascript' src='kingster-js/jquery/jquery.js'></script>
+	<iframe name="apply_popup" id="apply_popup" style="border-radius: 10px;" frameborder="0" width="100%" height="100%" src=""></iframe>
+	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/layer/3.3.0/layer.min.js" integrity="sha512-ivbamoACV0tsZQmTH/TYOxU405DRH76I5hJCvK2+i8x7Vv+FE/w1Ouc/v+W5ISLg/2wliVjZe2+lo6DXvrEjoQ==" crossorigin="anonymous"></script>
+	<!-- <script type='text/javascript' src='kingster-js/jquery/jquery.js'></script> -->
 	<script type='text/javascript' src='kingster-js/jquery/jquery-migrate.min.js'></script>
 	<!-- <script type='text/javascript' src='kingster-plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js'></script>
     <script type='text/javascript' src='kingster-plugins/revslider/public/assets/js/jquery.themepunch.revolution.min.js'></script>
@@ -406,7 +409,7 @@ while ($sugSchool = $dosql->GetArray()) {
 
 
 	<!-- ==========  [from-ORIGINAL]  ========== -->
-	<script src="./../templates/default/js/jquery.min.js"></script>
+
 
 
 
@@ -454,7 +457,22 @@ while ($sugSchool = $dosql->GetArray()) {
 				});
 			});
 		}
+
+		$(".course-apply").click(e=>{
+			const urlParams = new URLSearchParams(window.location.search);
+      const course_id = urlParams.get('id');
+			form = layer.open({
+        type: 2,
+        title: '课程申请',
+        shade: 0.8,
+        area: ['680px', '90%'],
+        content: `course-apply?cid=${course_id}`,
+      });
+			return false;
+		});
 	</script>
+
+
 
 </body>
 
