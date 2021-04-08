@@ -9,8 +9,9 @@ $funcArr = [
     'getFieldsChildren',
     'getImmi',
     'saveImmi',
-    "addFieldC",
-    "delFieldC",
+    'addFieldC',
+    'delFieldC',
+    'renameField',
 ];
 
 $op = 0;
@@ -233,4 +234,24 @@ function delFieldC()
             echo json_encode(['code' => -99, 'msg' => '数据库错误 - ' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
         }
     }
+}
+
+function renameField()
+{
+    global $conn;
+    if (empty($_REQUEST['id']) || empty($_REQUEST['name'])) {
+        echo json_encode(['code' => -1, 'msg' => '参数非法'], JSON_UNESCAPED_UNICODE);
+        die;
+    }
+    $param['id'] = $_REQUEST['id'];
+    $param['name'] = $_REQUEST['name'];
+    $sql = "UPDATE field SET `name` = :name WHERE id = :id ;";
+    $stmt = $conn->prepare($sql);
+    try {
+        $stmt->execute($param);
+        echo json_encode(['code' => 0, 'msg' => '成功'], JSON_UNESCAPED_UNICODE);
+    } catch (Exception $e) {
+        echo json_encode(['code' => -2, 'msg' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+    }
+
 }

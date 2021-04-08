@@ -250,7 +250,7 @@ if (!empty($sch['video'])) {
     echo '<video class="video" controls="controls" src="' . ($sch['video']) . '" width="100%" id="promotionVid" loading="lazy">';
 }?>
 
-											<!-- <img src="./../<?php //echo $v[0]; ;;;;;;?>" loading="lazy" /> -->
+											<!-- <img src="./../<?php //echo $v[0]; ;;;;;;;;?>" loading="lazy" /> -->
 											<!-- <img src="educate-images/blog/bs1.jpg" alt="image"> -->
 										</div><!-- /.feature-post -->
 
@@ -267,7 +267,7 @@ if (!empty($sch['video'])) {
 foreach ($picarr as $k) {
     $v = explode(',', $k);
     ?>
-											<!-- <li><img src="<?php //echo($v[0]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>" width="204" height="125" /><div><?php //echo($v[1]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div></li> -->
+											<!-- <li><img src="<?php //echo($v[0]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>" width="204" height="125" /><div><?php //echo($v[1]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div></li> -->
 											<div class="gdlr-core-item-list class1 gdlr-core-item-pdlr gdlr-core-column-20" style="padding-left: 10px; padding-right: 10px;">
 												<div class="gdlr-core-portfolio-grid  gdlr-core-center-align gdlr-core-style-normal">
 													<div class="gdlr-core-portfolio-thumbnail gdlr-core-media-image  gdlr-core-style-icon">
@@ -357,7 +357,14 @@ foreach ($picarr as $k) {
 								</div><!-- /col-md-8 -->
 
 								<!-- ======================================================================================================= -->
+								<!-- ====================     << Public-School-Info >>     ==================== -->
+								<div class="col-md-8" id="bodyPublicSchool" style="display: none;">
+									<div class="blog-title-single">
 
+										<?php echo ($sch['extra']); ?>
+
+									</div><!-- /blog-title-single -->
+								</div><!-- /col-md-8 -->
 								<!-- ====================     << Hotel >>     ==================== -->
 
 								<!-- =============================================================================================== -->
@@ -393,7 +400,7 @@ while ($row = $dosql->GetArray()) {
 													href="course-info.php?cid=<?php echo ($id); ?>&id=<?php echo ($row['id']); ?>">
 													<!-- <span class="gdlr-core-course-item-id gdlr-core-skin-caption" ></span> -->
 													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($row['title']); ?></span>
-													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
+													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
 													<i class="gdlr-core-course-item-icon gdlr-core-skin-icon fa fa-long-arrow-right" style="font-size: 16px;"></i></a>
 											</div>
 											<?php

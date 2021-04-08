@@ -35,15 +35,24 @@ if (strpos($row['months'], '-')) {
 }
 
 // formatting 'fees' to $2,000 etc
-$fees = $row['fees'];
-
-$fees_bf_3 = substr($fees, 0, -3);
-$fees_last_3 = substr($fees, -3);
 
 if ($row['fees'] == 0) {
     $fees_format = '无法显示';
 } else {
-    $fees_format = '$' . $fees_bf_3 . ',' . $fees_last_3 . ' 澳元';
+    $fees = $row['fees'];
+    if (empty($_COOKIE['gc_currency'])) {
+        $currency_code = 'AUD';
+    } else {
+        $currency_code = str_replace('"', "", $_COOKIE['gc_currency']);
+    }
+    $c_base = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE id = 1;");
+    $c_base = $c_base['rate'];
+    $c_target = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE code = '$currency_code' ;");
+    $fees = $fees * $c_target['rate'] / $c_base;
+    $fees = round($fees, -3);
+    $fees_bf_3 = substr($fees, 0, -3);
+    $fees_last_3 = substr($fees, -3);
+    $fees_format = $c_target['symbol'] . $fees_bf_3 . ',' . $fees_last_3 . ' ' . $c_target['name'];
 }
 
 $faculty = $dosql->GetOne("SELECT * FROM `field` WHERE id='" . $row['field_id_p'] . "' ");
@@ -197,11 +206,10 @@ $v = explode(',', $picarr[0]);
 							<div class="kingster-page-title-content kingster-item-pdlr ctm-header__content"
 								style="padding-top: 2.5% !important; padding-bottom: 2.5% !important;">
 
-								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo"
-										src="./../<?php echo ($sch['badge']); ?>" width="" height="" style="border-radius: 10px;" loading="lazy"
-										title="院校 - <?php echo ($sch['name']); ?>" /></a> <!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
+								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo" src="./../<?php echo ($sch['badge']); ?>"
+										width="" height="" style="border-radius: 10px;" loading="lazy" title="院校 - <?php echo ($sch['name']); ?>" /></a> <!-- [Logo] -->
+								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
 
 							</div>
 						</div>
@@ -303,11 +311,19 @@ $v = explode(',', $picarr[0]);
 											</li>
 										</ul>
 
-										<h5 class="bt-course">学费: <span><?php echo $fees_format; ?></span></h5>
-										<!-- <a class="flat-button bg-orange custom-button_noBorder" style="color: white; font-weight: bold; font-size:18px;padding:0px 25px;"
-											href="http://www.ct21.com.cn/online/online.php?zy=<?php echo urlencode(($newsTit)); ?>&sx=<?php echo urlencode(($sch['name'])); ?>">申请课程</a> -->
-											<a class="flat-button bg-orange custom-button_noBorder course-apply" style="color: white; font-weight: bold; font-size:18px;padding:0px 25px;"
-											href="#">申请课程</a>
+										<h5 class="bt-course" style="display:inline-block">学费: <span><?php echo $fees_format; ?></span></h5>
+										<select id="selt-currency" style="display: inline;width: 111px;float: right;height: 35px;padding: 0 0 0 10px;">
+											<option value="AUD">AUD</option>
+											<option value="CNY">CNY</option>
+											<option value="USD">USD</option>
+											<option value="NZD">NZD</option>
+											<option value="HKD">HKD</option>
+											<option value="TWD">TWD</option>
+										</select>
+										<div class="apply">
+											<a class="flat-button bg-orange custom-button_noBorder course-apply"
+												style="color: white; font-weight: bold; font-size:18px;padding:0px 25px;" href="#">申请课程</a>
+										</div>
 									</div>
 
 								</div>
@@ -375,7 +391,8 @@ while ($sugSchool = $dosql->GetArray()) {
 	</div>
 	<iframe name="apply_popup" id="apply_popup" style="border-radius: 10px;" frameborder="0" width="100%" height="100%" src=""></iframe>
 	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/layer/3.3.0/layer.min.js" integrity="sha512-ivbamoACV0tsZQmTH/TYOxU405DRH76I5hJCvK2+i8x7Vv+FE/w1Ouc/v+W5ISLg/2wliVjZe2+lo6DXvrEjoQ==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/layer/3.3.0/layer.min.js"
+		integrity="sha512-ivbamoACV0tsZQmTH/TYOxU405DRH76I5hJCvK2+i8x7Vv+FE/w1Ouc/v+W5ISLg/2wliVjZe2+lo6DXvrEjoQ==" crossorigin="anonymous"></script>
 	<!-- <script type='text/javascript' src='kingster-js/jquery/jquery.js'></script> -->
 	<script type='text/javascript' src='kingster-js/jquery/jquery-migrate.min.js'></script>
 	<!-- <script type='text/javascript' src='kingster-plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js'></script>
@@ -458,18 +475,49 @@ while ($sugSchool = $dosql->GetArray()) {
 			});
 		}
 
-		$(".course-apply").click(e=>{
+		$(".course-apply").click(e => {
 			const urlParams = new URLSearchParams(window.location.search);
-      const course_id = urlParams.get('id');
+			const course_id = urlParams.get('id');
 			form = layer.open({
-        type: 2,
-        title: '课程申请',
-        shade: 0.8,
-        area: ['680px', '90%'],
-        content: `course-apply?cid=${course_id}`,
-      });
+				type: 2,
+				title: '课程申请',
+				shade: 0.8,
+				area: ['680px', '90%'],
+				content: `course-apply?cid=${course_id}`,
+			});
 			return false;
 		});
+
+		$("#selt-currency").change(e => {
+			setCookie("gc_currency", e.currentTarget.value, 30);
+			location.reload();
+		});
+
+		const currency_code = getCookie('gc_currency') || "AUD";
+		$("#selt-currency").val(currency_code);
+
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+			var expires = "expires=" + d.toUTCString();
+			document.cookie = cname + "=" + JSON.stringify(cvalue) + ";" + expires + ";path=/";
+		}
+
+		function getCookie(cname) {
+			var name = cname + "=";
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return JSON.parse(c.substring(name.length, c.length));
+				}
+			}
+			return null;
+		}
 	</script>
 
 

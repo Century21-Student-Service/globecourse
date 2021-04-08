@@ -117,10 +117,24 @@ $dopage->GetPage($sql, 10);
 
     <?php
 while ($row = $dosql->GetArray()) {
+
     if ($row['fees'] == 0) {
-        $fees_format = '抱歉，暂时无法显示';
+        $fees_format = '无法显示';
     } else {
-        $fees_format = '$' . number_format($row['fees'], 0, '', ',');
+        $fees = $row['fees'];
+        if (empty($_COOKIE['gc_currency'])) {
+            $currency_code = 'AUD';
+        } else {
+            $currency_code = str_replace('"', "", $_COOKIE['gc_currency']);
+        }
+        $c_base = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE id = 1;");
+        $c_base = $c_base['rate'];
+        $c_target = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE code = '$currency_code' ;");
+        $fees = $fees * $c_target['rate'] / $c_base;
+        $fees = round($fees, -3);
+        $fees_bf_3 = substr($fees, 0, -3);
+        $fees_last_3 = substr($fees, -3);
+        $fees_format = $c_target['code'] . ' ' . $c_target['symbol'] . $fees_bf_3 . ',' . $fees_last_3;
     }
     $link = 'course-info.php?cid=' . $row['inst_id'] . '&id=' . $row['id'];
     $months = $row['months'] ? $row['months'] . "个月" : "无";
@@ -137,7 +151,7 @@ while ($row = $dosql->GetArray()) {
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>

@@ -68,7 +68,7 @@ if ($keyword) {
 
 $where .= " AND i.regional = $regional ";
 
-$sql = "SELECT c.id,c.name,c.hours,c.inst_id,i.name AS inst ,l.name AS `level`,s.name AS `state`
+$sql = "SELECT c.id,c.name,c.hours,c.inst_id,i.name AS inst ,l.name AS `level`,s.name AS `state`, c.fees
       FROM course c
       LEFT JOIN institution i ON i.id = c.inst_id
       LEFT JOIN `level` l ON l.id = c.level_id
@@ -99,29 +99,49 @@ $dopage->GetPage($sql, 10);
   <h2><small>为您找到相关结果</small>"<?php echo $dopage->GetResult_num(); ?>"<small>个</small></h2>
   <ul class="ctm__responsive-table">
     <li class="ctm-table__header">
-      <div class="ctm-table__col ctm-table__5col-1 ctm-table__col-1">课程名称</div>
-      <div class="ctm-table__col ctm-table__5col-2">所属学府</div>
-      <div class="ctm-table__col ctm-table__5col-3">课程类别</div>
-      <div class="ctm-table__col ctm-table__5col-4">所属州份</div>
-      <div class="ctm-table__col ctm-table__5col-5">课时（周）</div>
+      <div class="ctm-table__col ctm-table__6col-1 ctm-table__col-1">课程名称</div>
+      <div class="ctm-table__col ctm-table__6col-2">所属学府</div>
+      <div class="ctm-table__col ctm-table__6col-3">课程级别</div>
+      <div class="ctm-table__col ctm-table__6col-4">所属州份</div>
+      <div class="ctm-table__col ctm-table__6col-5">课时（周）</div>
+      <div class="ctm-table__col ctm-table__6col-6">学费</div>
     </li>
 
     <?php
 while ($row = $dosql->GetArray()) {; // foreach ($rows as $row) {
+    if ($row['fees'] == 0) {
+        $fees_format = '无法显示';
+    } else {
+        $fees = $row['fees'];
+        if (empty($_COOKIE['gc_currency'])) {
+            $currency_code = 'AUD';
+        } else {
+            $currency_code = str_replace('"', "", $_COOKIE['gc_currency']);
+        }
+        $c_base = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE id = 1;");
+        $c_base = $c_base['rate'];
+        $c_target = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE code = '$currency_code' ;");
+        $fees = $fees * $c_target['rate'] / $c_base;
+        $fees = round($fees, -3);
+        $fees_bf_3 = substr($fees, 0, -3);
+        $fees_last_3 = substr($fees, -3);
+        $fees_format = $c_target['code'] . ' ' . $c_target['symbol'] . $fees_bf_3 . ',' . $fees_last_3;
+    }
     ?>
-        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
+        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
         <li class="ctm-table__row" onclick="parent.location.href='course-info.php?cid=<?php echo ($row['inst_id']); ?>&id=<?php echo ($row['id']); ?>';">
-          <div class="ctm-table__col ctm-table__5col-1 ctm-table__col-1" data-label=""><?php echo ($row['name']); ?></div>
-          <div class="ctm-table__col ctm-table__5col-2 ctm-table__embed-School" data-label=""><?php echo ($row['inst']); ?></div>
-          <div class="ctm-table__col ctm-table__5col-3 ctm-table__embed-courseType" data-label=""><?php echo ($row['level']); ?></div>
-          <div class="ctm-table__col ctm-table__5col-4 ctm-table__embed-State" data-label=""><?php echo ($row['state']); ?></div>
-          <div class="ctm-table__col ctm-table__5col-5 ctm-table__embed-Duration" data-label=""><?php echo ($row['hours']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-1 ctm-table__col-1" data-label=""><?php echo ($row['name']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-2 ctm-table__embed-School" data-label=""><?php echo ($row['inst']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-3 ctm-table__embed-courseType" data-label=""><?php echo ($row['level']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-4 ctm-table__embed-State" data-label=""><?php echo ($row['state']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-5 ctm-table__embed-Duration" data-label=""><?php echo ($row['hours']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-6 ctm-table__embed-Fee" data-label=""><?php echo ($fees_format); ?></div>
         </li>
     <?php
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>

@@ -20,6 +20,14 @@ getcss("js/layer/theme/default/layer.css", true);
       cursor: pointer;
     }
 
+    span.toggle-text {
+      padding: 7px;
+    }
+
+    .toggle-field {
+      padding: 7px;
+    }
+
     #search_keyword {
       border-radius: 0px 4px 4px 0px;
     }

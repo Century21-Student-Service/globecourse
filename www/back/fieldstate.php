@@ -9,10 +9,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>领域 - 移民</title>
   <?php
-getcss("ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css");
+getcss("ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css");
 getcss("ajax/libs/bootstrap-table/1.18.2/bootstrap-table.min.css");
 getcss("ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
-getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
+getcss("ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css");
 getcss("js/layer/theme/default/layer.css", true);
 ?>
   <style>
@@ -31,6 +31,22 @@ getcss("js/layer/theme/default/layer.css", true);
 
     .field-title:hover .btn-field-del {
       display: block;
+    }
+
+    span.toggle {
+      cursor: pointer;
+    }
+
+    button.btn-update {
+      margin: 4px 0 4px 4px;
+    }
+
+    input.update {
+      max-width: 150px;
+    }
+
+    table {
+      font-size: 17px;
     }
   </style>
 </head>
@@ -59,10 +75,11 @@ getcss("js/layer/theme/default/layer.css", true);
   <?php
 
 getjs("ajax/libs/jquery/3.5.1/jquery.min.js");
-getjs("ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js");
+getjs("ajax/libs/popper.js/1.16.1/umd/popper.min.js");
+getjs("ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js");
 getjs("ajax/libs/bootstrap-table/1.18.2/bootstrap-table.min.js");
 getjs("ajax/libs/bootstrap-table/1.18.2/locale/bootstrap-table-zh-CN.min.js");
-getjs("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.js");
+getjs("ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js");
 getjs("js/layer/layer.js", true);
 ?>
   <script>
@@ -75,6 +92,47 @@ getjs("js/layer/layer.js", true);
     parent.fields.forEach(e => {
       if (e.id == pid) $("h1").html(e.name);
     });
+
+    function dismissName(id) {
+      $('#toggle_rename_' + id).popover('hide');
+    }
+
+    function saveName(id) {
+      $("#btn_saveName_" + id).attr('disabled', 'disabled');
+      $("#btn_dismissName_" + id).attr('disabled', 'disabled');
+      let oldName = $("#toggle_rename_" + id).html().trim();
+      let newName = $("#input_rename_" + id).val().trim();
+      if (newName.length !== 0 && newName != oldName) {
+        $.post('util/fieldOperation?op=7', {
+          name: newName,
+          id,
+        }, res => {
+          try {
+            res = JSON.parse(res)
+          } catch (e) {
+            layer.alert(res, {
+              title: "错误",
+              icon: 2
+            });
+            $("#btn_saveName_" + id).removeAttr('disabled');
+            $("#btn_dismissName_" + id).removeAttr('disabled');
+          }
+          if (res.code == 0) {
+            $("#toggle_rename_" + id).html(newName);
+            dismissName(id);
+          } else {
+            layer.alert(res.msg, {
+              title: "错误",
+              icon: 2
+            });
+            $("#btn_saveName_" + id).removeAttr('disabled');
+            $("#btn_dismissName_" + id).removeAttr('disabled');
+          }
+        })
+      } else {
+        dismissName(id);
+      }
+    }
 
     function refreshTable() {
       const getStates = $.get("util/fieldOperation.php?op=1", res => {
@@ -95,7 +153,14 @@ getjs("js/layer/layer.js", true);
           width: 180,
           class: "field-title",
           formatter: function (value, row, index) {
-            return value + `<button class='btn btn-sm btn-danger btn-field-del' data-fieldid='${row.field_id}'>删除</button>`;
+            var content = `<input id='input_rename_${row.field_id}' class='form-control update' type='text'>
+          <button type='button' class='btn btn-success btn-sm btn-update' id='btn_saveName_${row.field_id}' onclick='saveName(${row.field_id})'>
+          <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
+          <button type='button' class='btn btn-danger btn-sm btn-update' id='btn_dismissName_${row.field_id}' onclick='dismissName(${row.field_id})'>
+          <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>`;
+            return `<span id="toggle_rename_${row.field_id}" class="toggle toggle-text" data-toggle="popover"
+                title="修改名称" data-content="${content}">${value}</span>
+            <button class='btn btn-sm btn-danger btn-field-del' data-fieldid='${row.field_id}'>删除</button>`;
           }
         }, {
           field: '0',
@@ -129,6 +194,16 @@ getjs("js/layer/layer.js", true);
           data: immi,
           columns,
           onPostBody: function () {
+            $('[data-toggle="popover"]').popover({
+              html: true,
+            });
+            $('[data-toggle="popover"]').on('shown.bs.popover', function (e) {
+              $("#input_rename_" + e.currentTarget.id.replace(/^toggle_rename_/g, '')).val($(this).html());
+            });
+            $('[data-toggle="popover"]').on('show.bs.popover', function (e) {
+
+              $('[data-toggle="popover"]:not(#' + e.currentTarget.id + ')').popover('hide');
+            });
             $('.toggle-button').bootstrapToggle();
             $(".btn-field-del").click(e => {
               const fid = $(e.currentTarget).data("fieldid");
