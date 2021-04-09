@@ -66,7 +66,7 @@ getcss("js/layer/theme/default/layer.css", true);
       <select id="states" name="states" class="btn btn-default preinput-control" style="width: 205px;"></select>
 
       <div style="float: right;">
-        <button type="button" class="btn btn-primary " onclick='FormInst(false)'>
+        <button type="button" class="btn btn-primary " onclick='FromInst(false)'>
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b> 添加院校</b>
         </button>
         <button type="button" class="btn btn-primary btn-control" id="refresh_unuse" onclick="refresh();">
@@ -89,6 +89,10 @@ getjs("js/layer/layer.js", true);
 ?>
   <script type="text/javascript">
     var form = null;
+    var current_scroll = {
+      x: 0,
+      y: 0
+    };
     const columns_institution = [{
         title: '校徽',
         field: 'badge',
@@ -133,7 +137,7 @@ getjs("js/layer/layer.js", true);
         sortable: true,
         formatter: function (value, row, index) {
           var edit =
-            "<button type='button' title='修改' class='btn btn-primary btn-sm btn-edit btn-op' onclick='FormInst(" + row['id'] +
+            "<button type='button' title='修改' class='btn btn-primary btn-sm btn-edit btn-op' onclick='FromInst(" + row['id'] +
             ")'><span class='glyphicon glyphicon-edit' aria-hidden='true'></button>";
           var content =
             "<button type='button' class='btn btn-success btn-sm btn-update' onclick='deleteInstitution(" +
@@ -158,7 +162,7 @@ getjs("js/layer/layer.js", true);
       align: 'left',
       valign: 'middle',
       formatter: function (value, row, index) {
-        return `<a href='#' onClick='FormCourse(1,${row.id})'>${value}</a>`;
+        return `<a href='#' onClick='FromCourse("",${row.id})'>${value}</a>`;
       }
     }, {
       title: '级别',
@@ -292,7 +296,7 @@ getjs("js/layer/layer.js", true);
           var str = '';
           str += '<div style="float:right;">';
           str +=
-            `<button type="button" class="btn btn-success" onclick="FormCourse(${row.id})"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b> 添加课程</b></button>`;
+            `<button type="button" class="btn btn-success" onclick="FromCourse(${row.id})"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b> 添加课程</b></button>`;
           str += '</div>';
           str +=
             '<ul class="nav nav-tabs" role="tablist"><li role="presentation" class="active"><a href="#detail_course" class="port-tab" data-toggle="tab" id="tab_detail_course">课程</a></li></ul>';
@@ -378,7 +382,7 @@ getjs("js/layer/layer.js", true);
         });
     }
 
-    function FormInst(id) {
+    function FromInst(id) {
       form = layer.open({
         type: 2,
         title: '添加院校',
@@ -388,7 +392,11 @@ getjs("js/layer/layer.js", true);
       });
     }
 
-    function FormCourse(inst_id, id) {
+    function FromCourse(inst_id, id) {
+      current_scroll = {
+        x: window.pageXOffset,
+        y: window.pageYOffset
+      };
       const url = `newcourse?inst_id=${inst_id}`;
       form = layer.open({
         type: 2,

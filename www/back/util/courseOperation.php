@@ -182,6 +182,7 @@ function getCoursesById()
                     c.field_id_p AS `field_p`,
                     c.field_id_c AS `field_c`,
                     i.name AS `institution`,
+                    i.state_id,
                     c.inst_id,
                     c.hours,
                     c.months,

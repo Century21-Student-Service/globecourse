@@ -22,6 +22,7 @@ $funcArr = [
     'uploadFile',
     'deleteFiles',
     'saveInstitution',
+    'getInstitutionByCourseId',
 ];
 
 $op = 0;
@@ -409,4 +410,44 @@ function saveInstitution()
         echo json_encode(['code' => -20, 'msg' => '数据库错误' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
     }
 
+}
+
+function getInstitutionByCourseId()
+{
+    global $conn;
+    $instId = $_REQUEST['courseid'];
+    $sql_detail = "SELECT  i.id,
+                            i.name,
+                            i.ename,
+                            i.badge,
+                            i.status,
+                            i.intro,
+                            i.description,
+                            i.pics,
+                            i.video,
+                            i.regional,
+                            i.state_id,
+                            s.name AS `state`
+                    FROM institution i
+                    LEFT JOIN `state` s ON s.id = i.state_id
+                    WHERE i.id IN (SELECT inst_id FROM course WHERE id = ?)
+                    LIMIT 1 ;";
+    $stmt = $conn->prepare($sql_detail);
+    $stmt->execute([$instId]);
+    $one = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($one['pics']) {
+        $one['pics'] = unserialize($one['pics']);
+        foreach ($one['pics'] as &$pic) {
+            $pic = explode(',', $pic);
+            if ($pic[0][0] == '/') {
+                $pic['img'] = $pic[0];
+            } else {
+                $pic['img'] = '/' . $pic[0];
+            }
+            $pic['alt'] = $pic[1];
+            unset($pic[0]);
+            unset($pic[1]);
+        }
+    }
+    echo json_encode($one, JSON_UNESCAPED_UNICODE);
 }

@@ -41,16 +41,16 @@ getcss("js/layer/theme/default/layer.css", true);
       <div class="input-group-prepend">
         <label class="input-group-text" for="input_course_state_id">所在州</label>
       </div>
-      <select class="custom-select disabled" id="input_course_state_id" disabled="disabled">
-        <option>新南威尔士州</option>
+      <select class="custom-select disabled" id="input_course_state_id">
+        <option>请选择州</option>
       </select>
     </div>
     <div class="input-group input-select">
       <div class="input-group-prepend">
         <label class="input-group-text" for="input_course_inst_id">所属学院</label>
       </div>
-      <select class="custom-select disabled" id="input_course_inst_id" disabled="disabled">
-        <option>新南威尔士大学</option>
+      <select class="custom-select disabled" id="input_course_inst_id">
+        <option>请选择院校</option>
       </select>
     </div>
     <div class="input-group ">
@@ -181,48 +181,54 @@ getjs("js/layer/layer.js", true);
           });
         })
       });
-      if (inst_id == 0) {
-        pro_inst = $.get('./util/courseOperation.php?op=5', function (res) {
-          res = JSON.parse(res);
-          STATESANDINST = res;
-          $("#input_course_state_id")
-            .empty()
-            .append('<option value="0">请选择州</option>').append(res.map(function (e) {
-              return '<option value="' + e['id'] + '">' + e['name'] + '</option>';
-            }).join(''))
-            .change(function (op) {
-              if ($(this).val() == 0) {
-                $("#input_course_inst_id").html('<option value="0">全部院校</option>');
-              } else {
-                let inst = [];
-                for (let i = 0; i < STATESANDINST.length; i++) {
-                  if (STATESANDINST[i].id == $(this).val()) {
-                    inst = STATESANDINST[i].inst;
-                    break;
-                  }
+
+      pro_inst = $.get('./util/courseOperation.php?op=5', function (res) {
+        res = JSON.parse(res);
+        STATESANDINST = res;
+        $("#input_course_state_id")
+          .empty()
+          .append('<option value="0">请选择州</option>').append(res.map(function (e) {
+            return '<option value="' + e['id'] + '">' + e['name'] + '</option>';
+          }).join(''))
+          .change(function (op) {
+            if ($(this).val() == 0) {
+              $("#input_course_inst_id").html('<option value="0">请选择院校</option>');
+            } else {
+              let inst = [];
+              for (let i = 0; i < STATESANDINST.length; i++) {
+                if (STATESANDINST[i].id == $(this).val()) {
+                  inst = STATESANDINST[i].inst;
+                  break;
                 }
-                $("#input_course_inst_id")
-                  .html('<option value="0">全部院校</option>')
-                  .append(inst.map(f => "<option value='" + f.id + "'>" + f.name + "</option>").join(''))
-                  .off('change')
-                  .change(e => {
-                    if (e.currentTarget.value != 0) {
-                      $(e.currentTarget).removeClass('invalid');
-                    }
-                  });
               }
-            });
-          $("#input_course_inst_id").html('<option value="0">请选择院校</option>');
-          $("#input_course_state_id").prop("disabled", false);
-          $("#input_course_inst_id").prop("disabled", false);
-        });
-      } else {
-        pro_inst = $.get('util/institutionOperation.php?op=4&instid=' + inst_id, function (res) {
-          res = JSON.parse(res);
-          $("#input_course_state_id").html(`<option value='${res.state_id}'>${res.state}</option>`);
-          $("#input_course_inst_id").html(`<option value='${res.id}'>${res.name}</option>`);
-        });
-      }
+              $("#input_course_inst_id")
+                .html('<option value="0">请选择院校</option>')
+                .append(inst.map(f => "<option value='" + f.id + "'>" + f.name + "</option>").join(''))
+                .off('change')
+                .change(e => {
+                  if (e.currentTarget.value != 0) {
+                    $(e.currentTarget).removeClass('invalid');
+                  }
+                });
+            }
+          });
+        // if (id != 0)
+        //   $.get('util/institutionOperation.php?op=8&courseid=' + course_id, function (res) {
+        //     res = JSON.parse(res);
+        //     $("#input_course_state_id").val(res.state_id);
+        //     $("#input_course_state_id").change();
+        //     // setTimeout(e => $("#input_course_inst_id").val(res.id), 1000);
+        //   });
+      });
+
+      // pro_fill_inst = $.get('util/institutionOperation.php?op=8&courseid=' + course_id, function (res) {
+      //   res = JSON.parse(res);
+      //   $("#input_course_state_id").val(res.state_id);
+      //   $("#input_course_inst_id").val(res.id);
+      //   // $("#input_course_state_id").html(`<option value='${res.state_id}'>${res.state}</option>`);
+      //   // $("#input_course_inst_id").html(`<option value='${res.id}'>${res.name}</option>`);
+      // });
+
 
 
       Promise.all([pro_levels, pro_inst, pro_field]).then(function (res) {
@@ -238,13 +244,20 @@ getjs("js/layer/layer.js", true);
             $("#input_course_level").val(res.level_id);
             $("#input_course_hours").val(res.months);
             $("#input_course_fees").val(res.fees);
+            $("#input_course_state_id").val(res.state_id);
+            $("#input_course_state_id").change();
+            $("#input_course_inst_id").val(res.inst_id);
             editor_description.txt.html(res.description);
             editor_intro.txt.html(res.intro);
-            if (res.inst_id && res.institution) {
-              $("#input_course_inst_id").html(`<option value='${res.inst_id}'>${res.institution}</option>`);
-            }
-            // console.log($("#input_course_inst_id").val());
           });
+        if (inst_id) {
+          $.get('util/institutionOperation.php?op=4&instid=' + inst_id, function (res) {
+            res = JSON.parse(res);
+            $("#input_course_state_id").val(res.state_id);
+            $("#input_course_state_id").change();
+            $("#input_course_inst_id").val(res.id);
+          });
+        }
       });
       $("#input_course_name").keyup(e => {
         if (e.currentTarget.value.trim().length > 0) {
@@ -329,6 +342,7 @@ getjs("js/layer/layer.js", true);
           data_new.fees == null
         ) {
           parent.layer.close(parent.form);
+          parent.scrollTo(parent.current_scroll.x, parent.current_scroll.y);
           return;
         }
 
@@ -345,7 +359,8 @@ getjs("js/layer/layer.js", true);
           }
           if (res.code == 0) {
             parent.layer.close(parent.form);
-            parent.refresh();
+            parent.scrollTo(parent.current_scroll.x, parent.current_scroll.y);
+            // parent.refresh();
           } else {
             layer.alert(res.msg, {
               title: "错误",
@@ -393,13 +408,16 @@ getjs("js/layer/layer.js", true);
               btn: ['关闭', '取消'] //按钮
             }, function () {
               parent.layer.close(parent.form);
+              parent.scrollTo(parent.current_scroll.x, parent.current_scroll.y);
               return;
             });
           } else {
             parent.layer.close(parent.form);
+            parent.scrollTo(parent.current_scroll.x, parent.current_scroll.y);
           }
         } else {
           parent.layer.close(parent.form);
+          parent.scrollTo(parent.current_scroll.x, parent.current_scroll.y);
         }
       });
     });
