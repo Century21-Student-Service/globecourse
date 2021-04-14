@@ -4,11 +4,11 @@ include_once './../ext/news.php';
 include_once '_dynamic_siteSetting/directoryLang.php'; /***  '$directory' / '$fType_php' from 'directoryLang.php'  ***/
 include_once 'custom-append/append__List.php';
 
-// unset($_SESSION['states']);
-// unset($_SESSION['cType']);
-// unset($_SESSION['f_Range']);
-// unset($_SESSION['f_From']);
-// unset($_SESSION['f_To']);
+unset($_SESSION['states']);
+unset($_SESSION['cType']);
+unset($_SESSION['cN']);
+unset($_SESSION['bField']);
+unset($_SESSION['narrowField']);
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ include_once 'custom-append/append__List.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Fees Search | CT21 Search Platform</title>
+    <title>Course Search | CT21 Search Platform</title>
     <!-- <title>Kingster &#8211; School, College &amp; University HTML Template</title> -->
 
     <!-- (Theme) custom  ==  << Favicon and touch icons >>  ====================          Icon          -->
@@ -58,7 +58,6 @@ include_once 'custom-append/append__List.php';
         #custom_greenLine-style{ border-color: #d6d6d6; border-bottom-width: 2px; margin-top: 40px; }
     </style>
     <!-- ==========  (custom) Style [only this pg]  ========== -->
-
 
 </head>
 <body class="home page-template-default page page-id-2039 gdlr-core-body woocommerce-no-js tribe-no-js kingster-body kingster-body-front kingster-full  kingster-with-sticky-navigation  kingster-blockquote-style-1 gdlr-core-link-to-lightbox">
@@ -113,10 +112,10 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 		                                <!-- ================================================================================================================================== -->
 		                                <!-- =============================================        Form [for submit button]        ============================================= -->
 		                                <!-- ================================================================================================================================== -->
-		                                <?php $toFile = 'search-fees__result';?>
+		                                <?php $toFile = 'search-course__result';?>
 
 		                                <form action="<?php echo $toFile . $fType_php; ?>" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" >
-		                                <!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;?>search-fees__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
+		                                <!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;?>search-course__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
 
 
 			                                <!-- ______________________________        (Left) side        ______________________________ -->
@@ -135,7 +134,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 
 
 						                                        	<!-- ====================     << Title >> {page}     ==================== -->
-						                                            <?php pageTitle('Fees Search', ''); // title, subtitle ?>
+						                                            <?php pageTitle('Course Search', ''); // title, subtitle ?>
 
 
 						                                            <!-- ====================     << (Blue) Line >>     ==================== -->
@@ -470,12 +469,11 @@ include 'custom-append/append_Tab2.php';
 			                                            <!-- ===================================        [Search-button]        =================================== -->
 			                                            <!-- ===================================================================================================== -->
 
-			                                            <!-- 13th Element -->
-			                                            <!-- ====================     << (Search) Button >>     ==================== -->
 			                                            <div class="gdlr-core-pbf-element" style="padding-left: 5%;">
 			                                            	<button id="btnSearch" type="submit" class="gdlr-core-button gdlr-core-button-solid gdlr-core-button-no-border custom-button_noBorder" style="font-weight: bold;" id="button">Search</button>
 			                                                <!-- <input name="button" type="submit" class="" style="font-weight: bold;" id="button" value="立 即 搜 索"></div> -->
 			                                            </div>
+
 			                                            <!-- ==========    /Element    ========== -->
 			                                        </div>
 		                                        </div>
@@ -533,94 +531,9 @@ include 'custom-append/append_Tab2.php';
     <script type='text/javascript' src='kingster-js/plugins.min.js'></script>
 
 
-
-	<!-- ==========  [from-ORIGINAL]  ========== -->
+    <!-- ==========  [from-ORIGINAL]  ========== -->
     <!-- <script src="./../templates/default/js/jquery.min.js"></script> -->
 
-    <!-- ==========  (custom) JavaScript  ========== -->
-    <script>
-		jQuery(function(){
-			jQuery('#broadField').change(function(){
-				var pid=jQuery(this).val();
-				//alert(pid);
-				jQuery.ajax({
-					type :'GET',
-					url  :'./../ext/ajaxFun.php?act=getSecField&type=1&pid='+pid,
-					date :'',
-					success:function(m){
-						jQuery('#narrowField option').remove();
-						jQuery('#narrowField').append(m);
-					}
-				});
-
-				if (jQuery('#broadField').val() != ''){
-					jQuery('#narrowField').removeClass('ctm-dropdown__hide');
-				}
-				if (jQuery('#broadField').val() == ''){
-					jQuery('#narrowField').addClass('ctm-dropdown__hide');
-				}
-		   });
-
-		});
-	</script>
-	<!-- ==========  (custom) JavaScript  ========== -->
-
-
-    <!-- ==========  (custom) JavaScript  ========== -->
-    <script type="text/javascript" src="custom-code__js/search-animation__popupWin.js"></script>
-    <script type="text/javascript" src="_dynamic_siteSetting/footer-setting.js"></script>
-    <!-- ==========  (custom) JavaScript  ========== -->
-
-
-    <!-- ======================================================================================== -->
-	<!-- ______________________________        (custom) Map        ______________________________ -->
-	<!-- ======================================================================================== -->
-    <script type="text/javascript" src="custom-code__js/map-function__dropdown.js"></script>
-
-    <script type="text/javascript">
-    	//  show Map after-load
-    	jQuery('.ctm-map-svg').show();
-    	// jQuery('.ctm-map-svg').load(function(){
-    	// 	jQuery('.ctm-map-svg').show();
-    	// });
-
-    	var w = window.innerWidth;
-
-    	if (w < 1260){
-    		jQuery('.ctm-map-svg').css({'margin-right': '0%'});
-    		jQuery('.ctm-map-container').css({'margin-bottom': '15%'});
-    	}
-    </script>
-
-    <!-- ========================================================================================================= -->
-	<!-- ______________________________        (custom) Tab-Switch [faculty]        ______________________________ -->
-	<!-- ========================================================================================================= -->
-    <script type="text/javascript">
-
-    	jQuery('input[name="searchMode_faculty"]').change(function(){
-
-    		var value = jQuery("input[name='searchMode_faculty']:checked").val();
-
-    		if(value == 0){
-    			jQuery('#search_tab1_faculty').removeClass('tab-box__hide');
-    			jQuery('#search_tab2_faculty').addClass('tab-box__hide');
-    		}
-
-    		if(value == 1){
-    			jQuery('#search_tab1_faculty').addClass('tab-box__hide');
-    			jQuery('#search_tab2_faculty').removeClass('tab-box__hide');
-    		}
-
-    		jQuery('#broadField').val(0);
-    		jQuery('#narrowField').val(0);
-    		jQuery('#courseName').val('');
-
-    		/** ====  (Disable) Major [dropdown]  ==== **/
-    		jQuery('#div_Major').addClass('ctm-disable');
-
-    	});
-
-    </script>
 
     <!-- ===================================================================================================== -->
 	<!-- ______________________________        (custom) Major of Courses        ______________________________ -->
@@ -652,10 +565,69 @@ include 'custom-append/append_Tab2.php';
 
 		});
 	</script>
+	<!-- ==========  [from-ORIGINAL]  ========== -->
 
-    <!-- =============================================================================================== -->
-	<!-- ______________________________        (custom) Tab-Switch        ______________________________ -->
-	<!-- =============================================================================================== -->
+
+
+    <!-- ==========  (custom) JavaScript  ========== -->
+    <script type="text/javascript" src="custom-code__js/search-animation__popupWin.js"></script>
+    <script type="text/javascript" src="_dynamic_siteSetting/footer-setting.js"></script>
+    <!-- ==========  (custom) JavaScript  ========== -->
+
+
+    <!-- ======================================================================================== -->
+	<!-- ______________________________        (custom) Map        ______________________________ -->
+	<!-- ======================================================================================== -->
+    <script type="text/javascript" src="custom-code__js/map-function__dropdown.js"></script>
+
+    <script type="text/javascript">
+    	//  show Map after-load
+    	jQuery('.ctm-map-svg').show();
+    	// jQuery('.ctm-map-svg').load(function(){
+    	// 	jQuery('.ctm-map-svg').show();
+    	// });
+
+    	var w = window.innerWidth;
+
+    	if (w < 1260){
+    		jQuery('.ctm-map-svg').css({'margin-right': '0%'});
+    		jQuery('.ctm-map-container').css({'margin-bottom': '15%'});
+    	}
+    </script>
+
+    <!-- ======================================================================================== -->
+	<!-- ______________________________        (custom) Tab        ______________________________ -->
+	<!-- ======================================================================================== -->
+    <script type="text/javascript">
+
+    	jQuery('input[name="searchMode_faculty"]').change(function(){
+
+    		var value = jQuery("input[name='searchMode_faculty']:checked").val();
+
+    		if(value == 0){
+    			jQuery('#search_tab1_faculty').removeClass('tab-box__hide');
+    			jQuery('#search_tab2_faculty').addClass('tab-box__hide');
+    		}
+
+    		if(value == 1){
+    			jQuery('#search_tab1_faculty').addClass('tab-box__hide');
+    			jQuery('#search_tab2_faculty').removeClass('tab-box__hide');
+    		}
+
+    		jQuery('#broadField').val(0);
+    		jQuery('#narrowField').val(0);
+    		jQuery('#courseName').val('');
+
+    		/** ====  (Disable) Major [dropdown]  ==== **/
+    		jQuery('#div_Major').addClass('ctm-disable');
+
+    	});
+
+    </script>
+
+    <!-- ========================================================================================================= -->
+	<!-- ______________________________        (custom) Tab-Switch [faculty]        ______________________________ -->
+	<!-- ========================================================================================================= -->
     <script type="text/javascript">
 
     	jQuery('input[name="searchMode_fees"]').change(function(){
@@ -682,9 +654,9 @@ include 'custom-append/append_Tab2.php';
 
     </script>
 
-    <!-- ========================================================================================= -->
-	<!-- ______________________________        (custom) Fees        ______________________________ -->
-	<!-- ========================================================================================= -->
+    <!-- ====================================================================================================== -->
+	<!-- ______________________________        (custom) Tab-Switch [fees]        ______________________________ -->
+	<!-- ====================================================================================================== -->
     <script type="text/javascript">
 
     	jQuery('#feesFrom').addClass('ctm__disable');

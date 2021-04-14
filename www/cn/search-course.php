@@ -334,14 +334,6 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 																		<!-- =====  (Insert) State [drop-down list]  ===== -->
 																		<select name="broadField" class="dropdown_100" id="broadField">
 																			<option value="0">请选择「学科」</option>
-
-																			<?php
-$dosql->Execute("SELECT * FROM `#@__field` WHERE `type`=0 ");
-
-while ($row = $dosql->GetArray()) {
-    echo ('<option value="' . $row['bh'] . '">' . $row['bh'] . ' - ' . $row['cname'] . '</option>');
-}
-?>
 																		</select>
 
 

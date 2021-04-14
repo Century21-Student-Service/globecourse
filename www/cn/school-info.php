@@ -189,7 +189,7 @@ if (empty($picarr)) {
 								<!-- ====================     << Title >>     ==================== -->
 								<h1 class="bold ctm-pgSchool__title" style="font-size: 40px; margin-bottom: 0; line-height: normal;"><?php echo ($sch['name']); ?></h1>
 								<!-- (Chinese) -->
-								<h1 class="ctm-pgSchool__title-en" style="font-size: 40px; margin-bottom: 16px;"><small><?php echo ($sch['ename']); ?></small></h1>
+								<h1 class="ctm-pgSchool__title-en" style="font-size: 40px; margin-bottom: 16px;"><small><?php echo ($sch['name_en']); ?></small></h1>
 								<!-- (English) -->
 
 
@@ -250,7 +250,7 @@ if (!empty($sch['video'])) {
     echo '<video class="video" controls="controls" src="' . ($sch['video']) . '" width="100%" id="promotionVid" loading="lazy">';
 }?>
 
-											<!-- <img src="./../<?php //echo $v[0]; ;;;;;;;;?>" loading="lazy" /> -->
+											<!-- <img src="./../<?php //echo $v[0]; ;;;;;;;;;?>" loading="lazy" /> -->
 											<!-- <img src="educate-images/blog/bs1.jpg" alt="image"> -->
 										</div><!-- /.feature-post -->
 
@@ -267,7 +267,7 @@ if (!empty($sch['video'])) {
 foreach ($picarr as $k) {
     $v = explode(',', $k);
     ?>
-											<!-- <li><img src="<?php //echo($v[0]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>" width="204" height="125" /><div><?php //echo($v[1]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div></li> -->
+											<!-- <li><img src="<?php //echo($v[0]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>" width="204" height="125" /><div><?php //echo($v[1]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div></li> -->
 											<div class="gdlr-core-item-list class1 gdlr-core-item-pdlr gdlr-core-column-20" style="padding-left: 10px; padding-right: 10px;">
 												<div class="gdlr-core-portfolio-grid  gdlr-core-center-align gdlr-core-style-normal">
 													<div class="gdlr-core-portfolio-thumbnail gdlr-core-media-image  gdlr-core-style-icon">
@@ -400,7 +400,7 @@ while ($row = $dosql->GetArray()) {
 													href="course-info.php?cid=<?php echo ($id); ?>&id=<?php echo ($row['id']); ?>">
 													<!-- <span class="gdlr-core-course-item-id gdlr-core-skin-caption" ></span> -->
 													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($row['title']); ?></span>
-													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
+													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
 													<i class="gdlr-core-course-item-icon gdlr-core-skin-icon fa fa-long-arrow-right" style="font-size: 16px;"></i></a>
 											</div>
 											<?php

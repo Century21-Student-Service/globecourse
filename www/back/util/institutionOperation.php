@@ -73,11 +73,13 @@ function getInstitutionById()
     $instId = $_REQUEST['instid'];
     $sql_detail = "SELECT  i.id,
                             i.name,
-                            i.ename,
+                            i.name_en,
                             i.badge,
                             i.status,
                             i.intro,
                             i.description,
+                            i.intro_en,
+                            i.description_en,
                             i.pics,
                             i.video,
                             i.regional,
@@ -90,7 +92,7 @@ function getInstitutionById()
     $stmt = $conn->prepare($sql_detail);
     $stmt->execute([$instId]);
     $one = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($one['pics']) {
+    if ($one && $one['pics']) {
         $one['pics'] = unserialize($one['pics']);
         foreach ($one['pics'] as &$pic) {
             $pic = explode(',', $pic);
@@ -126,7 +128,7 @@ function getInstitutions()
 
     $sql_detail = "SELECT  i.id,
                            i.name,
-                           i.ename,
+                           i.name_en,
                            i.badge,
                            i.status,
                            s.name AS `state`
@@ -150,7 +152,7 @@ function getInstitutions()
         $stmt1 = $conn->prepare($sql . $whereClause);
         $stmt1->execute(array('%' . $query . '%'));
 
-        $whereClause = str_replace("i.name LIKE ?", "i.ename LIKE ?", $whereClause);
+        $whereClause = str_replace("i.name LIKE ?", "i.name_en LIKE ?", $whereClause);
 
         $stmt2 = $conn->prepare($sql . $whereClause);
         $stmt2->execute(array('%' . $query . '%'));
@@ -390,7 +392,7 @@ function saveInstitution()
         // echo $sql;die;
     } else {
         // 插入新数据
-        $sql = "INSERT INTO institution (`name`,`ename`,`intro`,`description`,`state_id`,`badge`,`pics`,`video`,`regional`)VALUE(:name,:ename,:intro,:description,:state_id,:badge,:pics,:video,:regional);";
+        $sql = "INSERT INTO institution (`name`,`name_en`,`intro`,`description`,`intro_en`,`description_en`,`state_id`,`badge`,`pics`,`video`,`regional`)VALUE(:name,:name_en,:intro,:description,:intro_en,:description_en,:state_id,:badge,:pics,:video,:regional);";
         if (!empty($data['pics'])) {
             $result = [];
             foreach (array_filter($data['pics']) as $v) {
@@ -418,7 +420,7 @@ function getInstitutionByCourseId()
     $instId = $_REQUEST['courseid'];
     $sql_detail = "SELECT  i.id,
                             i.name,
-                            i.ename,
+                            i.name_en,
                             i.badge,
                             i.status,
                             i.intro,

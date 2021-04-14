@@ -282,6 +282,13 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
           aria-selected="true">详细介绍</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" id="intro_tab_en" data-toggle="tab" href="#input_intro_en" role="tab" aria-controls="intro" aria-selected="true">简介(英文)</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " id="description_tab_en" data-toggle="tab" href="#input_description_en" role="tab" aria-controls="description"
+          aria-selected="true">详细介绍(英文)</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" id="images_tab" data-toggle="tab" href="#input_images" role="tab" aria-controls="images" aria-selected="false">组图</a>
       </li>
       <li class="nav-item">
@@ -292,6 +299,8 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
     <div class="tab-content">
       <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="intro_tab" id="input_intro"></div>
       <div class="tab-pane fade " role="tabpanel" aria-labelledby="description_tab" id="input_description"></div>
+      <div class="tab-pane fade show" role="tabpanel" aria-labelledby="intro_tab" id="input_intro_en"></div>
+      <div class="tab-pane fade " role="tabpanel" aria-labelledby="description_tab" id="input_description_en"></div>
       <div class="tab-pane fade " role="tabpanel" aria-labelledby="images_tab" id="input_images" style="height: 342px;overflow: auto;">
         <div class="pics-card pics-add">
           <i class="fa fa-plus" aria-hidden="true"></i>
@@ -342,6 +351,12 @@ getjs("js/layer/layer.js", true);
     const editor_description = new E(document.getElementById('input_description'))
     editor_description.config.placeholder = '请输入详细介绍';
     editor_description.create();
+    const editor_intro_en = new E(document.getElementById('input_intro_en'))
+    editor_intro_en.config.placeholder = '请输入简介(英文)';
+    editor_intro_en.create();
+    const editor_description_en = new E(document.getElementById('input_description_en'))
+    editor_description_en.config.placeholder = '请输入详细介绍(英文)';
+    editor_description_en.create();
     const urlParams = new URLSearchParams(window.location.search);
     const inst_id = urlParams.get('inst_id');
     let data_old = {},
@@ -544,28 +559,34 @@ getjs("js/layer/layer.js", true);
         data_new.id = data_old.id;
         data_new.description = editor_description.txt.html().trim();
         data_new.intro = editor_intro.txt.html().trim();
+        data_new.description_en = editor_description_en.txt.html().trim();
+        data_new.intro_en = editor_intro_en.txt.html().trim();
         data_new.name = $("#input_inst_name").val().trim();
-        data_new.ename = $("#input_inst_ename").val().trim();
+        data_new.name_en = $("#input_inst_ename").val().trim();
         data_new.state_id = $("#input_inst_state").val();
         data_new.video = $("#input_inst_video").val();
         data_new.regional = $("#input_inst_regional")[0].checked ? "1" : "0";
 
         if (data_old.id) {
           if (sameValue(data_new.name, data_old.name)) data_new.name = null;
-          if (sameValue(data_new.ename, data_old.ename)) data_new.ename = null;
+          if (sameValue(data_new.name_en, data_old.name_en)) data_new.name_en = null;
           if (sameValue(data_new.state_id, data_old.state_id)) data_new.state_id = null;
           if (sameValue(data_new.description, data_old.description)) data_new.description = null;
           if (sameValue(data_new.intro, data_old.intro)) data_new.intro = null;
+          if (sameValue(data_new.description_en, data_old.description_en)) data_new.description_en = null;
+          if (sameValue(data_new.intro_en, data_old.intro_en)) data_new.intro_en = null;
           if (sameValue(data_new.regional, data_old.regional)) data_new.regional = null;
           if (samePics(data_new.pics, data_old.pics)) data_new.pics = null;
           if (
             data_new.badge.length == 0 &&
             data_new.video.length == 0 &&
             data_new.name == null &&
-            data_new.ename == null &&
+            data_new.name_en == null &&
             data_new.state_id == null &&
             data_new.description == null &&
             data_new.intro == null &&
+            data_new.description_en == null &&
+            data_new.intro_en == null &&
             data_new.regional == null &&
             data_new.pics == null
           ) {
@@ -603,8 +624,10 @@ getjs("js/layer/layer.js", true);
         data_new.id = data_old.id;
         data_new.description = editor_description.txt.html().trim();
         data_new.intro = editor_intro.txt.html().trim();
+        data_new.description_en = editor_description_en.txt.html().trim();
+        data_new.intro_en = editor_intro_en.txt.html().trim();
         data_new.name = $("#input_inst_name").val().trim();
-        data_new.ename = $("#input_inst_ename").val().trim();
+        data_new.name_en = $("#input_inst_ename").val().trim();
         data_new.state_id = $("#input_inst_state").val();
         data_new.video = $("#input_inst_video").val().trim();
         data_new.regional = $("#input_inst_regional")[0].checked ? "1" : "0";
@@ -613,15 +636,17 @@ getjs("js/layer/layer.js", true);
             data_new.badge.length > 0 ||
             data_new.video.length > 0 ||
             !sameValue(data_new.name, data_old.name) ||
-            !sameValue(data_new.ename, data_old.ename) ||
+            !sameValue(data_new.name_en, data_old.name_en) ||
             !sameValue(data_new.state_id, data_old.state_id) ||
             !sameValue(data_new.description, data_old.description) ||
             !sameValue(data_new.intro, data_old.intro) ||
+            !sameValue(data_new.description_en, data_old.description_en) ||
+            !sameValue(data_new.intro_en, data_old.intro_en) ||
             !sameValue(data_new.regional, data_old.regional) ||
             !samePics(data_new.pics, data_old.pics)
           ) {
             // if (!sameValue(data_new.name, data_old.name)) console.log("name", data_new.name, data_old.name);
-            // if (!sameValue(data_new.ename, data_old.ename)) console.log("ename", data_new.ename, data_old.ename);
+            // if (!sameValue(data_new.name_en, data_old.name_en)) console.log("name_en", data_new.name_en, data_old.name_en);
             // if (!sameValue(data_new.state_id, data_old.state_id)) console.log("state", data_new.state_id, data_old.state_id);
             // if (!sameValue(data_new.description, data_old.description)) {
             //   console.log("des");
@@ -662,7 +687,7 @@ getjs("js/layer/layer.js", true);
               }
               $("#img_badge").attr('src', (res.badge.split('')[0] == '/') ? res.badge : ('/' + res.badge));
               $("#input_inst_name").val(res.name);
-              $("#input_inst_ename").val(res.ename);
+              $("#input_inst_ename").val(res.name_en);
               $("#input_inst_state>option").each((i, e) => {
                 e.removeAttribute("selected");
                 if (e.value == res.state_id)
@@ -671,6 +696,8 @@ getjs("js/layer/layer.js", true);
               res.regional > 0 ? $("#input_inst_regional").bootstrapToggle('on') : $("#input_inst_regional").bootstrapToggle('off');
               editor_description.txt.html(res.description);
               editor_intro.txt.html(res.intro);
+              editor_description_en.txt.html(res.description_en);
+              editor_intro_en.txt.html(res.intro_en);
               data_old = res;
               data_new.pics = [...res.pics];
               initImages(data_old.pics);

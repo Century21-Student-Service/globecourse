@@ -6,7 +6,7 @@ $cid = empty($cid) ? 5 : intval($cid);
 $sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $cid);
 
 //检测文档正确性
-$row = $dosql->GetOne("SELECT c.id,c.name,c.ename,c.fees,c.hours,c.months,c.intro,c.description,c.field_id_p,c.field_id_c,l.name AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
+$row = $dosql->GetOne("SELECT c.id,c.name,c.name_en,c.fees,c.hours,c.months,c.intro,c.description,c.field_id_p,c.field_id_c,l.name AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
 
 #region philip 2021-02-19
 if (is_array($row)) {
@@ -208,8 +208,8 @@ $v = explode(',', $picarr[0]);
 
 								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo" src="./../<?php echo ($sch['badge']); ?>"
 										width="" height="" style="border-radius: 10px;" loading="lazy" title="院校 - <?php echo ($sch['name']); ?>" /></a> <!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
+								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
 
 							</div>
 						</div>

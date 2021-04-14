@@ -4,11 +4,12 @@ session_start();
 require_once '../../../config/conn.php';
 
 $inst_id = $_REQUEST['iid'];
+$en = empty($_REQUEST['en']);
 
-$sql_course = "SELECT `id`,`name`,ename,`level_id`,`field_id_p`,`field_id_c`,`hours`,`months`,`fees` FROM course WHERE inst_id=? AND `status` > 0 ORDER BY id;";
-$sql_levels = "SELECT `id`,`name` FROM `level` WHERE id IN (SELECT level_id FROM course WHERE inst_id=?) ORDER BY id;";
-$sql_fields_c = "SELECT `id`,`name`,`p_id` FROM field WHERE id IN(SELECT field_id_c FROM course WHERE inst_id=?) ORDER BY id;";
-$sql_fields_p = "SELECT `id`,`name` FROM field WHERE deep = 0 AND id IN(SELECT field_id_p FROM course WHERE inst_id=?) ORDER BY id;";
+$sql_course = "SELECT `id`,`name`,IFNULL(name_en,`name`) AS `name_en`,`level_id`,`field_id_p`,`field_id_c`,`hours`,`months`,`fees` FROM course WHERE inst_id=? AND `status` > 0 ORDER BY id;";
+$sql_levels = "SELECT `id`,`name`,`name_en` FROM `level` WHERE id IN (SELECT level_id FROM course WHERE inst_id=?) ORDER BY id;";
+$sql_fields_c = "SELECT `id`,`name`,IFNULL(name_en,`name`) AS `name_en`, `p_id` FROM field WHERE id IN(SELECT field_id_c FROM course WHERE inst_id=?) ORDER BY id;";
+$sql_fields_p = "SELECT `id`,`name`,IFNULL(name_en,`name`) AS `name_en` FROM field WHERE deep = 0 AND id IN(SELECT field_id_p FROM course WHERE inst_id=?) ORDER BY id;";
 
 $stmt_course = $conn->prepare($sql_course);
 $stmt_levels = $conn->prepare($sql_levels);

@@ -52,7 +52,7 @@ function getCourses()
 
     $sql_detail = "SELECT  c.id,
                            c.name,
-                           c.ename,
+                           c.name_en,
                            l.name AS `level`,
                            i.name AS `inst`,
                            s.name AS `state`,
@@ -111,7 +111,7 @@ function getCourses()
         $stmt1 = $conn->prepare($sql . $whereClause);
         $stmt1->execute($param);
 
-        $whereClause = str_replace("c.name LIKE :keyword", "c.ename LIKE :keyword", $whereClause);
+        $whereClause = str_replace("c.name LIKE :keyword", "c.name_en LIKE :keyword", $whereClause);
 
         $stmt2 = $conn->prepare($sql . $whereClause);
         $stmt2->execute($param);
@@ -177,7 +177,7 @@ function getCoursesById()
     $courseId = $_REQUEST['id'];
     $sql = "SELECT  c.id,
                     c.name,
-                    c.ename,
+                    c.name_en,
                     c.level_id,
                     c.field_id_p AS `field_p`,
                     c.field_id_c AS `field_c`,
@@ -190,6 +190,8 @@ function getCoursesById()
                     c.immigration,
                     c.intro,
                     c.description,
+                    c.intro_en,
+                    c.description_en,
                     c.status
             FROM course c
             LEFT JOIN institution i ON c.inst_id = i.id
@@ -275,7 +277,7 @@ function saveCourse()
         // echo $sql;die;
     } else {
         // 插入新数据
-        $sql = "INSERT INTO course (`name`,`ename`,`level_id`,`field_id_p`,`field_id_c`,`months`,`fees`,`intro`,`description`,`inst_id`)VALUE(:name,:ename,:level_id,:field_id_p,:field_id_c,:months,:fees,:intro,:description,:inst_id);";
+        $sql = "INSERT INTO course (`name`,`name_en`,`level_id`,`field_id_p`,`field_id_c`,`months`,`fees`,`intro`,`description`,`intro_en`,`description_en`,`inst_id`)VALUE(:name,:name_en,:level_id,:field_id_p,:field_id_c,:months,:fees,:intro,:description,:intro_en,:description_en,:inst_id);";
     }
 
     try {

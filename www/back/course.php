@@ -116,6 +116,10 @@ getjs("js/layer/layer.js", true);
     var form = null;
     let STATESANDINST = [],
       FIELDS = [];
+    var current_scroll = {
+      x: 0,
+      y: 0
+    };
 
     const column_course = [{
       title: '名称',
@@ -128,7 +132,7 @@ getjs("js/layer/layer.js", true);
       }
     }, {
       title: '英文名称',
-      field: 'ename',
+      field: 'name_en',
       align: 'left',
       valign: 'middle',
       width: 240,
@@ -644,6 +648,10 @@ getjs("js/layer/layer.js", true);
     }
 
     function FormCourse(inst_id, id) {
+      current_scroll = {
+        x: window.pageXOffset,
+        y: window.pageYOffset
+      };
       const url = `newcourse?inst_id=${inst_id}`;
       form = layer.open({
         type: 2,

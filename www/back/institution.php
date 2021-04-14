@@ -114,7 +114,7 @@ getjs("js/layer/layer.js", true);
         cellStyle: cellStyle
       }, {
         title: '英文名称',
-        field: 'ename',
+        field: 'name_en',
         align: 'left',
         valign: 'middle',
         sortable: true,

@@ -106,17 +106,26 @@ getcss("js/layer/theme/default/layer.css", true);
 
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item" style="display:none">
-        <a class="nav-link " id="intro_tab" data-toggle="tab" href="#input_intro" role="tab" aria-controls="intro" aria-selected="true">简介</a>
+        <a class="nav-link " id="tab_intro" data-toggle="tab" href="#input_intro" role="tab" aria-controls="intro" aria-selected="true">简介</a>
+      </li>
+      <!-- <li class="nav-item" style="display:none">
+        <a class="nav-link " id="tab_intro_en" data-toggle="tab" href="#input_intro_en" role="tab" aria-controls="intro" aria-selected="true">简介(英文)</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link active" id="tab_description" data-toggle="tab" href="#input_description" role="tab" aria-controls="description"
+          aria-selected="true">详细介绍</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" id="description_tab" data-toggle="tab" href="#input_description" role="tab" aria-controls="description"
-          aria-selected="true">详细介绍</a>
+        <a class="nav-link" id="tab_description_en" data-toggle="tab" href="#input_description_en" role="tab" aria-controls="description_en"
+          aria-selected="true">详细介绍(英文)</a>
       </li>
     </ul>
 
     <div class="tab-content">
-      <div class="tab-pane fade " role="tabpanel" aria-labelledby="intro_tab" id="input_intro"></div>
-      <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="description_tab" id="input_description"></div>
+      <div class="tab-pane fade " role="tabpanel" aria-labelledby="tab_intro" id="input_intro"></div>
+      <div class="tab-pane fade " role="tabpanel" aria-labelledby="tab_intro_en" id="input_intro_en"></div>
+      <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="tab_description" id="input_description"></div>
+      <div class="tab-pane fade" role="tabpanel" aria-labelledby="tab_description_en" id="input_description_en"></div>
     </div>
 
     <div style="float: right; margin-top: 15px;">
@@ -144,6 +153,12 @@ getjs("js/layer/layer.js", true);
     const editor_description = new E(document.getElementById('input_description'))
     editor_description.config.placeholder = '请输入详细介绍';
     editor_description.create();
+    const editor_intro_en = new E(document.getElementById('input_intro_en'))
+    editor_intro_en.config.placeholder = '请输入简介(英文)';
+    editor_intro_en.create();
+    const editor_description_en = new E(document.getElementById('input_description_en'))
+    editor_description_en.config.placeholder = '请输入详细介绍(英文)';
+    editor_description_en.create();
     const urlParams = new URLSearchParams(window.location.search);
     const inst_id = urlParams.get('inst_id');
     const course_id = urlParams.get('id');
@@ -238,7 +253,7 @@ getjs("js/layer/layer.js", true);
             res = JSON.parse(res);
             data_old = res;
             $("#input_course_name").val(res.name);
-            $("#input_course_ename").val(res.ename);
+            $("#input_course_ename").val(res.name_en);
             $("#input_course_field_p").val(res.field_p).change();
             $("#input_course_field_c").val(res.field_c);
             $("#input_course_level").val(res.level_id);
@@ -247,8 +262,10 @@ getjs("js/layer/layer.js", true);
             $("#input_course_state_id").val(res.state_id);
             $("#input_course_state_id").change();
             $("#input_course_inst_id").val(res.inst_id);
-            editor_description.txt.html(res.description);
-            editor_intro.txt.html(res.intro);
+            editor_description.txt.html(res.description || "");
+            editor_description_en.txt.html(res.description_en || "");
+            editor_intro.txt.html(res.intro || "");
+            editor_intro_en.txt.html(res.intro_en || "");
           });
         if (inst_id) {
           $.get('util/institutionOperation.php?op=4&instid=' + inst_id, function (res) {
@@ -282,9 +299,11 @@ getjs("js/layer/layer.js", true);
         data_new.id = data_old.id;
         data_new.description = editor_description.txt.html().trim();
         data_new.intro = editor_intro.txt.html().trim();
+        data_new.description_en = editor_description_en.txt.html().trim();
+        data_new.intro_en = editor_intro_en.txt.html().trim();
         data_new.inst_id = $("#input_course_inst_id").val();
         data_new.name = $("#input_course_name").val().trim();
-        data_new.ename = $("#input_course_ename").val().trim();
+        data_new.name_en = $("#input_course_ename").val().trim();
         data_new.field_id_p = $("#input_course_field_p").val();
         data_new.field_id_c = $("#input_course_field_c").val();
         data_new.level_id = $("#input_course_level").val();
@@ -321,22 +340,27 @@ getjs("js/layer/layer.js", true);
         }
 
         if (sameValue(data_new.name, data_old.name)) data_new.name = null;
-        if (sameValue(data_new.ename, data_old.ename)) data_new.ename = null;
+        if (sameValue(data_new.name_en, data_old.name_en)) data_new.name_en = null;
         if (sameValue(data_new.field_id_p, data_old.field_p)) data_new.field_id_p = null;
         if (sameValue(data_new.field_id_c, data_old.field_c)) data_new.field_id_c = null;
         if (sameValue(data_new.description, data_old.description)) data_new.description = null;
         if (sameValue(data_new.intro, data_old.intro)) data_new.intro = null;
+        if (sameValue(data_new.description_en, data_old.description_en)) data_new.description_en = null;
+        if (sameValue(data_new.intro_en, data_old.intro_en)) data_new.intro_en = null;
         if (sameValue(data_new.level_id, data_old.level_id)) data_new.level_id = null;
         if (sameValue(data_new.months, data_old.months)) data_new.months = null;
         if (sameValue(data_new.fees, data_old.fees)) data_new.fees = null;
 
         if (
           data_new.name == null &&
-          data_new.ename == null &&
+          data_new.name_en == null &&
           data_new.field_id_p == null &&
           data_new.field_id_c == null &&
           data_new.name == null &&
           data_new.intro == null &&
+          data_new.intro_en == null &&
+          data_new.description == null &&
+          data_new.description_en == null &&
           data_new.level_id == null &&
           data_new.months == null &&
           data_new.fees == null
@@ -345,7 +369,8 @@ getjs("js/layer/layer.js", true);
           parent.scrollTo(parent.current_scroll.x, parent.current_scroll.y);
           return;
         }
-
+        // console.log("here", JSON.stringify(data_new));
+        // return;
         $.post('util/courseOperation.php?op=4', JSON.stringify(data_new), res => {
           try {
             res = JSON.parse(res);
@@ -375,8 +400,10 @@ getjs("js/layer/layer.js", true);
         data_new.id = data_old.id;
         data_new.description = editor_description.txt.html().trim();
         data_new.intro = editor_intro.txt.html().trim();
+        data_new.description_en = editor_description_en.txt.html().trim();
+        data_new.intro_en = editor_intro_en.txt.html().trim();
         data_new.name = $("#input_course_name").val().trim();
-        data_new.ename = $("#input_course_ename").val().trim();
+        data_new.name_en = $("#input_course_ename").val().trim();
         data_new.field_id_p = $("#input_course_field_p").val();
         data_new.field_id_c = $("#input_course_field_c").val();
         data_new.level_id = $("#input_course_level").val();
@@ -386,7 +413,7 @@ getjs("js/layer/layer.js", true);
         if (data_old.id) {
           if (
             !sameValue(data_new.name, data_old.name) ||
-            !sameValue(data_new.ename, data_old.ename) ||
+            !sameValue(data_new.name_en, data_old.name_en) ||
             !sameValue(data_new.field_id_p, data_old.field_p) ||
             !sameValue(data_new.field_id_c, data_old.field_c) ||
             !sameValue(data_new.description, data_old.description) ||
@@ -396,7 +423,7 @@ getjs("js/layer/layer.js", true);
             !sameValue(data_new.fees, data_old.fees)
           ) {
             if (!sameValue(data_new.name, data_old.name)) console.log('name', data_new.name, data_old.name);
-            if (!sameValue(data_new.ename, data_old.ename)) console.log('ename', data_new.ename, data_old.ename);
+            if (!sameValue(data_new.name_en, data_old.name_en)) console.log('name_en', data_new.name_en, data_old.name_en);
             if (!sameValue(data_new.field_id_p, data_old.field_p)) console.log('field_id_p', data_new.field_id_p, data_old.field_p);
             if (!sameValue(data_new.field_id_c, data_old.field_c)) console.log('field_id_c', data_new.field_id_c, data_old.field_c);
             // if (!sameValue(data_new.description, data_old.description)) console.log('description', data_new.description, data_old.description);

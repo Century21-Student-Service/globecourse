@@ -138,7 +138,7 @@ function getCountryAndState($state)
 {
     $Db = new MySql(false);
     // $r = $Db->GetOne("SELECT `fieldsel` FROM `ctm_field` WHERE `fieldname`='" . $sql . "'");
-    $r = $Db->GetOne("SELECT s.name AS `state`, c.name AS `country` FROM state s LEFT JOIN country c ON s.country_id = c.id WHERE s.id=$state;");
+    $r = $Db->GetOne("SELECT s.name AS `state`,s.name_en AS `state_en`, c.name AS `country`, c.name_en AS `country_en` FROM state s LEFT JOIN country c ON s.country_id = c.id WHERE s.id=$state;");
     return $r;
 }
 

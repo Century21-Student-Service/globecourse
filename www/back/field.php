@@ -34,7 +34,7 @@ getjs("js/layer/layer.js", true);
       cursor: pointer;
     }
 
-    .data-title {
+    .data-id {
       position: absolute;
       padding-top: 10px;
       padding-left: 10px;
@@ -42,9 +42,14 @@ getjs("js/layer/layer.js", true);
       color: white;
     }
 
-    .data-status {
+    .data-title {
       font-size: 34px;
       margin-top: 77px;
+      color: white;
+    }
+
+    .data-subtitle {
+      font-size: 24px;
       color: white;
     }
 
@@ -68,6 +73,27 @@ getjs("js/layer/layer.js", true);
 
     .data-block:hover .data-edit {
       display: block;
+    }
+
+    .layui-layer-input {
+      display: block;
+      width: 230px;
+      height: 36px;
+      margin: 0 auto;
+      line-height: 30px;
+      padding-left: 10px;
+      border: 1px solid #e6e6e6;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .layui-layer-content {
+      padding: 15px;
+    }
+
+    .layui-layer-btn0 {
+      background-color: #0062a9 !important;
+      border-color: #0062a9 !important;
     }
   </style>
 </head>
@@ -94,9 +120,10 @@ getjs("js/layer/layer.js", true);
         let index = 0;
         res.forEach(e => {
           str = `<div class="data-block" data-pid="${e.id}" id="field_${e.id}" style="background-color:${randomcolor[index]}">
-                  <div class="data-title">${("0" + e.id).slice(-2)}</div>
+                  <div class="data-id">${("0" + e.id).slice(-2)}</div>
                   <div class="data-edit"><i class="fas fa-edit"></i></div>
-                  <div class="data-status">${e.name}</div>
+                  <div class="data-title">${e.name}</div>
+                  <div class="data-subtitle">${e.name_en || '-'}</div>
                   <div class="data-compare">
                   </div>
                 </div>`;
@@ -108,34 +135,79 @@ getjs("js/layer/layer.js", true);
         $(".data-block").click(e => {
           const pid = $(e.currentTarget).data("pid");
           if (e.target.classList.contains("fa-edit")) {
-            layer.prompt({
-              title: '请输入新的名称',
-              formType: 0
-            }, function (newname, index) {
-              $.post('util/fieldOperation?op=7', {
-                name: newname,
-                id: pid,
-              }, res => {
-                try {
-                  res = JSON.parse(res)
-                } catch (e) {
-                  layer.alert(res, {
-                    title: "错误",
-                    icon: 2
-                  });
-                }
-                if (res.code == 0) {
-                  $("#field_" + pid + " .data-status").html(newname);
-                  layer.close(index);
-                } else {
-                  layer.alert(res.msg, {
-                    title: "错误",
-                    icon: 2
-                  });
-                }
-              })
-              layer.close(index);
+            layer.open({
+              type: 1,
+              anim: 2,
+              closeBtn: 0,
+              shadeClose: true, //开启遮罩关闭
+              content: `<input type="text" class="layui-layer-input" id="name_${pid}" value="">
+              <input type="text" class="layui-layer-input" id="name_en_${pid}" value="">
+              <div class="layui-layer-btn layui-layer-btn-"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">关闭</a></div>`,
+              success: function (layero, index) {
+                $("#name_" + pid).val(htmlDecode($(`#field_${pid} .data-title`).html()));
+                $("#name_en_" + pid).val(htmlDecode($(`#field_${pid} .data-subtitle`).html()));
+              },
+              yes: function (index, layero) {
+                const name = $("#name_" + pid).val();
+                const name_en = $("#name_en_" + pid).val();
+                $.post('util/fieldOperation?op=7', {
+                  name,
+                  name_en,
+                  id: pid,
+                }, res => {
+                  try {
+                    res = JSON.parse(res)
+                  } catch (e) {
+                    layer.alert(res, {
+                      title: "错误",
+                      icon: 2
+                    });
+                  }
+                  if (res.code == 0) {
+                    $("#field_" + pid + " .data-title").html(name);
+                    $("#field_" + pid + " .data-subtitle").html(name_en);
+                    layer.close(index);
+                  } else {
+                    layer.alert(res.msg, {
+                      title: "错误",
+                      icon: 2
+                    });
+                  }
+                })
+                layer.close(index);
+
+                layer.close(index);
+              }
             });
+
+            // layer.prompt({
+            //   title: '请输入新的名称',
+            //   formType: 0
+            // }, function (newname, index) {
+            //   $.post('util/fieldOperation?op=7', {
+            //     name: newname,
+            //     id: pid,
+            //   }, res => {
+            //     try {
+            //       res = JSON.parse(res)
+            //     } catch (e) {
+            //       layer.alert(res, {
+            //         title: "错误",
+            //         icon: 2
+            //       });
+            //     }
+            //     if (res.code == 0) {
+            //       $("#field_" + pid + " .data-status").html(newname);
+            //       layer.close(index);
+            //     } else {
+            //       layer.alert(res.msg, {
+            //         title: "错误",
+            //         icon: 2
+            //       });
+            //     }
+            //   })
+            //   layer.close(index);
+            // });
             return;
           } else {
             form = layer.open({
@@ -149,6 +221,11 @@ getjs("js/layer/layer.js", true);
         });
       });
     });
+
+    function htmlDecode(input) {
+      var doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent;
+    }
   </script>
 </body>
 

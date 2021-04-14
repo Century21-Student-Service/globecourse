@@ -1,149 +1,104 @@
-<?php session_start();
-  require_once(dirname(__FILE__).'./../include/config.inc.php'); 
-  include_once('./../ext/news.php');
+<?php
 
-  @$state=$_REQUEST['state'];
-  @$courseType=$_REQUEST['schoolType'];
-  @$courseName=$_REQUEST['courseName'];
-  @$broadField=$_REQUEST['broadField'];
-  @$narrowField=$_REQUEST['narrowField'];
+session_start();
 
+require_once dirname(__FILE__) . './../include/config.inc.php';
+require '../../config/conn.php';
 
-  /** ====  [State]  ==== **/
-  if(!empty($state)){
-    $_SESSION['states']=$state;
-    $statestr=$_SESSION['states'];
-  }else{
-    if ($state == '0'){
-      $_SESSION['states'] = 0;
-      $statestr=0;
+define('EMPTY_UNAVAILABLE', 'Unavailable');
+
+$state = isset($_REQUEST['state']) ? $_REQUEST['state'] : $_SESSION['state'];
+$regional = isset($_REQUEST['regional']) ? $_REQUEST['regional'] : $_SESSION['regional'];
+$level = isset($_REQUEST['schoolType']) ? $_REQUEST['schoolType'] : $_SESSION['level'];
+$keyword = isset($_REQUEST['courseName']) ? $_REQUEST['courseName'] : $_SESSION['keyword'];
+$field_p = isset($_REQUEST['broadField']) ? $_REQUEST['broadField'] : $_SESSION['field_p'];
+$field_c = isset($_REQUEST['narrowField']) ? $_REQUEST['narrowField'] : $_SESSION['field_c'];
+
+$_SESSION['state'] = $state;
+$_SESSION['regional'] = $regional;
+$_SESSION['level'] = $level;
+$_SESSION['keyword'] = $keyword;
+$_SESSION['field_p'] = $field_p;
+$_SESSION['field_c'] = $field_c;
+
+$where = "";
+
+// $sql = "SELECT id FROM institution WHERE regional=$regional";
+// $stmt = $conn->prepare($sql);
+// $stmt->execute();
+// $rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
+// if (count($rows)) {
+//     $where .= "AND inst_id IN(" . implode(",", $rows) . ") ";
+// }
+
+if ($regional) {
+    $sql = "SELECT DISTINCT field_id FROM immi_field_state WHERE state_id <> 0";
+} else {
+    $sql = "SELECT DISTINCT field_id FROM immi_field_state WHERE state_id = 0";
+}
+
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
+$where .= " AND c.field_id_c IN(" . implode(",", $rows) . ") ";
+
+if ($state) {
+    $sql = "SELECT id FROM institution WHERE state_id=$state";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    if (count($rows)) {
+        $where .= " AND inst_id IN(" . implode(",", $rows) . ") ";
     }
-    else if(empty($_SESSION['states'])){
-      $statestr=0;
-    }else{
-      $statestr=$_SESSION['states'];
+}
+
+if ($level) {
+    $where .= "AND level_id = $level ";
+}
+
+if ($keyword) {
+    $where .= "AND c.name like '%$keyword%' ";
+} else {
+    if ($field_p) {
+        $where .= "AND field_id_p = $field_p ";
     }
-  }
-  /** ====  [Course-Type]  ==== **/
-  if(!empty($courseType)){
-    $_SESSION['cType']=$courseType;
-    $ct=$_SESSION['cType'];
-  }else{
-    if ($courseType == '0'){
-      $_SESSION['cType'] = 0;
-      $ct=0;
+    if ($field_c) {
+        $where .= "AND field_id_c = $field_c ";
     }
-    else if(empty($_SESSION['cType'])){
-      $ct=0;
-    }else{
-      $ct=$_SESSION['cType'];
-    }
-  }
+}
 
-  /** ====  [Course-Name]  ==== **/
-  if(!empty($courseName)){
-    $_SESSION['cN']=$courseName;
-    $cn=$_SESSION['cN'];
-  }else{
-    if ($courseName == ''){ //  textfield empty
-      $_SESSION['cN'] = 0;
-      $cn=0;
-    }
-    else if(empty($_SESSION['cN'])){
-      $cn='';
-    }else{
-      $cn=$_SESSION['cN'];
-    }
-  }
+$where .= " AND i.regional = $regional ";
 
-  /** ====  [Faculty]  ==== **/
-  if(!empty($broadField)){
+$sql = "SELECT c.id,
+                IF(c.name_en IS NULL OR c.name_en = '', c.`name`, c.name_en) AS `name`,
+                c.hours,
+                c.months,
+                c.inst_id,
+                i.name_en AS inst ,
+                l.name_en AS `level`,
+                s.name_en AS `state`,
+                c.fees
+      FROM course c
+      LEFT JOIN institution i ON i.id = c.inst_id
+      LEFT JOIN `level` l ON l.id = c.level_id
+      LEFT JOIN `state` s ON s.id = i.state_id
+      WHERE c.status > 0
+      $where
+      ";
 
-    $_SESSION['bField']=$broadField;
-    $bf=$_SESSION['bField'];
-  }else{
-    if ($broadField == '0'){
-      $_SESSION['bField'] = 0;
-      $bf=0;
-    }
-    else if(empty($_SESSION['bField'])){
-      $bf=0;
-    }else{
-      $bf=$_SESSION['bField'];
-    }
-  }
-  /** ====  [Specific-course]  ==== **/
-  if(!empty($narrowField)){
-
-    $_SESSION['nField']=$narrowField;
-    $nf=$_SESSION['nField'];
-  }else{
-    if ($narrowField == '0'){
-      $_SESSION['nField'] = 0;
-      $nf=0;
-    }
-    else if(empty($_SESSION['nField'])){
-      $nf=0;
-    }else{
-      $nf=$_SESSION['nField'];
-    }
-  }
-
-
-  /** ==================================================================================== **/
-  /** ______________________________        get List        ______________________________ **/
-  /** ==================================================================================== **/
-  if($statestr==0){
-      $stateW="";
-  }else{
-      $stateW=" state='".$statestr."' AND ";
-  }
-  if($ct==0){
-     $TypeW="";
-  }else{
-     $TypeW=" type='".$ct."' AND ";
-  }
-
-
-
-  if($nf==0&&$bf==0){
-    $fieldW="";
-    $bfW="";
-    }
-  else if ($nf==0&&$bf!=0) {
-
-    $fieldW=" kcfw LIKE '".$bf."%' AND ";
-    $bfW="";
-  }
-  else{
-    $fieldW="kcfw= ".$nf." AND ";
-    $bfW="";
-  }
-
-  if($cn==''){
-    $cnW="";
-  }else{
-    $cnW=" title LIKE '%".$cn."%' OR ename LIKE '%".$cn."%' AND ";
-  }
-
-  $sql="SELECT * FROM `#@__infolist` WHERE classid=2 AND immigration=1 AND ".$stateW." ".$TypeW." ".$fieldW." ".$bfW." ".$cnW." checkinfo='true' AND delstate='' AND checkinfo=true ORDER BY orderid DESC";
-  $dopage->GetPage($sql,10);
+// die($sql);
+// $stmt = $conn->prepare($sql);
+// $stmt->execute();
+// $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$dopage->GetPage($sql, 10);
 
 ?>
 
 <link href="./../css/common.css" type="text/css" rel="stylesheet" />
-<!-- <link href="./../ext/news.css" type="text/css" rel="stylesheet" /> -->
-
-<!-- <script src="./../templates/default/js/jquery.min.js"></script> -->
-
-<!-- (Theme) kingster -->
-<!-- <link rel='stylesheet' href='kingster-plugins/goodlayers-core/plugins/combine/style.css' type='text/css' media='all' /> -->
 <link rel='stylesheet' href='kingster-plugins/goodlayers-core/include/css/page-builder.min.css' type='text/css' media='all' />
-<!-- <link rel='stylesheet' href='kingster-plugins/revslider/public/assets/css/settings.css' type='text/css' media='all' /> -->
 <link rel='stylesheet' href='kingster-css/style-core.min.css' type='text/css' media='all' />
 <link rel='stylesheet' href='kingster-css/kingster-style-custom.min.css' type='text/css' media='all' />
-
-<!-- (Theme) custom -->
 <link rel="stylesheet" type="text/css" href="custom-css/table.css">
 
 
@@ -151,50 +106,54 @@
 <!-- ______________________________        Table [responsive]        ______________________________ -->
 <!-- ============================================================================================== -->
 <div class="ctm-table__container">
-  <h2><small>Found </small>"<?php echo $dopage->GetResult_num(); ?>"<small> results</small></h2>
+<h2><small>Found </small> <?php echo $dopage->GetResult_num(); ?> <small> results</small></h2>
   <ul class="ctm__responsive-table">
     <li class="ctm-table__header">
-      <div class="ctm-table__col ctm-table__5col-1 ctm-table__col-1">Course Name</div>
-      <div class="ctm-table__col ctm-table__5col-2">Institution</div>
-      <div class="ctm-table__col ctm-table__5col-3">Education</div>
-      <div class="ctm-table__col ctm-table__5col-4">State</div>
-      <div class="ctm-table__col ctm-table__5col-5">Duration（weekly）</div>
+    <div class="ctm-table__col ctm-table__6col-1 ctm-table__col-1">Course Name</div>
+      <div class="ctm-table__col ctm-table__6col-2">Education</div>
+      <div class="ctm-table__col ctm-table__6col-3">Institution</div>
+      <div class="ctm-table__col ctm-table__6col-4">State</div>
+      <div class="ctm-table__col ctm-table__6col-5">Duration(Months)</div>
+      <div class="ctm-table__col ctm-table__6col-6">Fees(yearly)</div>
     </li>
-    
-    <?php
-      while($row = $dosql->GetArray())
-      {
-        if($row['linkurl']=='' and $cfg_isreurl!='Y') $gourl = 'newsshow.php?cid='.$row['classid'].'&id='.$row['id'];
-        else if($cfg_isreurl=='Y') $gourl = 'newsshow-'.$row['classid'].'-'.$row['id'].'-1.html';
-        else $gourl = $row['linkurl'];
 
-        $row2 = $dosql->GetOne("SELECT `classname` FROM `#@__infoclass` WHERE `id`=".$row['classid']);
-        if($cfg_isreurl!='Y') $gourl2 = 'news.php?cid='.$row['classid'];
-        else $gourl2 = 'news-'.$row['classid'].'-1.html';
-        if($row['type']>3){;
-            $page="./../schoolShow.php";
-          $zypage="./../schoolShow_zysh.php";
-          
-        }else{
-          $page="./../schoolShow2.php";
-          $zypage="./../schoolShow_zysh.php";
+    <?php
+while ($row = $dosql->GetArray()) {; // foreach ($rows as $row) {
+    if ($row['fees'] == 0) {
+        $fees_format = EMPTY_UNAVAILABLE;
+    } else {
+        $fees = $row['fees'];
+        if (empty($_COOKIE['gc_currency'])) {
+            $currency_code = 'AUD';
+        } else {
+            $currency_code = str_replace('"', "", $_COOKIE['gc_currency']);
         }
-
+        $c_base = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE id = 1;");
+        $c_base = $c_base['rate'];
+        $c_target = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE code = '$currency_code' ;");
+        $fees = $fees * $c_target['rate'] / $c_base;
+        $fees = round($fees, -3);
+        $fees_bf_3 = substr($fees, 0, -3);
+        $fees_last_3 = substr($fees, -3);
+        $fees_format = $c_target['code'] . ' ' . $c_target['symbol'] . $fees_bf_3 . ',' . $fees_last_3;
+    }
+    $link = 'course-info.php?cid=' . $row['inst_id'] . '&id=' . $row['id'];
+    $months = $row['months'] ? $row['months'] . " months" : EMPTY_UNAVAILABLE;
     ?>
-        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);?>?cid=<?php //echo($row['cbh']);?>&id=<?php //echo($row['id']);?>';"> -->
-        <li class="ctm-table__row" onclick="parent.location.href='course-info.php?cid=<?php echo($row['cbh']);?>&id=<?php echo($row['id']);?>';">
-          <div class="ctm-table__col ctm-table__5col-1 ctm-table__col-1" data-label=""><?php echo($row['title']);?></div>
-          <div class="ctm-table__col ctm-table__5col-2 ctm-table__embed-School" data-label=""><?php echo($row['daxue']);?></div>
-          <div class="ctm-table__col ctm-table__5col-3 ctm-table__embed-courseType" data-label=""><?php echo( getVal_en('typeEn',$row['type']) );?></div>
-          <div class="ctm-table__col ctm-table__5col-4 ctm-table__embed-State" data-label=""><?php echo( getVal_en('stateEn',$row['state']) );?></div>
-          <div class="ctm-table__col ctm-table__5col-5 ctm-table__embed-Duration" data-label=""><?php echo($row['ks']);?></div>
+        <!-- <li class="ctm-table__row" onclick="parent.location.href='/iframe_parent/<?php //echo($zypage);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>?cid=<?php //echo($row['cbh']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>&id=<?php //echo($row['id']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>';"> -->
+        <li class="ctm-table__row" onclick="parent.location.href='<?php echo $link; ?>';">
+        <div class="ctm-table__col ctm-table__6col-1 ctm-table__col-1" data-label=""><?php echo ($row['name']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-2 ctm-table__embed-courseType" data-label=""><?php echo $row['level']; ?></div>
+          <div class="ctm-table__col ctm-table__6col-3 ctm-table__embed-School" data-label=""><?php echo ($row['inst']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-4 ctm-table__embed-State" data-label=""><?php echo ($row['state']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-5 ctm-table__embed-Duration" data-label=""><?php echo ($months); ?></div>
+          <div class="ctm-table__col ctm-table__6col-6 ctm-table__embed-Fes" data-label=""><?php echo $fees_format; ?></div>
         </li>
-
     <?php
-      }
-    ?>
+}
+?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>

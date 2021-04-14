@@ -45,6 +45,11 @@ getcss("js/layer/theme/default/layer.css", true);
       max-width: 150px;
     }
 
+    span.empty-name {
+      padding: 15px;
+      font-weight: bold;
+    }
+
     table {
       font-size: 17px;
     }
@@ -93,8 +98,12 @@ getjs("js/layer/layer.js", true);
       if (e.id == pid) $("h1").html(e.name);
     });
 
-    function dismissName(id) {
-      $('#toggle_rename_' + id).popover('hide');
+    function dismissName(id, en = false) {
+      if (en) {
+        $('#toggle_rename_en_' + id).popover('hide');
+      } else {
+        $('#toggle_rename_' + id).popover('hide');
+      }
     }
 
     function saveName(id) {
@@ -134,6 +143,44 @@ getjs("js/layer/layer.js", true);
       }
     }
 
+    function saveNameEn(id) {
+      $("#btn_saveName_en_" + id).attr('disabled', 'disabled');
+      $("#btn_dismissName_en_" + id).attr('disabled', 'disabled');
+      let oldName = $("#toggle_rename_en_" + id).html().trim();
+      let newName = $("#input_rename_en_" + id).val().trim();
+      if (newName.length !== 0 && newName != oldName) {
+        $.post('util/fieldOperation?op=7', {
+          name_en: newName,
+          id,
+        }, res => {
+          try {
+            res = JSON.parse(res)
+          } catch (e) {
+            layer.alert(res, {
+              title: "错误",
+              icon: 2
+            });
+            $("#btn_saveName_en_" + id).removeAttr('disabled');
+            $("#btn_dismissName_en_" + id).removeAttr('disabled');
+          }
+          if (res.code == 0) {
+            $("#toggle_rename_en_" + id).html(newName);
+            dismissName(id, true);
+          } else {
+            layer.alert(res.msg, {
+              title: "错误",
+              icon: 2
+            });
+            $("#btn_saveName_en_" + id).removeAttr('disabled');
+            $("#btn_dismissName_en_" + id).removeAttr('disabled');
+          }
+        })
+      } else {
+        dismissName(id, true);
+      }
+    }
+
+
     function refreshTable() {
       const getStates = $.get("util/fieldOperation.php?op=1", res => {
         states = JSON.parse(res);
@@ -161,6 +208,22 @@ getjs("js/layer/layer.js", true);
             return `<span id="toggle_rename_${row.field_id}" class="toggle toggle-text" data-toggle="popover"
                 title="修改名称" data-content="${content}">${value}</span>
             <button class='btn btn-sm btn-danger btn-field-del' data-fieldid='${row.field_id}'>删除</button>`;
+          }
+        }, {
+          field: 'field_name_en',
+          title: '英文名称',
+          valign: 'middle',
+          width: 180,
+          formatter: function (value, row, index) {
+            const toggleClass = value || "empty-name";
+            value = value || "-";
+            const content = `<input id='input_rename_en_${row.field_id}' class='form-control update' type='text'>
+          <button type='button' class='btn btn-success btn-sm btn-update' id='btn_saveName_en_${row.field_id}' onclick='saveNameEn(${row.field_id},true)'>
+          <span class='glyphicon glyphicon-ok' aria-hidden='true'></span></button>
+          <button type='button' class='btn btn-danger btn-sm btn-update' id='btn_dismissName_en_${row.field_id}' onclick='dismissName(${row.field_id},true)'>
+          <span class='glyphicon glyphicon-remove' aria-hidden='true'></span></button>`;
+            return `<span id="toggle_rename_en_${row.field_id}" class="toggle toggle-text ${toggleClass}" data-toggle="popover"
+                title="修改名称" data-content="${content}">${value}</span>`;
           }
         }, {
           field: '0',
@@ -198,10 +261,10 @@ getjs("js/layer/layer.js", true);
               html: true,
             });
             $('[data-toggle="popover"]').on('shown.bs.popover', function (e) {
-              $("#input_rename_" + e.currentTarget.id.replace(/^toggle_rename_/g, '')).val($(this).html());
+              if (!/_en_/g.test(e.currentTarget.id))
+                $("#input_rename_" + e.currentTarget.id.replace(/^toggle_rename_/g, '')).val($(this).html());
             });
             $('[data-toggle="popover"]').on('show.bs.popover', function (e) {
-
               $('[data-toggle="popover"]:not(#' + e.currentTarget.id + ')').popover('hide');
             });
             $('.toggle-button').bootstrapToggle();

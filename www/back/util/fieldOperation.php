@@ -29,11 +29,11 @@ call_user_func($funcArr[$op]);
 function getFields($return = false)
 {
     global $conn;
-    $sql_parents = "SELECT `id`,`name` FROM field WHERE deep = 0 ORDER BY id;";
+    $sql_parents = "SELECT `id`,`name`,`name_en` FROM field WHERE deep = 0 ORDER BY id;";
     $stmt_parents = $conn->prepare($sql_parents);
     $stmt_parents->execute();
     $parents = $stmt_parents->fetchAll(PDO::FETCH_ASSOC);
-    $sql_child = "SELECT `id`,`name` FROM field WHERE p_id = ? ORDER BY id;";
+    $sql_child = "SELECT `id`,`name`,`name_en` FROM field WHERE p_id = ? ORDER BY id;";
     $stmt_child = $conn->prepare($sql_child);
     foreach ($parents as &$p) {
         $stmt_child->execute([$p['id']]);
@@ -65,7 +65,7 @@ function getFieldsChildren($return = false)
 {
     global $conn;
     $pid = $_REQUEST['pid'];
-    $sql_children = "SELECT `id`,`name` FROM field WHERE p_id = ? ORDER BY orderint,id;";
+    $sql_children = "SELECT `id`,`name`,name_en FROM field WHERE p_id = ? ORDER BY orderint,id;";
     $stmt_children = $conn->prepare($sql_children);
     $stmt_children->execute([$pid]);
     $children = $stmt_children->fetchAll(PDO::FETCH_ASSOC);
@@ -112,7 +112,7 @@ function getImmi()
         array_push($result[$i['field_id']], $i['state_id']);
     }
     foreach ($children as $c) {
-        $one = ['field_id' => $c['id'], 'field_name' => $c['name']];
+        $one = ['field_id' => $c['id'], 'field_name' => $c['name'], 'field_name_en' => $c['name_en']];
         if (!isset($result[$c['id']])) {
             foreach ($states as $s) {
                 $one[$s['id']] = 0;
@@ -244,8 +244,17 @@ function renameField()
         die;
     }
     $param['id'] = $_REQUEST['id'];
-    $param['name'] = $_REQUEST['name'];
-    $sql = "UPDATE field SET `name` = :name WHERE id = :id ;";
+    $sql = "UPDATE field SET ";
+    if (!empty($_REQUEST['name'])) {
+        $sql .= ' `name` = :name,';
+        $param['name'] = $_REQUEST['name'];
+    }
+    if (!empty($_REQUEST['name'])) {
+        $sql .= ' `name_en` = :name_en,';
+        $param['name_en'] = $_REQUEST['name_en'];
+    }
+    $sql = substr($sql, 0, -1);
+    $sql .= " WHERE id = :id ;";
     $stmt = $conn->prepare($sql);
     try {
         $stmt->execute($param);
@@ -253,5 +262,4 @@ function renameField()
     } catch (Exception $e) {
         echo json_encode(['code' => -2, 'msg' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
     }
-
 }
