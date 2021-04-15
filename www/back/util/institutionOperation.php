@@ -233,7 +233,7 @@ function uploadFile()
 function UploadFileInfo()
 {
     global $conn;
-    $cfg_max_file_size = 1024 * 1024 * 8;
+    $cfg_max_file_size = 1024 * 1024 * 64;
     $upfile = 'fileupload';
 
     $cfg_upload_img_type = 'gif|png|jpg|bmp';
@@ -305,7 +305,7 @@ function UploadFileInfo()
     $filename = time() . '_' . rand(1, 9999) . '.' . $tempfile_ext;
 
     //上传文件路径
-    $save_url = 'uploads/' . $upload_url . '/' . $filename;
+    $save_url = '/uploads/' . $upload_url . '/' . $filename;
     $save_dir = $upload_dir . '/' . $filename;
 
     if (file_exists($save_dir)) {

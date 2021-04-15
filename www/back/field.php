@@ -140,8 +140,8 @@ getjs("js/layer/layer.js", true);
               anim: 2,
               closeBtn: 0,
               shadeClose: true, //开启遮罩关闭
-              content: `<input type="text" class="layui-layer-input" id="name_${pid}" value="">
-              <input type="text" class="layui-layer-input" id="name_en_${pid}" value="">
+              content: `<input type="text" class="layui-layer-input" id="name_${pid}" value="" placeholder="请输入中文名">
+              <input type="text" class="layui-layer-input" id="name_en_${pid}" value="" placeholder="请输入英文名">
               <div class="layui-layer-btn layui-layer-btn-"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">关闭</a></div>`,
               success: function (layero, index) {
                 $("#name_" + pid).val(htmlDecode($(`#field_${pid} .data-title`).html()));

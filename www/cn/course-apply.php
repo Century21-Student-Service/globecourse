@@ -211,7 +211,7 @@
       </tr>
       <tr>
         <td class="td-upload">
-          <img src="/a.png" alt="" class="upload-preview hide" id="upload_preview_passport">
+          <img src="" alt="" class="upload-preview hide" id="upload_preview_passport">
           <div class="img-add img-add-passport" onclick="document.getElementById('file_upload_img_passport').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
             <div class="img-add-alt">点击上传</div>
@@ -220,12 +220,12 @@
             <div class="progress-bar" id="img_progress_bar_passport" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             <span class="uploading">上传中</span>
           </div>
-          <input class="file-upload pics-upload" id="file_upload_img_passport" data-type="passport" type="file" accept="image/*">
+          <input class="file-upload pics-upload" id="file_upload_img_passport" data-type="passport" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_passport" type="hidden">
         </td>
 
         <td class="td-upload">
-          <img src="/a.png" alt="" class="upload-preview hide" id="upload_preview_graduated">
+          <img src="" alt="" class="upload-preview hide" id="upload_preview_graduated">
           <div class="img-add img-add-graduated" onclick="document.getElementById('file_upload_img_graduated').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
             <div class="img-add-alt">点击上传</div>
@@ -234,12 +234,12 @@
             <div class="progress-bar" id="img_progress_bar_graduated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             <span class="uploading">上传中</span>
           </div>
-          <input class="file-upload pics-upload" id="file_upload_img_graduated" data-type="graduated" type="file" accept="image/*">
+          <input class="file-upload pics-upload" id="file_upload_img_graduated" data-type="graduated" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_graduated" type="hidden">
         </td>
 
         <td class="td-upload">
-          <img src="/a.png" alt="" class="upload-preview hide" id="upload_preview_diploma">
+          <img src="" alt="" class="upload-preview hide" id="upload_preview_diploma">
           <div class="img-add img-add-diploma" onclick="document.getElementById('file_upload_img_diploma').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
             <div class="img-add-alt">点击上传</div>
@@ -248,12 +248,12 @@
             <div class="progress-bar" id="img_progress_bar_diploma" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             <span class="uploading">上传中</span>
           </div>
-          <input class="file-upload pics-upload" id="file_upload_img_diploma" data-type="diploma" type="file" accept="image/*">
+          <input class="file-upload pics-upload" id="file_upload_img_diploma" data-type="diploma" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_diploma" type="hidden">
         </td>
 
         <td class="td-upload">
-          <img src="/a.png" alt="" class="upload-preview hide" id="upload_preview_score">
+          <img src="" alt="" class="upload-preview hide" id="upload_preview_score">
           <div class="img-add img-add-score" onclick="document.getElementById('file_upload_img_score').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
             <div class="img-add-alt">点击上传</div>
@@ -262,12 +262,12 @@
             <div class="progress-bar" id="img_progress_bar_score" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             <span class="uploading">上传中</span>
           </div>
-          <input class="file-upload pics-upload" id="file_upload_img_score" data-type="score" type="file" accept="image/*">
+          <input class="file-upload pics-upload" id="file_upload_img_score" data-type="score" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_scoresheet" type="hidden">
         </td>
 
         <td class="td-upload">
-          <img src="/a.png" alt="" class="upload-preview hide" id="upload_preview_ielts">
+          <img src="" alt="" class="upload-preview hide" id="upload_preview_ielts">
           <div class="img-add img-add-ielts" onclick="document.getElementById('file_upload_img_ielts').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
             <div class="img-add-alt">点击上传</div>
@@ -276,7 +276,7 @@
             <div class="progress-bar" id="img_progress_bar_ielts" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             <span class="uploading">上传中</span>
           </div>
-          <input class="file-upload pics-upload" id="file_upload_img_ielts" data-type="ielts" type="file" accept="image/*">
+          <input class="file-upload pics-upload" id="file_upload_img_ielts" data-type="ielts" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_ielts" type="hidden">
         </td>
       </tr>
@@ -431,7 +431,7 @@
 
     function validEmail() {
       const reg =
-        /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+        /(?:[A-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[A-z0-9](?:[A-z0-9-]*[A-z0-9])?\.)+[A-z0-9](?:[A-z0-9-]*[A-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[A-z0-9-]*[A-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
       if (!reg.test($("#input_email").val())) {
         $("#input_email").addClass('error');
         return false;

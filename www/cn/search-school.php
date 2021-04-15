@@ -357,7 +357,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 
 		$.get("util/search-immigrationOperation", res => {
 			res = JSON.parse(res);
-			$("#schoolType").html(`<option value="0">Please Choose "Type of Courses"</option>`);
+			$("#schoolType").html(`<option value="0">请选择「课程类别」</option>`);
 			res.forEach(e => {
 				$("#schoolType").append(`<option value='${e.id}'>${e.name}</option>`);
 			});
@@ -366,7 +366,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 		$("#state").change(e => {
 			$.get(`util/search-immigrationOperation?state=${e.currentTarget.value}`, res => {
 				res = JSON.parse(res);
-				$("#schoolType").html(`<option value="0">Please Choose "Type of Courses"</option>`);
+				$("#schoolType").html(`<option value="0">请选择「课程类别」</option>`);
 				res.forEach(e => {
 					$("#schoolType").append(`<option value='${e.id}'>${e.name}</option>`);
 				});

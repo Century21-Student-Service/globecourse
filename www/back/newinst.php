@@ -523,7 +523,6 @@ getjs("js/layer/layer.js", true);
                 $('.video-intro').removeAttr('src');
                 $('.video-intro').addClass("hide");
               }
-
               console.log(res);
               return;
             }

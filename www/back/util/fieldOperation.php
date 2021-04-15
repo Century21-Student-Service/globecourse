@@ -239,7 +239,7 @@ function delFieldC()
 function renameField()
 {
     global $conn;
-    if (empty($_REQUEST['id']) || empty($_REQUEST['name'])) {
+    if (empty($_REQUEST['id']) || (empty($_REQUEST['name']) && empty($_REQUEST['name_en']))) {
         echo json_encode(['code' => -1, 'msg' => '参数非法'], JSON_UNESCAPED_UNICODE);
         die;
     }
@@ -249,7 +249,7 @@ function renameField()
         $sql .= ' `name` = :name,';
         $param['name'] = $_REQUEST['name'];
     }
-    if (!empty($_REQUEST['name'])) {
+    if (!empty($_REQUEST['name_en'])) {
         $sql .= ' `name_en` = :name_en,';
         $param['name_en'] = $_REQUEST['name_en'];
     }

@@ -40,7 +40,7 @@ function getEntryLevels()
 {
     global $conn;
     $result = [];
-    $sql = "SELECT `level`,`grade`,`code` FROM app_level ORDER BY code;";
+    $sql = "SELECT `level`,`grade`,`level_code` AS `code` FROM app_level ORDER BY code;";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $r) {

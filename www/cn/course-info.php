@@ -2,6 +2,11 @@
 require_once dirname(__FILE__) . './../include/config.inc.php';
 include_once './../ext/news.php';
 
+if (empty($id)) {
+    header("Location: search-course");
+    die;
+}
+
 $cid = empty($cid) ? 5 : intval($cid);
 $sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $cid);
 
@@ -208,8 +213,8 @@ $v = explode(',', $picarr[0]);
 
 								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo" src="./../<?php echo ($sch['badge']); ?>"
 										width="" height="" style="border-radius: 10px;" loading="lazy" title="院校 - <?php echo ($sch['name']); ?>" /></a> <!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
+								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
 
 							</div>
 						</div>
@@ -322,7 +327,7 @@ $v = explode(',', $picarr[0]);
 										</select>
 										<div class="apply">
 											<a class="flat-button bg-orange custom-button_noBorder course-apply"
-												style="color: white; font-weight: bold; font-size:18px;padding:0px 25px;" href="#">申请课程</a>
+												style="color: white; font-weight: bold; font-size:18px;padding:0px 25px;" href="#">申请此课程</a>
 										</div>
 									</div>
 
