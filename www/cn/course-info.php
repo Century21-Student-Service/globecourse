@@ -198,7 +198,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 //   $v = explode(',', $k);
 $v = explode(',', $picarr[0]);
 ?>
-					<div class="kingster-page-title-wrap  kingster-style-medium kingster-left-align" style="background-image: url('./../<?php echo $v[0]; ?>');"
+					<div class="kingster-page-title-wrap  kingster-style-medium kingster-left-align" style="height:280px;background-image: url('./../<?php echo $v[0]; ?>');"
 						loading="lazy">
 						<!-- [Background-Image] -->
 
@@ -213,8 +213,8 @@ $v = explode(',', $picarr[0]);
 
 								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo" src="./../<?php echo ($sch['badge']); ?>"
 										width="" height="" style="border-radius: 10px;" loading="lazy" title="院校 - <?php echo ($sch['name']); ?>" /></a> <!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
+										<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><div class="kingster-page-caption"><h1 class="kingster-page-title" style="padding-top:10px;font-size:38px"><?php echo ($sch['name']); ?></div></a>
+								</h1>
 
 							</div>
 						</div>

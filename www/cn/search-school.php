@@ -355,7 +355,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			});
 		});
 
-		$.get("util/search-immigrationOperation", res => {
+		$.get("util/search-immigrationOperation?op=4", res => {
 			res = JSON.parse(res);
 			$("#schoolType").html(`<option value="0">请选择「课程类别」</option>`);
 			res.forEach(e => {
@@ -364,7 +364,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 		});
 
 		$("#state").change(e => {
-			$.get(`util/search-immigrationOperation?state=${e.currentTarget.value}`, res => {
+			$.get(`util/search-immigrationOperation?op=4&state=${e.currentTarget.value}`, res => {
 				res = JSON.parse(res);
 				$("#schoolType").html(`<option value="0">请选择「课程类别」</option>`);
 				res.forEach(e => {

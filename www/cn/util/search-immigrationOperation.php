@@ -7,6 +7,7 @@ $funcArr = [
     'getStates',
     'getFields',
     'getFieldsCOnly',
+    'getLevelsWithoutRegional',
 ];
 
 $op = 0;
@@ -49,6 +50,7 @@ function getLevels()
         $stmt = $conn->prepare($sql);
         $stmt->execute();
     }
+
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);
 }
 
@@ -195,4 +197,24 @@ function getFieldsCOnly($return = false)
     } else {
         echo json_encode($children, JSON_UNESCAPED_UNICODE);
     }
+}
+
+function getLevelsWithoutRegional()
+{
+    global $conn;
+    $state_id = isset($_REQUEST['state']) ? $_REQUEST['state'] : 0;
+
+    if ($state_id) {
+        $sql = "SELECT `id`,`name` FROM `level` WHERE 1 = 1  AND id IN
+        (SELECT distinct level_id FROM course WHERE inst_id IN (SELECT id FROM institution WHERE state_id=?))
+        ORDER BY id;";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$state_id]);
+    } else {
+        $sql = "SELECT `id`,`name` FROM `level` ORDER BY id;";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    }
+
+    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);
 }
