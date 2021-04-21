@@ -99,11 +99,17 @@ getjs("js/layer/layer.js", true);
       width: 220,
       sortable: true,
       formatter: function (value, row, index) {
-        let passport = row.passport.length > 0 ? `<a class='file' href='${row.passport}'>护照</a>` : `<a class='file empty' href=''>护照</a>`;
-        let graduated = row.graduated.length > 0 ? `<a class='file' href='${row.graduated}'>毕业证</a>` : `<a class='file empty' href=''>毕业证</a>`;
-        let diploma = row.diploma.length > 0 ? `<a class='file' href='${row.diploma}'>学位证</a>` : `<a class='file empty' href=''>学位证</a>`;
-        let scoresheet = row.scoresheet.length > 0 ? `<a class='file' href='${row.scoresheet}'>成绩单</a>` : `<a class='file empty' href=''>成绩单</a>`;
-        let ielts_photo = row.ielts_photo.length > 0 ? `<a class='file' href='${row.ielts_photo}'>雅思</a>` : `<a class='file empty' href=''>雅思</a>`;
+        const reg = /globecourse\/[0-9a-z]{32}\.pdf/g;
+        let passport = row.passport.length > 0 ? `<a class='file ${reg.test(row.passport)?"pdf":"img"}' href='${row.passport}'>护照</a>` :
+          `<a class='file empty' href=''>护照</a>`;
+        let graduated = row.graduated.length > 0 ? `<a class='file ${reg.test(row.graduated)?"pdf":"img"}' href='${row.graduated}'>毕业证</a>` :
+          `<a class='file empty' href=''>毕业证</a>`;
+        let diploma = row.diploma.length > 0 ? `<a class='file ${reg.test(row.diploma)?"pdf":"img"}' href='${row.diploma}'>学位证</a>` :
+          `<a class='file empty' href=''>学位证</a>`;
+        let scoresheet = row.scoresheet.length > 0 ? `<a class='file ${reg.test(row.scoresheet)?"pdf":"img"}' href='${row.scoresheet}'>成绩单</a>` :
+          `<a class='file empty' href=''>成绩单</a>`;
+        let ielts_photo = row.ielts_photo.length > 0 ? `<a class='file ${reg.test(row.ielts_photo)?"pdf":"img"}' href='${row.ielts_photo}'>雅思</a>` :
+          `<a class='file empty' href=''>雅思</a>`;
         return passport + graduated + diploma + scoresheet + ielts_photo;
       }
     }, {
@@ -133,9 +139,19 @@ getjs("js/layer/layer.js", true);
         // detailViewByClick: false,
         // detailViewIcon: false,
         onPostBody: function () {
-          $('a.file').magnificPopup({
+          $('a.file.img').magnificPopup({
             type: 'image',
             closeOnContentClick: true,
+          });
+
+          $("a.file.pdf").magnificPopup({
+            type: 'iframe',
+            fixedBgPos: true,
+            closeOnContentClick: true,
+          });
+
+          $("a.file.empty").click(e => {
+            return false;
           });
         },
         // detailFormatter: function (index, row) {
@@ -157,9 +173,6 @@ getjs("js/layer/layer.js", true);
 
     $(() => {
       refresh();
-      $("a.file").click(e => {
-        return false;
-      })
     });
   </script>
 </body>

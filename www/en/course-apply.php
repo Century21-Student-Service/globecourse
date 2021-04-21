@@ -497,11 +497,11 @@
     function fillDobYearMonth() {
       let dob_years = [{
           i: 0,
-          v: 'Please Select'
+          v: 'Year'
         }],
         dob_months = [{
             i: 0,
-            v: 'Please Select'
+            v: 'Month'
           },
           {
             i: 1,
