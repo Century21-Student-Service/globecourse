@@ -138,52 +138,52 @@
 <body>
   <div class="container">
     <header>
-      <h1>个人资料</h1>
+      <h1>Profile</h1>
     </header>
 
     <table class="tbl-app">
       <tr>
-        <td class="app-title right">申请院校</td>
-        <td class="left"><input type="text" class="form-control" aria-label="申请院校" id="input_inst">
+        <td class="app-title right">Institution</td>
+        <td class="left"><input type="text" class="form-control" aria-label="Institution" id="input_inst">
           <input type="hidden" class='for-submit' id="input_inst_id">
         </td>
         <td class="star">*</td>
       </tr>
       <tr>
-        <td class="app-title right">申请课程</td>
+        <td class="app-title right">Course</td>
         <td class="left">
-          <input type="text" class="form-control" aria-label="申请课程" id="input_course">
+          <input type="text" class="form-control" aria-label="Course" id="input_course">
           <input type="hidden" class='for-submit' id="input_course_id">
         </td>
         <td class="star">*</td>
       </tr>
       <tr>
-        <td class="app-title right">申请人姓名</td>
-        <td class="left"><input type="text" class="form-control for-submit" aria-label="申请人姓名" id="input_name"></td>
+        <td class="app-title right">Full Name</td>
+        <td class="left"><input type="text" class="form-control for-submit" aria-label="Full Name" id="input_name"></td>
         <td class="star">*</td>
       </tr>
       <tr>
-        <td class="app-title right">出生年月</td>
+        <td class="app-title right">Date of Birth</td>
         <td class="left">
-          <select class="custom-select for-submit" id="input_dob_year" style="width: 53%;min-width:90px;">
-          </select>
           <select class="custom-select for-submit" id="input_dob_month" style="width: 45%;min-width:90px;">
+          </select>
+          <select class="custom-select for-submit" id="input_dob_year" style="width: 53%;min-width:90px;">
           </select>
         </td>
         <td class="star">*</td>
       </tr>
       <tr>
-        <td class="app-title right">联系电话</td>
-        <td class="left"><input type="text" class="form-control for-submit" aria-label="联系电话" id="input_phone"></td>
+        <td class="app-title right">Phone</td>
+        <td class="left"><input type="text" class="form-control for-submit" aria-label="Phone" id="input_phone"></td>
         <td class="star">*</td>
       </tr>
       <tr>
-        <td class="app-title right">电子邮件</td>
-        <td class="left"><input type="text" class="form-control for-submit" aria-label="电子邮件" id="input_email"></td>
+        <td class="app-title right">Email</td>
+        <td class="left"><input type="text" class="form-control for-submit" aria-label="Email" id="input_email"></td>
         <td class="star">*</td>
       </tr>
       <tr>
-        <td class="app-title right">最高学历或在读年级</td>
+        <td class="app-title right">Highest or Current Grade</td>
         <td class="left">
           <select class="custom-select for-submit" id="input_app_level" style="width: 53%;min-width:90px;">
           </select>
@@ -192,33 +192,33 @@
         </td>
       </tr>
       <tr>
-        <td class="app-title right">毕业或在读院校名称</td>
-        <td class="left"><input type="text" class="form-control for-submit" aria-label="毕业或在读院校名称" id="input_entry_inst"></td>
+        <td class="app-title right">Graduated or Current Institution</td>
+        <td class="left"><input type="text" class="form-control for-submit" aria-label="Current Institution" id="input_entry_inst"></td>
       </tr>
       <tr>
-        <td class="app-title right">雅思分数</td>
-        <td class="left"><input type="text" class="form-control for-submit" aria-label="雅思分数" id="input_ielts"></td>
+        <td class="app-title right">IELTS Score</td>
+        <td class="left"><input type="text" class="form-control for-submit" aria-label="IELTS Score" id="input_ielts"></td>
       </tr>
     </table>
 
     <table class="tbl-upload-image">
       <tr>
-        <th>护照</th>
-        <th>学历毕业证书</th>
-        <th>学位证</th>
-        <th>毕业成绩单</th>
-        <th>雅思成绩单</th>
+        <th>Passport</th>
+        <th>Graduation Certificate</th>
+        <th>Degree Certificate</th>
+        <th>Score Sheet</th>
+        <th>IELTS Sheet</th>
       </tr>
       <tr>
         <td class="td-upload">
           <img src="" alt="" class="upload-preview hide" id="upload_preview_passport">
           <div class="img-add img-add-passport" onclick="document.getElementById('file_upload_img_passport').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
-            <div class="img-add-alt">点击上传</div>
+            <div class="img-add-alt">Click to upload</div>
           </div>
           <div class="progress position-relative progress-upload hide" id="progress_passport">
             <div class="progress-bar" id="img_progress_bar_passport" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            <span class="uploading">上传中</span>
+            <span class="uploading">Uploading...</span>
           </div>
           <input class="file-upload pics-upload" id="file_upload_img_passport" data-type="passport" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_passport" type="hidden">
@@ -228,11 +228,11 @@
           <img src="" alt="" class="upload-preview hide" id="upload_preview_graduated">
           <div class="img-add img-add-graduated" onclick="document.getElementById('file_upload_img_graduated').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
-            <div class="img-add-alt">点击上传</div>
+            <div class="img-add-alt">Click to upload</div>
           </div>
           <div class="progress position-relative progress-upload hide" id="progress_graduated">
             <div class="progress-bar" id="img_progress_bar_graduated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            <span class="uploading">上传中</span>
+            <span class="uploading">Uploading...</span>
           </div>
           <input class="file-upload pics-upload" id="file_upload_img_graduated" data-type="graduated" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_graduated" type="hidden">
@@ -242,11 +242,11 @@
           <img src="" alt="" class="upload-preview hide" id="upload_preview_diploma">
           <div class="img-add img-add-diploma" onclick="document.getElementById('file_upload_img_diploma').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
-            <div class="img-add-alt">点击上传</div>
+            <div class="img-add-alt">Click to upload</div>
           </div>
           <div class="progress position-relative progress-upload hide" id="progress_diploma">
             <div class="progress-bar" id="img_progress_bar_diploma" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            <span class="uploading">上传中</span>
+            <span class="uploading">Uploading...</span>
           </div>
           <input class="file-upload pics-upload" id="file_upload_img_diploma" data-type="diploma" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_diploma" type="hidden">
@@ -256,11 +256,11 @@
           <img src="" alt="" class="upload-preview hide" id="upload_preview_score">
           <div class="img-add img-add-score" onclick="document.getElementById('file_upload_img_score').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
-            <div class="img-add-alt">点击上传</div>
+            <div class="img-add-alt">Click to upload</div>
           </div>
           <div class="progress position-relative progress-upload hide" id="progress_score">
             <div class="progress-bar" id="img_progress_bar_score" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            <span class="uploading">上传中</span>
+            <span class="uploading">Uploading...</span>
           </div>
           <input class="file-upload pics-upload" id="file_upload_img_score" data-type="score" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_scoresheet" type="hidden">
@@ -270,11 +270,11 @@
           <img src="" alt="" class="upload-preview hide" id="upload_preview_ielts">
           <div class="img-add img-add-ielts" onclick="document.getElementById('file_upload_img_ielts').click();">
             <i class="fa fa-plus" aria-hidden="true" style="font-size:90px;margin-top: 22px;"></i>
-            <div class="img-add-alt">点击上传</div>
+            <div class="img-add-alt">Click to upload</div>
           </div>
           <div class="progress position-relative progress-upload hide" id="progress_ielts">
             <div class="progress-bar" id="img_progress_bar_ielts" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            <span class="uploading">上传中</span>
+            <span class="uploading">Uploading...</span>
           </div>
           <input class="file-upload pics-upload" id="file_upload_img_ielts" data-type="ielts" type="file" accept=".jpg,.png,.gif,.pdf">
           <input class="file-upload for-submit" id="input_img_ielts" type="hidden">
@@ -285,10 +285,10 @@
 
     <div class="footer">
       <button type="button" class="btn btn-primary" id='btn_save'>
-        提交申请
+        Submit
       </button>
       <button type="button" class="btn btn-default" style="width: 90px;" id='btn_close'>
-        关闭
+        Close
       </button>
     </div>
   </div>
@@ -303,11 +303,14 @@
       const vn = validName(),
         vm = validEmail(),
         vp = validPhone();
-      if (vn && vm && vp) {
-        let data = {};
-        $(".for-submit").each((i, e) => {
-          data[$(e).attr("id").replace(/^input_/g, '')] = $(e).val();
-        });
+      let data = {};
+      $(".for-submit").each((i, e) => {
+        data[$(e).attr("id").replace(/^input_/g, '')] = $(e).val();
+      });
+      data.dob_month == 0 ? $("#input_dob_month").addClass('error') : $("#input_dob_month").removeClass('error');
+      data.dob_year == 0 ? $("#input_dob_year").addClass('error') : $("#input_dob_year").removeClass('error');
+      const dob = data.dob_year != 0 && data.dob_month != 0;
+      if (vn && vm && vp && dob) {
         data.birth = data.dob_year + "-" + data.dob_month.padStart(2, '0');
         data.entry_level = data.app_grade;
         data.lang = 'CN';
@@ -319,29 +322,29 @@
           try {
             res = JSON.parse(res);
           } catch (e) {
-            parent.layer.alert('未知错误', {
-              title: "错误",
+            parent.layer.alert('Unknown Error ', {
+              title: "Error",
               icon: 2
             });
-            console.warn('未知错误：' + res.msg);
+            console.warn('Unknown Error ' + res.msg);
             return;
           }
           if (res.code == 0) {
-            parent.layer.alert('已收到您的申请\n我们已经给您发了一封确认邮件\n同时我们的工作人员会很快联系您', {
-              title: "成功",
+            parent.layer.alert('Your application has been submitted. <br> We will contact you ASAP.', {
+              title: "Success",
               icon: 1
             });
             parent.layer.close(parent.form);
           } else {
-            parent.layer.alert('未知错误：' + res.msg, {
-              title: "错误",
+            parent.layer.alert('Unknown Error ' + res.msg, {
+              title: "Error",
               icon: 2
             });
           }
         });
       } else {
-        parent.layer.alert("请输入正确的姓名、电话、电子邮件", {
-          title: "错误",
+        parent.layer.alert("Please input correct name, DOB, telephone and email address.", {
+          title: "Error",
           icon: 0
         });
         return false;
@@ -353,13 +356,15 @@
     $("#input_phone").keyup(validPhone);
     $("#input_email").keyup(validEmail);
 
-
-
     $("#input_app_level").change(e => {
       const level = e.currentTarget.value;
-      let grade = entry_levels[level];
-      grade = grade.map(v => `<option value='${v.code}'>${v.grade}</option>`).join('');
-      $("#input_app_grade").html(grade);
+      if (level == 0) {
+        $("#input_app_grade").html(`<option value='0'>Please Select</option>`);
+      } else {
+        let grade = entry_levels[level];
+        grade = grade.map(v => `<option value='${v.code}'>${v.grade}</option>`).join('');
+        $("#input_app_grade").html(grade);
+      }
     });
 
     $(".pics-upload").on("change", function (e) {
@@ -367,8 +372,8 @@
         const MAX_SIZE = 1024 * 1024 * 5;
         const file = this.files[0];
         if (file.size > MAX_SIZE) {
-          parent.layer.alert("文件太大，请选择小于5M的文件", {
-            title: "错误",
+          parent.layer.alert("File is too large. Please select files no larger than 5M", {
+            title: "Error",
             icon: 2
           });
           return;
@@ -384,8 +389,8 @@
         reader.readAsDataURL(file);
         uploadFile(file, function (res, error) {
           if (error) {
-            parent.layer.alert('未知错误：' + error, {
-              title: "错误",
+            parent.layer.alert('Unknown error: ' + error, {
+              title: "Error",
               icon: 2
             });
             return;
@@ -395,8 +400,8 @@
             if (file.type == 'application/pdf')
               $('#upload_preview_' + key).attr('src', 'data:image/jpeg;base64,' + res.img);
           } catch (e) {
-            parent.layer.alert('未知错误：' + res, {
-              title: "错误",
+            parent.layer.alert('Unknown error: ' + res, {
+              title: "Error",
               icon: 2
             });
             console.log(res);
@@ -409,8 +414,8 @@
           } else {
             $("#progress_" + key).addClass("hide");
             $(".img-add-" + key).removeClass("hide")
-            parent.layer.alert('错误：' + res.msg, {
-              title: "错误",
+            parent.layer.alert('Error：' + res.msg, {
+              title: "Error",
               icon: 2
             });
           }
@@ -490,17 +495,73 @@
     }
 
     function fillDobYearMonth() {
-      let dob_years = [],
-        dob_months = [];
+      let dob_years = [{
+          i: 0,
+          v: 'Please Select'
+        }],
+        dob_months = [{
+            i: 0,
+            v: 'Please Select'
+          },
+          {
+            i: 1,
+            v: 'January'
+          },
+          {
+            i: 2,
+            v: 'February'
+          },
+          {
+            i: 3,
+            v: 'March'
+          },
+          {
+            i: 4,
+            v: 'April'
+          },
+          {
+            i: 5,
+            v: 'May'
+          },
+          {
+            i: 6,
+            v: 'June'
+          },
+          {
+            i: 7,
+            v: 'July'
+          },
+          {
+            i: 8,
+            v: 'August'
+          },
+          {
+            i: 9,
+            v: 'Semptember'
+          },
+          {
+            i: 10,
+            v: 'October'
+          },
+          {
+            i: 11,
+            v: 'November'
+          },
+          {
+            i: 12,
+            v: 'December'
+          }
+        ];
       const thisyear = (new Date()).getFullYear();
       for (let i = thisyear - 1; i > thisyear - 100; i--) {
-        dob_years.push(i);
+        dob_years.push({
+          i,
+          v: i
+        });
       }
-      for (let i = 1; i <= 12; i++) {
-        dob_months.push(i);
-      }
-      dob_years = dob_years.map(v => `<option value='${v}'>${v}年</option>`).join('');
-      dob_months = dob_months.map(v => `<option value='${v}'>${v}月</option>`).join('');
+
+      dob_years = dob_years.map(e => `<option value='${e.i}'>${e.v}</option>`).join('');
+      dob_months = dob_months.map(e => `<option value='${e.i}'>${e.v}</option>`).join('');
       $("#input_dob_year").append(dob_years);
       $("#input_dob_month").append(dob_months);
     }
@@ -509,7 +570,9 @@
       $.get('util/application', res => {
         entry_levels = JSON.parse(res);
         let keys = Object.keys(entry_levels);
-        keys = keys.map(v => `<option value='${v}'>${v}</option>`).join('');
+        keys = keys.map(v => `<option value='${v}'>${v}</option>`);
+        keys.unshift(`<option value='0'>Please Select</option>`)
+        keys = keys.join('');
         $("#input_app_level").append(keys);
         $("#input_app_level").change();
       });

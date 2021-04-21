@@ -40,7 +40,7 @@ function getEntryLevels()
 {
     global $conn;
     $result = [];
-    $sql = "SELECT `level`,`grade`,`level_code` AS `code` FROM app_level ORDER BY code;";
+    $sql = "SELECT `level_en` AS `level`, `grade_en` AS `grade`,`level_code` AS `code` FROM app_level ORDER BY code;";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $r) {
@@ -76,7 +76,7 @@ function uploadPhoto()
 
     if (empty($matches)) {
         // error_log("Unknown file type - ");
-        echo json_encode(['code' => -2, 'msg' => '文件格式错误，请上传jpg/png/gif/pdf类型的文件'], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['code' => -2, 'msg' => 'Unaccpted format, please upload file with format of jpg/png/gif/pdf.'], JSON_UNESCAPED_UNICODE);
         die;
     }
 
@@ -95,6 +95,7 @@ function uploadPhoto()
         'key' => $key,
         'params' => ['ContentType' => $mime],
     ]);
+
     try {
         $result = $uploader->upload();
         if ($extension == '.pdf') {
@@ -115,7 +116,7 @@ function getCourseName()
 {
     $cid = $_REQUEST['cid'];
     global $conn;
-    $sql = "SELECT c.id,c.name AS `course`, c.inst_id, i.name AS `institution` FROM course c LEFT JOIN institution i ON c.inst_id = i.id WHERE c.id = ?;";
+    $sql = "SELECT c.id,c.name_en AS `course`, c.inst_id, i.name_en AS `institution` FROM course c LEFT JOIN institution i ON c.inst_id = i.id WHERE c.id = ?;";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$cid]);
     echo json_encode(['code' => 0, 'course' => $stmt->fetch(PDO::FETCH_ASSOC)], JSON_UNESCAPED_UNICODE);
@@ -125,7 +126,7 @@ function saveApplication()
 {
     $data = json_decode(file_get_contents("php://input"), true);
     if (!$data) {
-        echo json_encode(['code' => -1, 'msg' => '提交的数据不合法'], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['code' => -1, 'msg' => 'Illegal Inputs'], JSON_UNESCAPED_UNICODE);
         die;
     }
     global $conn;
@@ -170,7 +171,7 @@ function saveApplication()
 
     try {
         $stmt->execute($data);
-        echo json_encode(['code' => 0, 'msg' => '成功'], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['code' => 0, 'msg' => 'Success'], JSON_UNESCAPED_UNICODE);
     } catch (Exception $e) {
         echo json_encode(['code' => -1, 'msg' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
     }

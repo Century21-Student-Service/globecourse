@@ -228,8 +228,8 @@ if (!empty($picarr)) {
 								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo" src="./../<?php echo ($sch['badge']); ?>"
 										width="" height="" style="border-radius: 10px;" loading="lazy" title="Insititution - <?php echo ($sch['name_en']); ?>" /></a>
 								<!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
+								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
 
 							</div>
 						</div>
@@ -385,8 +385,11 @@ while ($sugSchool = $dosql->GetArray()) {
 	</div>
 	</div>
 
-
-	<script type='text/javascript' src='kingster-js/jquery/jquery.js'></script>
+	<iframe name="apply_popup" id="apply_popup" style="border-radius: 10px;" frameborder="0" width="100%" height="100%" src=""></iframe>
+	<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/layer/3.3.0/layer.min.js"
+		integrity="sha512-ivbamoACV0tsZQmTH/TYOxU405DRH76I5hJCvK2+i8x7Vv+FE/w1Ouc/v+W5ISLg/2wliVjZe2+lo6DXvrEjoQ==" crossorigin="anonymous"></script>
+	<!-- <script type='text/javascript' src='kingster-js/jquery/jquery.js'></script> -->
 	<script type='text/javascript' src='kingster-js/jquery/jquery-migrate.min.js'></script>
 	<!-- <script type='text/javascript' src='kingster-plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js'></script>
     <script type='text/javascript' src='kingster-plugins/revslider/public/assets/js/jquery.themepunch.revolution.min.js'></script>
@@ -467,6 +470,19 @@ while ($sugSchool = $dosql->GetArray()) {
 				});
 			});
 		}
+
+		$(".course-apply").click(e => {
+			const urlParams = new URLSearchParams(window.location.search);
+			const course_id = urlParams.get('id');
+			form = layer.open({
+				type: 2,
+				title: 'Course Apply',
+				shade: 0.8,
+				area: ['680px', '90%'],
+				content: `course-apply?cid=${course_id}`,
+			});
+			return false;
+		});
 	</script>
 
 </body>
