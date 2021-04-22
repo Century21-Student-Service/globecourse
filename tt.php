@@ -50,6 +50,11 @@ foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $r) {
         $video
             ->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(10))
             ->save($source_img);
+        $ffprobe = FFMpeg\FFProbe::create();
+        $d = $ffprobe
+            ->format($source_video) // extracts file informations
+            ->get('duration'); // returns the duration property
+        $d = round($d);
 
         $uploader_video = new MultipartUploader($client, $source_video, [
             'bucket' => S3BUCKET,
@@ -65,7 +70,7 @@ foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $r) {
         try {
             $uploader_video->upload();
             $uploader_image->upload();
-            $arr = [['title' => '', 'video' => $key_video, 'img' => $key_img]];
+            $arr = [['t' => '', 'v' => $key_video, 'i' => $key_img, 'd' => $d]];
             $stmt_update->execute([json_encode($arr), $r['id']]);
             echo 'DONE';
         } catch (Exception $e) {
@@ -73,13 +78,6 @@ foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $r) {
         }
     }
 }
-
-die;
-$ffmpeg = FFMpeg\FFMpeg::create();
-$video = $ffmpeg->open('www/uploads/media/20210409/1617975363_5431.mp4');
-$video
-    ->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(10))
-    ->save('frame.jpg');
 
 die;
 $finfo = finfo_open(FILEINFO_MIME_TYPE); // 返回 mime 类型
