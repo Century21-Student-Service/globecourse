@@ -1,6 +1,9 @@
 <?php session_start();
 require_once dirname(__FILE__) . './../include/config.inc.php';
+require_once dirname(__FILE__) . './../../vendor/autoload.php';
+require_once dirname(__FILE__) . './../../config/credentials.php';
 include_once './../ext/news.php';
+use Aws\S3\S3Client;
 
 define('EMPTYTMP_UPDATING', 'Updating...');
 define('EMPTYTMP_UNAVAILABLE', 'Unavailable');
@@ -23,6 +26,29 @@ $id = empty($id) ? 2 : intval($id);
 // $sch = $dosql->GetOne("SELECT * FROM `#@__infoimg` WHERE id=" . $id);
 $sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $id);
 $state = getCountryAndState($sch['state_id']);
+$videos = [];
+if ($sch['video']) {
+    $dosql->Execute("SELECT id, title_en AS `title`, `path` FROM `upload_video` WHERE `status`=1 AND id IN(" . $sch['video'] . ")");
+
+    $client = new S3Client([
+        'version' => 'latest',
+        'region' => 'sgp1',
+        'endpoint' => S3ENDPOINT,
+        'credentials' => [
+            'key' => S3KEY,
+            'secret' => S3SECRECT,
+        ],
+    ]);
+    while ($row = $dosql->GetArray()) {
+        $cmd = $client->getCommand('GetObject', [
+            'Bucket' => S3BUCKET,
+            'Key' => $row['path'],
+        ]);
+        $request = $client->createPresignedRequest($cmd, '+45 minutes');
+        $row['path'] = (string) $request->getUri();
+        array_push($videos, $row);
+    }
+}
 $db = new MySql(false);
 
 // Filter-Buttons -- get session
@@ -142,6 +168,42 @@ if ($tid == 0) {
 
 		.course-info-detail {
 			display: block;
+		}
+
+		.video-tab {
+			display: none;
+			width: 100%;
+			height: auto;
+			padding-top: 0%;
+		}
+
+		.video-tab.active {
+			display: inline;
+		}
+
+		.tab-panel-video-button {
+			cursor: pointer;
+			float: left;
+			width: auto;
+			min-height: 36px;
+			display: block;
+			outline: 0;
+			padding: 8px 16px;
+			border: solid 1px #204d74;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			min-width: 75px;
+			text-align: center;
+		}
+
+		.tab-panel-video-button:hover {
+			background-color: #027dfa;
+			color: #fff;
+		}
+
+		.tab-panel-video-button.active {
+			background-color: #027dfa;
+			color: #fff;
 		}
 	</style>
 	<!-- ==========  (custom) Style [only this pg]  ========== -->
@@ -268,9 +330,29 @@ if ($sch['id'] == 23) {
 
 										<!-- ====  Video  ==== -->
 										<div class="feature-post">
-											<?php
-if (!empty($sch['video'])) {
-    echo '<video class="video" controls="controls" src="' . ($sch['video']) . '" width="100%" id="promotionVid" loading="lazy">';
+										<?php
+if (!empty($videos)) {
+    if (count($videos) == 1) {
+        echo '<video class="video" controls="controls" src="' . $videos[0]['path'] . '" width="100%" loading="lazy">';
+    } else {
+        echo '<div class="inner_mid left video_wrap block">';
+        echo '<div class="tab-panel">';
+        foreach ($videos as $index => $v) {
+            $title = empty($v['title']) ? "Intro" : $v['title'];
+            $active = $index == 0 ? "active" : "";
+            echo '<div class="tab-panel-video-button btn-default ' . $active . '" data-for="#v_' . $index . '">' . $title . '</div>';
+        }
+        echo '</div>';
+        echo '<div class="tab-panel-content">';
+        foreach ($videos as $index => $v) {
+            $active = $index == 0 ? "active" : "";
+            echo '<div class=tab-panel-item id="v_' . $index . '">'
+                . '<video src="' . $v['path'] . '" controls class="video video-tab ' . $active . '" width="100%" loading="lazy"> 您的浏览器不支持 video 标签。</video>'
+                . '</div>';
+        }
+        echo '</div>';
+        echo '</div>';
+    }
 }?>
 
 										</div><!-- /.feature-post -->
@@ -287,7 +369,7 @@ if (!empty($picarr)) {
     foreach ($picarr as $k) {
         $v = explode(',', $k);
         ?>
-											<!-- <li><img src="<?php //echo($v[0]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>" width="204" height="125" /><div><?php //echo($v[1]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div></li> -->
+											<!-- <li><img src="<?php //echo($v[0]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?>" width="204" height="125" /><div><?php //echo($v[1]);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div></li> -->
 											<div class="gdlr-core-item-list class1 gdlr-core-item-pdlr gdlr-core-column-20" style="padding-left: 10px; padding-right: 10px;">
 												<div class="gdlr-core-portfolio-grid  gdlr-core-center-align gdlr-core-style-normal">
 													<div class="gdlr-core-portfolio-thumbnail gdlr-core-media-image  gdlr-core-style-icon">
@@ -408,7 +490,7 @@ while ($row = $dosql->GetArray()) {
 													href="course-info.php?cid=<?php echo ($id); ?>&id=<?php echo ($row['id']); ?>">
 													<!-- <span class="gdlr-core-course-item-id gdlr-core-skin-caption" ></span> -->
 													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($nameEn); ?></span>
-													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
+													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
 													<i class="gdlr-core-course-item-icon gdlr-core-skin-icon fa fa-long-arrow-right" style="font-size: 16px;"></i></a>
 											</div>
 											<?php
@@ -717,6 +799,16 @@ while ($sugSchool = $dosql->GetArray()) {
 				});
 
 				refreshCourse(1);
+			});
+			$(".tab-panel-video-button").click(function (e) {
+				const target = e.currentTarget;
+				$(".tab-panel-video-button").removeClass("active");
+				target.classList.add("active");
+				$(".video-tab").removeClass("active");
+				$(".video-tab").each((i, e) => e.pause());
+				$(target.dataset.for+">video").addClass("active");
+				$(target.dataset.for+">video").removeAttr("muted");
+				document.querySelector(target.dataset.for+">video").play();
 			});
 		});
 

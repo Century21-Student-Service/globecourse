@@ -1,6 +1,8 @@
 <?php
 include "checksession.php";
 require '../../../config/conn.php';
+require '../../../config/credentials.php';
+require '../../../vendor/autoload.php';
 
 define('PHPMYWIND_ROOT', substr(dirname(__FILE__), 0, -9));
 define('PHPMYWIND_DATA', PHPMYWIND_ROOT . 'data');
@@ -9,6 +11,13 @@ define('PHPMYWIND_UPLOAD', PHPMYWIND_ROOT . 'uploads');
 define('UPLOAD_IMG', PHPMYWIND_UPLOAD . '/image');
 define('UPLOAD_SOFT', PHPMYWIND_UPLOAD . '/soft');
 define('UPLOAD_MEDIA', PHPMYWIND_UPLOAD . '/media');
+
+use Aws\S3\MultipartUploader;
+use Aws\S3\S3Client;
+use FFMpeg\Coordinate\TimeCode;
+use FFMpeg\FFMpeg;
+use FFMpeg\FFProbe;
+use GuzzleHttp\Promise;
 
 $fields = [];
 
@@ -23,6 +32,7 @@ $funcArr = [
     'deleteFiles',
     'saveInstitution',
     'getInstitutionByCourseId',
+    'uploadVideo',
 ];
 
 $op = 0;
@@ -105,6 +115,48 @@ function getInstitutionById()
             unset($pic[0]);
             unset($pic[1]);
         }
+    }
+
+    if ($one && $one['video']) {
+        $videos = explode(',', $one['video']);
+        $one['video'] = [];
+        $in = str_repeat('?,', count($videos) - 1) . '?';
+        if ($videos) {
+            $sql_videos = "SELECT id, `path`, title, title_en, width, height, duration  FROM upload_video WHERE status=1 AND id IN ($in)";
+            $stmt_videos = $conn->prepare($sql_videos);
+            $stmt_videos->execute($videos);
+            $one['video'] = $stmt_videos->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!empty($one['video'])) {
+                $client = new S3Client([
+                    'version' => 'latest',
+                    'region' => 'sgp1',
+                    'endpoint' => S3ENDPOINT,
+                    'credentials' => [
+                        'key' => S3KEY,
+                        'secret' => S3SECRECT,
+                    ],
+                ]);
+                foreach ($one['video'] as &$video) {
+                    $cmd = $client->getCommand('GetObject', [
+                        'Bucket' => S3BUCKET,
+                        'Key' => $video['path'],
+                    ]);
+                    $request = $client->createPresignedRequest($cmd, '+30 minutes');
+                    $video['video'] = (string) $request->getUri();
+
+                    $cmd = $client->getCommand('GetObject', [
+                        'Bucket' => S3BUCKET,
+                        'Key' => preg_replace('/\.[\w\d]{3}$/', ".jpg", $video['path']),
+                    ]);
+                    $request = $client->createPresignedRequest($cmd, '+30 minutes');
+                    $video['img'] = (string) $request->getUri();
+                    unset($video['path']);
+                }
+            }
+
+        }
+
     }
     echo json_encode($one, JSON_UNESCAPED_UNICODE);
 }
@@ -228,6 +280,88 @@ function uploadFile()
         echo json_encode(['code' => -99, 'msg' => '未知错误'], JSON_UNESCAPED_UNICODE);
     }
     echo json_encode($upload_info, JSON_UNESCAPED_UNICODE);
+}
+
+function uploadVideo()
+{
+    @set_time_limit(0);
+    $upload_info = uploadVideoInfo();
+    if (!is_array($upload_info)) {
+        echo json_encode(['code' => -99, 'msg' => '未知错误'], JSON_UNESCAPED_UNICODE);
+    }
+    echo json_encode($upload_info, JSON_UNESCAPED_UNICODE);
+}
+
+function uploadVideoInfo()
+{
+    global $conn;
+
+    $sql_check = "SELECT id FROM upload_video WHERE `name` = ?";
+    $stmt_check = $conn->prepare($sql_check);
+
+    $sql_insert = "INSERT INTO upload_video(`name`,`size`,`duration`,`width`,`height`) VALUES (:name, :size, :duration,:width,:height);";
+    $stmt_insert = $conn->prepare($sql_insert);
+
+    $cfg_max_file_size = 1024 * 1024 * 64;
+    $upfile = 'fileupload';
+
+    $cfg_upload_media_type = ['avi', 'ogg', 'flv', 'mpg', 'mp4', 'rm', 'rmvb', 'wmv'];
+
+    $tempfile_tn = isset($_FILES[$upfile]['tmp_name']) ? $_FILES[$upfile]['tmp_name'] : '';
+    if ($tempfile_tn == '' || !is_uploaded_file($tempfile_tn)) {
+        return ['code' => -10, 'msg' => '请选择上传文件或您上传的文件超过php.ini设定最大文件上传限制[' . ini_get('upload_max_filesize') . ']！'];
+    }
+
+    $tempfile = $_FILES[$upfile];
+    $tempfile_name = $tempfile['name'];
+    $tempfile_size = $tempfile['size'];
+    $tempfile_ext = strtolower(substr(strrchr($tempfile_name, '.'), 1));
+    $upload_dir = "/tmp/";
+
+    if (!in_array($tempfile_ext, $cfg_upload_media_type)) {
+        return ['code' => -20, 'msg' => '您上传的文件类型为：[' . $tempfile_ext . ']，该类文件不允许上传！'];
+    }
+
+    if ($tempfile_size > $cfg_max_file_size) {
+        return ['code' => -40, 'msg' => '您上传的文件超过系统设定最大文件上传限制[' . GetRealSize($cfg_max_file_size) . ']！'];
+    }
+
+    do {
+        $uuid = Ramsey\Uuid\Uuid::uuid4();
+        $name = str_replace("-", "", $uuid->toString()) . '.' . $tempfile_ext;
+        $stmt_check->execute([$name]);
+    } while ($stmt_check->fetch());
+    $source_video = '/tmp/' . str_replace("-", "", $uuid->toString()) . '.' . $tempfile_ext;
+    $source_img = '/tmp/' . str_replace("-", "", $uuid->toString()) . '.jpg';
+
+    if (move_uploaded_file($tempfile_tn, $source_video)) {
+        $ffmpeg = FFMpeg::create([
+            'ffmpeg.binaries' => '/usr/bin/ffmpeg',
+            'ffprobe.binaries' => '/usr/bin/ffprobe',
+        ]);
+        $ffmpeg->open($source_video)->frame(TimeCode::fromSeconds(10))->save($source_img);
+        list($width, $height) = getimagesize($source_img);
+        if ($width > 640) {
+            $imgResized = imagescale(imagecreatefromjpeg($source_img), 640, 360);
+            imagejpeg($imgResized, $source_img);
+            imagedestroy($imgResized);
+        }
+        $ffprobe = FFProbe::create([
+            'ffmpeg.binaries' => '/usr/bin/ffmpeg',
+            'ffprobe.binaries' => '/usr/bin/ffprobe',
+        ]);
+        $video = $ffprobe->streams($source_video)->videos()->first();
+        $height = $video->getDimensions()->getHeight();
+        $width = $video->getDimensions()->getWidth();
+        $duration = round($video->get('duration'));
+        $param = ['name' => $name, 'size' => $tempfile_size, 'duration' => $duration, 'width' => $width, 'height' => $height];
+        $stmt_insert->execute($param);
+        $param['id'] = $conn->lastInsertId();
+        $param['img'] = base64_encode(file_get_contents($source_img));
+        return ['code' => 0, 'msg' => $param];
+    } else {
+        return ['code' => -50, 'msg' => '移动上传文件失败'];
+    }
 }
 
 function UploadFileInfo()
@@ -360,10 +494,25 @@ function saveInstitution()
         die;
     }
     // echo json_encode($data);
-
+    // echo empty($data['vidoe'][0]['title']) ? "empty" : "notempty";
+    // die;
     // echo PHP_EOL;
 
+    $video_to_upload = [];
+    $video_to_delete = [];
+
+    $sql_check_video = "SELECT video FROM institution WHERE id=?";
+    $stmt_check_video = $conn->prepare($sql_check_video);
     if (!empty($data['id'])) {
+
+        $stmt_check_video->execute([$data['id']]);
+        $oldvideo = $stmt_check_video->fetch(PDO::FETCH_ASSOC)['video'];
+        if (!empty($oldvideo)) {
+            $oldvideo = explode(',', $oldvideo);
+        } else {
+            $oldvide = '';
+        }
+
         //更新现有数据
         $sql = "UPDATE institution SET ";
 
@@ -390,6 +539,7 @@ function saveInstitution()
         $sql = substr($sql, 0, -1);
         $sql .= " WHERE id=:id";
         // echo $sql;die;
+
     } else {
         // 插入新数据
         $sql = "INSERT INTO institution (`name`,`name_en`,`intro`,`description`,`intro_en`,`description_en`,`state_id`,`badge`,`pics`,`video`,`regional`)VALUE(:name,:name_en,:intro,:description,:intro_en,:description_en,:state_id,:badge,:pics,:video,:regional);";
@@ -403,15 +553,132 @@ function saveInstitution()
             $data['pics'] = '';
         }
     }
-    // die($sql);
+
+    if (!empty($data['video'])) {
+        $new_video_ids = array_map(function ($e) {return $e['id'];}, $data['video']);
+        if (!empty($oldvideo)) {
+            foreach ($new_video_ids as $new) {
+                if (!in_array($new, $oldvideo)) {
+                    array_push($video_to_upload, $new);
+                }
+            }
+            foreach ($oldvideo as $old) {
+                if (!in_array($old, $new_video_ids)) {
+                    array_push($video_to_delete, $old);
+                }
+            }
+        }
+        $update_title_param = array_map(function ($e) {
+            return [
+                'id' => $e['id'],
+                'title' => empty($e['title']) ? "" : $e['title'],
+                'title_en' => empty($e['title_en']) ? "" : $e['title_en'],
+            ];
+
+        }, $data['video']);
+
+        $data['video'] = implode(',', $new_video_ids);
+
+    } else {
+        $data['video'] = '';
+    }
+
+    $stmt = $conn->prepare($sql);
+
+    $sql_update_title = "UPDATE upload_video SET title=:title, title_en=:title_en WHERE id=:id ;";
+    $stmt_update_title = $conn->prepare($sql_update_title);
+
     try {
-        $stmt = $conn->prepare($sql);
+        syncVideos($video_to_upload, $video_to_delete);
+        if ($update_title_param) {
+            foreach ($update_title_param as $p) {
+                $stmt_update_title->execute($p);
+            }
+        }
         $stmt->execute($data);
         echo json_encode(['code' => 0, 'msg' => '成功'], JSON_UNESCAPED_UNICODE);
     } catch (Exception $e) {
         echo json_encode(['code' => -20, 'msg' => '数据库错误' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
     }
 
+}
+
+function syncVideos($video_to_upload, $video_to_delete)
+{
+    global $conn;
+    $sync = [];
+    $deletes = [];
+    $client = new S3Client([
+        'version' => 'latest',
+        'region' => 'sgp1',
+        'endpoint' => S3ENDPOINT,
+        'credentials' => [
+            'key' => S3KEY,
+            'secret' => S3SECRECT,
+        ],
+    ]);
+
+    if (!empty($video_to_upload)) {
+        $uids = str_repeat('?,', count($video_to_upload) - 1) . '?';
+        $sql_upload_get = "SELECT id,`name` FROM upload_video WHERE `status` = 0 AND id IN($uids);";
+        $stmt_upload_get = $conn->prepare($sql_upload_get);
+        $stmt_upload_get->execute($video_to_upload);
+        $uploads = $stmt_upload_get->fetchAll(PDO::FETCH_ASSOC);
+        $sql_upload_update = "UPDATE upload_video SET `path`=CONCAT('globecourse/video/',`name`), `status`=1 WHERE id IN($uids);";
+        $stmt_upload_update = $conn->prepare($sql_upload_update);
+        $stmt_upload_update->execute($video_to_upload);
+        foreach ($uploads as $u) {
+            array_push($sync,
+                (new MultipartUploader($client, '/tmp/' . $u['name'], [
+                    'bucket' => S3BUCKET,
+                    'key' => 'globecourse/video/' . $u['name'],
+                ]))->promise(),
+                (new MultipartUploader($client, '/tmp/' . preg_replace('/\.[\w\d]{3}$/', '.jpg', $u['name']), [
+                    'bucket' => S3BUCKET,
+                    'key' => 'globecourse/video/' . preg_replace('/\.[\w\d]{3}$/', '.jpg', $u['name']),
+                ]))->promise()
+            );
+        }
+    }
+
+    if (!empty($video_to_delete)) {
+        $dids = str_repeat('?,', count($video_to_delete) - 1) . '?';
+        $sql_delete_get = "SELECT id,`name` FROM upload_video WHERE `status` <> 2 AND id IN($dids);";
+        $stmt_delete_get = $conn->prepare($sql_delete_get);
+        $stmt_delete_get->execute($video_to_delete);
+        $deletes = $stmt_delete_get->fetchAll(PDO::FETCH_ASSOC);
+        $sql_delete_update = "UPDATE `upload_video` SET deletetime=CURRENT_TIMESTAMP, `status`=2 WHERE id IN($dids);";
+        $stmt_delete_update = $conn->prepare($sql_delete_update);
+        $stmt_delete_update->execute($video_to_delete);
+        $objects = [];
+        foreach ($deletes as $u) {
+            array_push($objects,
+                ['Key' => 'globecourse/video/' . $u['name']],
+                ['Key' => 'globecourse/video/' . preg_replace('/\.[\w\d]{3}$/', '.jpg', $u['name'])]
+            );
+
+            @unlink('/tmp/' . $u['name']);
+            @unlink('/tmp/' . preg_replace('/\.[\w\d]{3}$/', '.jpg', $u['name']));
+        }
+        array_push($sync,
+            $client->deleteObjectsAsync([
+                'Bucket' => S3BUCKET,
+                'Delete' => [
+                    'Objects' => $objects,
+                ],
+            ])
+        );
+    }
+
+    $results = Promise\unwrap($sync);
+    foreach ($results as $u) {
+        if ($u['Key']) {
+            $key = str_replace('globecourse/video/', '', $u['Key']);
+            @unlink('/tmp/' . $key);
+            @unlink('/tmp/' . preg_replace('', '.jpg', $key));
+        }
+    }
+    return true;
 }
 
 function getInstitutionByCourseId()

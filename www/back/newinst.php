@@ -11,7 +11,8 @@
   <?php
 
 getcss("ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css");
-getcss("ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+//getcss("ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+getcss("ajax/libs/font-awesome/5.15.3/css/all.min.css");
 getcss("ajax/libs/jqueryui/1.12.1/jquery-ui.min.css");
 getcss("js/layer/theme/default/layer.css", true);
 getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
@@ -31,10 +32,11 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
     }
 
     .progress {
-      width: 40%;
+      position: absolute;
+      width: 90%;
       height: 25px;
-      margin: auto;
-      margin-top: 15px;
+      left: 10px;
+      top: 50px;
       transition: all .3s ease;
     }
 
@@ -50,7 +52,7 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
       font-weight: 500;
       position: absolute;
       margin-top: 12px;
-      margin-left: 197px;
+      margin-left: 75px;
     }
 
     .badge {
@@ -116,6 +118,8 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
       background-color: #F25045;
       display: none;
       text-align: center;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
     }
 
     .pics-card:hover .pics-remove {
@@ -129,53 +133,85 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
       display: none;
     }
 
-    .video-intro {
-      height: 278px;
-      box-shadow: 1px 1px 15px -5px black;
-      margin: auto;
-      margin-top: 10px;
-      display: block;
+    .video-card {
+      display: inline-table;
+      position: relative;
+      transition: all .3s ease;
+      margin: 15px;
+      width: 230px;
+      height: 140px;
+      cursor: pointer;
     }
 
-    .video-intro.hide {
-      display: none;
-    }
-
-    .video-add {
-      border-color: rgb(201, 216, 219);
-      color: rgb(201, 216, 219);
-      font-size: 55px;
-      border: solid 2px;
-      border-radius: 12px;
-      width: 50%;
-      height: 240px;
-      text-align: center;
-      vertical-align: middle;
-      box-shadow: 1px 1px 15px -5px black;
-      margin: auto;
-      margin-top: 45px;
+    .video-img {
+      width: 100%;
+      height: 100%;
+      max-height: 140px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0px 2px 8px #0000008a;
       transition: all .3s ease;
     }
 
-    .video-add.hide {
-      display: none;
+    .video-add {
+      display: inline-table;
+      position: relative;
+      margin: 15px;
+      width: 230px;
+      height: 140px;
+      color: rgb(201, 216, 219);
+      font-size: 80px;
+      border: solid 2px;
+      border-radius: 12px;
+      border-color: rgb(201, 216, 219);
+      text-align: center;
+      vertical-align: middle;
+      box-shadow: 1px 1px 15px -5px black;
+      transition: all .3s ease;
+    }
+
+    .video-add i {
+      margin-top: 35px;
     }
 
     .video-add:hover {
       opacity: .7;
     }
 
-    .btn.video-change {
-      margin: auto;
-      display: block;
-      margin-top: 10px;
-      width: 140px;
-      transition: all .3s ease;
+    .video-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 25px;
+      width: 100%;
+      font-size: 18px;
+      padding: 0 4px;
     }
 
-    .btn.video-change.hide {
-      display: none;
-      transition: all .3s ease;
+    .video-duration {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 400;
+      color: white;
+    }
+
+    .video-control {
+      font-size: 16px;
+      font-weight: 400;
+      color: white;
+      float: right;
+    }
+
+    .video-control .far {
+      padding-left: 4px;
+    }
+
+    .video-control .fa-trash-alt:hover {
+      color: #F25045;
+    }
+
+    .video-control .fa-edit:hover {
+      color: #0062a9;
     }
 
     .pics-card {
@@ -217,6 +253,32 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
 
     .pics-add i {
       vertical-align: middle;
+    }
+
+    .layui-layer-input {
+      display: block;
+      width: 230px;
+      height: 36px;
+      margin: 10px;
+      line-height: 30px;
+      padding-left: 10px;
+      border: 1px solid #e6e6e6;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .layui-layer-content {
+      /* padding: 15px; */
+      overflow-y: hidden !important;
+    }
+
+    /* .layui-layer-btn0 {
+      background-color: #0062a9 !important;
+      border-color: #0062a9 !important;
+    } */
+
+    button.disabled {
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -308,25 +370,20 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
         </div>
       </div>
       <div class="tab-pane fade " role="tabpanel" aria-labelledby="video_tab" id="input_video" style="height: 342px;">
-        <div class="video-wrap">
-          <video controls class="video-intro hide"> 您的浏览器不能显示视频。 </video>
-          <div class="video-add" onclick="document.getElementById('file_upload_video').click();">
-            <i class="fa fa-plus" aria-hidden="true" style="font-size:170px;margin-top: 40px;"></i>
-          </div>
-          <button class="btn btn-primary btn-xl video-change hide" onclick="document.getElementById('file_upload_video').click();">修改</button>
-          <div class="progress position-relative progress-upload hide">
-            <div class="progress-bar" id="video_progress_bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            <span class="uploading">上传中</span>
-          </div>
-          <input class="file-upload pics-upload" id="file_upload_video" type="file" accept="video/*" />
-          <input class="file-upload" id="input_inst_video" type="hidden" />
+        <div class="video-add" onclick="document.getElementById('file_upload_video').click();">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          <input class="file-upload pics-upload" id="file_upload_video" type="file" multiple accept="video/*" />
         </div>
+        <input class="file-upload" id="input_inst_video" type="hidden" />
       </div>
     </div>
 
     <div style="float: right; margin-top: 15px;">
       <button type="button" class="btn btn-primary" id='btn_save'>
         保存
+        <div class="spinner-border text-light spinner-border-sm" role="status" style="display: none;" id="save_loading">
+          <span class="sr-only">Loading...</span>
+        </div>
       </button>
       <button type="button" class="btn btn-default" id='btn_close'>
         关闭
@@ -424,13 +481,13 @@ getjs("js/layer/layer.js", true);
           [...this.files].forEach(file => {
             let reader = new FileReader();
             reader.onload = function (e) {
-              str = '<div class="pics-card uploading" id="pics_card_' + length + '" data-index="' + length + '">' +
-                '<img class="pics-img" src="' + e.target.result + '">' +
-                '<div class="pics-remove">删除</div></div>';
+              str = `<div class="pics-card uploading" id="pics_card_${length}" data-index="${length}">
+                <img class="pics-img" src="${e.target.result}">
+                <div class="pics-remove img-remove">删除</div></div>`;
               $("#input_images").prepend(str);
               length++;
-              $(".pics-remove").off("click");
-              $(".pics-remove").click(deleteHandle);
+              $(".img-remove").off("click");
+              $(".img-remove").click(deleteHandle);
 
               uploadFile(file, function (res) {
                 try {
@@ -466,12 +523,19 @@ getjs("js/layer/layer.js", true);
       });
 
       $("#file_upload_video").on("change", function (e) {
-        if (this.files && this.files[0]) {
+        if (this.files) {
           const MAX_SIZE = 1024 * 1024 * 64;
           const old_src = $(".video-intro").attr('src');
-          const file = this.files[0];
+          let length = data_new.video.length - 1;
+          let oversize = false;
+          [...this.files].forEach(file => {
+            if (file.size > MAX_SIZE) {
+              oversize = true;
+              return;
+            }
+          });
 
-          if (file.size > MAX_SIZE) {
+          if (oversize) {
             layer.alert("文件太大，请选择小于64M的文件", {
               title: "错误",
               icon: 2
@@ -479,76 +543,98 @@ getjs("js/layer/layer.js", true);
             return;
           }
 
-          $(".video-add").addClass("hide");
-          $(".video-change").addClass("hide");
-          $(".video-intro").removeClass("hide");
-          $(".progress-upload").removeClass("hide");
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('.video-intro').attr('src', e.target.result);
-            $('.video-intro')[0].play();
-          }
-          reader.readAsDataURL(file);
-          uploadFile(file, function (res, error) {
-            $(".video-add").addClass("hide");
-            $(".video-change").removeClass("hide");
-            $(".progress-upload").addClass("hide");
-            if (error) {
-              layer.alert('未知错误：' + error, {
-                title: "错误",
-                icon: 2
+          [...this.files].forEach(file => {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+              length++;
+              str = `<div class="video-card" id="video_card_${length}" data-index="${length}" data-vid="">
+                      <div class="progress progress-upload">
+                        <div class="progress-bar" id="video_progress_bar_${length}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        <span class="uploading">上传中</span>
+                      </div>
+                      <img class="video-img">
+                      <div class="video-bottom">
+                        <div class="video-duration"></div>
+                        <div class="video-control">
+                          <i class="far fa-edit" data-index="${length}"></i>
+                          <i class="far fa-trash-alt" data-index="${length}"></i></div>
+                      </div>
+                      </div>`;
+              $("#input_video").prepend(str);
+              $(`#video_card_${length}`).click(e => {
+                const target_id = $(e.currentTarget).data('vid');
+                let target = {};
+                data_new.video.forEach(e => {
+                  if (e != null && e.id == target_id) {
+                    target = e;
+                    return;
+                  }
+                });
+                let width = target.width + 30,
+                  height = target.height + 30;
+                if (width >= 1280) {
+                  width = width / 2;
+                  height = height / 2;
+                }
+                layer.open({
+                  type: 1,
+                  title: false,
+                  area: [width + 'px', height + 'px'],
+                  shade: 0.8,
+                  closeBtn: 1,
+                  shadeClose: true,
+                  content: `<video controls style="width:${width}px;height:${height}px" src="${target.video}"></video>`
+                });
+                return false;
               });
-              if (old_src) {
-                $(".video-intro").attr('src', old_src);
-              } else {
-                $(".video-add").removeClass("hide");
-                $(".video-change").addClass("hide");
-                $('.video-intro').removeAttr('src');
-                $('.video-intro').addClass("hide");
-              }
-              return;
-            }
-            try {
-              res = JSON.parse(res);
-            } catch (e) {
-              layer.alert('未知错误：' + res, {
-                title: "错误",
-                icon: 2
-              });
-              if (old_src) {
-                $(".video-intro").attr('src', old_src);
-              } else {
-                $(".video-add").removeClass("hide");
-                $(".video-change").addClass("hide");
-                $('.video-intro').removeAttr('src');
-                $('.video-intro').addClass("hide");
-              }
-              console.log(res);
-              return;
-            }
-            if (res.code == 0) {
-              const video_old = $("#input_inst_video").val().trim();
-              if (video_old.length > 0) {
-                deletepic(video_old);
-              }
-              $("#input_inst_video").val(res.url);
-            } else {
-              layer.alert(res.msg, {
-                title: "错误",
-                icon: 2
-              });
-              if (old_src) {
-                $(".video-intro").attr('src', old_src);
-              } else {
-                $(".video-add").removeClass("hide");
-                $(".video-change").addClass("hide");
-                $('.video-intro').removeAttr('src');
-                $('.video-intro').addClass("hide");
-              }
 
-              return;
+              let el_video_card = $(`#video_card_${length}`),
+                el_progress = $(`#video_card_${length} .progress`),
+                el_img = $(`#video_card_${length} img`),
+                el_duration = $(`#video_card_${length} .video-duration`),
+                el_edit = $(`#video_card_${length} .fa-edit`),
+                el_trash = $(`#video_card_${length} .fa-trash-alt`);
+              uploadFile(file, function (res) {
+                try {
+                  res = JSON.parse(res);
+                } catch (e) {
+                  layer.alert('未知错误：' + res, {
+                    title: "错误",
+                    icon: 2
+                  });
+                  console.log(res);
+                  $("#video_card_" + length).remove();
+                  return;
+                }
+                if (res.code == 0) {
+                  // console.log(res.msg);
+                  delete res.msg.name;
+                  delete res.msg.size;
+                  res.msg.video = e.target.result;
+                  data_new.video.push(res.msg);
+                  const duration = Math.floor(res.msg.duration / 60) + ":" + res.msg.duration % 60;
+                  el_video_card.attr('data-vid', res.msg.id);
+                  el_progress.remove();
+                  el_img.attr('src', 'data:image/jpg;base64,' + res.msg.img);
+                  el_duration.html(duration);
+                  el_trash.click(deleteVideoHandle);
+                  el_edit.click(editClickHandle);
+                  // data_new.videos.push({
+                  //   img: res.url,
+                  //   alt: "",
+                  // });
+                } else {
+                  layer.alert(res.msg, {
+                    title: "错误",
+                    icon: 2
+                  });
+                  $(`#video_card_${length} .progress`).remove();
+                  return;
+                }
+              }, `video_progress_bar_${length}`, true);
             }
-          }, "video_progress_bar");
+            reader.readAsDataURL(file);
+          });
         }
       });
 
@@ -563,9 +649,16 @@ getjs("js/layer/layer.js", true);
         data_new.name = $("#input_inst_name").val().trim();
         data_new.name_en = $("#input_inst_ename").val().trim();
         data_new.state_id = $("#input_inst_state").val();
-        data_new.video = $("#input_inst_video").val();
         data_new.regional = $("#input_inst_regional")[0].checked ? "1" : "0";
 
+        data_new.video = data_new.video.filter(e => e != null);
+        data_new.video = data_new.video.map(e => {
+          return {
+            id: e.id,
+            title: e.title,
+            title_en: e.title_en
+          }
+        });
         if (data_old.id) {
           if (sameValue(data_new.name, data_old.name)) data_new.name = null;
           if (sameValue(data_new.name_en, data_old.name_en)) data_new.name_en = null;
@@ -576,9 +669,10 @@ getjs("js/layer/layer.js", true);
           if (sameValue(data_new.intro_en, data_old.intro_en)) data_new.intro_en = null;
           if (sameValue(data_new.regional, data_old.regional)) data_new.regional = null;
           if (samePics(data_new.pics, data_old.pics)) data_new.pics = null;
+          if (sameVideos(data_new.video, data_old.video)) data_new.video = null;
           if (
             data_new.badge.length == 0 &&
-            data_new.video.length == 0 &&
+            data_new.video == null &&
             data_new.name == null &&
             data_new.name_en == null &&
             data_new.state_id == null &&
@@ -594,7 +688,17 @@ getjs("js/layer/layer.js", true);
           }
         }
 
+        $("#btn_save").attr("disabled", "disabled");
+        $("#btn_save").addClass("disabled");
+        $("#btn_close").attr("disabled", "disabled");
+        $("#btn_close").addClass("disabled");
+        $("#save_loading").show();
         $.post('util/institutionOperation.php?op=7', JSON.stringify(data_new), res => {
+          $("#btn_save").removeClass("disabled");
+          $("#btn_save").removeAttr("disabled");
+          $("#btn_close").removeClass("disabled");
+          $("#btn_close").removeAttr("disabled");
+          $("#save_loading").hide();
           try {
             res = JSON.parse(res);
           } catch (e) {
@@ -642,6 +746,7 @@ getjs("js/layer/layer.js", true);
             !sameValue(data_new.description_en, data_old.description_en) ||
             !sameValue(data_new.intro_en, data_old.intro_en) ||
             !sameValue(data_new.regional, data_old.regional) ||
+            !sameVideos(data_new.video, data_old.video) ||
             !samePics(data_new.pics, data_old.pics)
           ) {
             // if (!sameValue(data_new.name, data_old.name)) console.log("name", data_new.name, data_old.name);
@@ -699,7 +804,9 @@ getjs("js/layer/layer.js", true);
               editor_intro_en.txt.html(res.intro_en);
               data_old = res;
               data_new.pics = [...res.pics];
+              data_new.video = JSON.parse(JSON.stringify(data_old.video));
               initImages(data_old.pics);
+              initVideo(data_new.video);
             }
           );
         }
@@ -720,6 +827,24 @@ getjs("js/layer/layer.js", true);
       return true;
     }
 
+    function sameVideos(videoA, videoB) {
+      if (!videoA && !videoB) return true;
+      if (!videoA && videoB.length == 0) return true;
+      if (!videoB && videoA.length == 0) return true;
+      if (!Array.isArray(videoA)) return false;
+      if (!Array.isArray(videoB)) return false;
+      if (videoA.length !== videoB.length) return false;
+      videoA = videoA.sort((a, b) => a.id - b.id);
+      videoB = videoB.sort((a, b) => a.id - b.id);
+      for (let i = 0; i < videoA.length; i++) {
+        let a = videoA[i],
+          b = videoB[i];
+        if (a.id != b.id || a.title != b.title || a.title_en != b.title_en)
+          return false;
+      }
+      return true;
+    }
+
     function sameValue(valueA, valueB) {
       if (valueA == null) valueA = "";
       if (valueB == null) valueB = "";
@@ -728,11 +853,12 @@ getjs("js/layer/layer.js", true);
       return valueA == valueB;
     }
 
-    function uploadFile(file, callback, progressId) {
+    function uploadFile(file, callback, progressId, video = false) {
       var formData = new FormData();
       formData.append("fileupload", file);
+      const url = video ? 'util/institutionOperation.php?op=9' : 'util/institutionOperation.php?op=5';
       $.ajax({
-        url: 'util/institutionOperation.php?op=5',
+        url,
         data: formData,
         processData: false,
         contentType: false,
@@ -774,8 +900,51 @@ getjs("js/layer/layer.js", true);
       const index = $(e.currentTarget).parent().data('index');
       $("#pics_card_" + index).effect('fade', null, 500, e => $("#pics_card_" + index).remove());
       data_new.pics[index] = null;
-      console.log(data_old);
-      console.log(data_new);
+    }
+
+    function deleteVideoHandle(e) {
+      const vid = $(e.currentTarget).parent().parent().parent().data('vid');
+      const index = $(e.currentTarget).data('index');
+      $("#video_card_" + index).effect('fade', null, 500, e => $("#video_card_" + index).remove());
+      data_new.video[index] = null;
+      return false;
+    }
+
+    function editClickHandle(ev) {
+      const id = $(ev.currentTarget).parent().parent().parent().data('vid');
+      let target = {};
+      data_new.video.forEach(e => {
+        if (e != null && e.id == id) {
+          target = e;
+          return;
+        }
+      });
+      if (target.title == null) target.title = '';
+      if (target.title_en == null) target.title_en = '';
+      layer.open({
+        type: 1,
+        anim: 2,
+        closeBtn: 0,
+        shadeClose: true, //开启遮罩关闭
+        title: "修改标题",
+        content: `<input type="text" class="layui-layer-input " id="title_${id}" value="" placeholder="请输入中文标题">
+              <input type="text" class="layui-layer-input" id="title_en_${id}" value="" placeholder="请输入英文标题">
+              <div class="layui-layer-btn"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">关闭</a></div>`,
+        success: function (layero, index) {
+          $("#title_" + id).val(target.title);
+          $("#title_en_" + id).val(target.title_en);
+        },
+        yes: function (index, layero) {
+          for (let i = 0; i < data_new.video.length; i++) {
+            if (data_new.video[i] != null && data_new.video[i].id == id) {
+              data_new.video[i].title = $("#title_" + id).val();
+              data_new.video[i].title_en = $("#title_en_" + id).val();
+            }
+          }
+          layer.close(index);
+        }
+      });
+      return false;
     }
 
     function initImages(pics) {
@@ -784,12 +953,46 @@ getjs("js/layer/layer.js", true);
           let e = pics[i],
             str = '<div class="pics-card" id="pics_card_' + i + '" data-index="' + i + '">' +
             '<img class="pics-img" src="' + e.img + '">' +
-            '<div class="pics-remove">删除</div></div>';
+            '<div class="pics-remove img-remove">删除</div></div>';
           $("#input_images").prepend(str);
         }
       }
-      $(".pics-remove").off("click");
-      $(".pics-remove").click(deleteHandle);
+      $(".img-remove").off("click");
+      $(".img-remove").click(deleteHandle);
+    }
+
+    function initVideo(videos) {
+      if (videos && Array.isArray(videos)) {
+        for (let i = videos.length - 1; i >= 0; i--) {
+          let e = videos[i],
+            duration = Math.floor(e.duration / 60) + ":" + e.duration % 60;
+          str = `<div class="video-card" id="video_card_${i}" data-index="${i}" data-videouri="${e.video}" data-vid="${e.id}">
+            <img class="video-img" src="${e.img}">
+            <div class="video-bottom">
+              <div class="video-duration">${duration}</div>
+              <div class="video-control">
+                <i class="far fa-edit" data-index="${i}"></i>
+                <i class="far fa-trash-alt" data-index="${i}"></i></div>
+              </div>
+            </div>`;
+          $("#input_video").prepend(str);
+        }
+        $(".fa-trash-alt").click(deleteVideoHandle)
+        $(".fa-edit").click(editClickHandle);
+        $(".video-card").off("click");
+        $(".video-card").click(e => {
+          layer.open({
+            type: 2,
+            title: false,
+            area: ['630px', '360px'],
+            shade: 0.8,
+            closeBtn: 1,
+            shadeClose: true,
+            content: $(e.currentTarget).data('videouri')
+          });
+          return false;
+        });
+      }
     }
   </script>
 </body>

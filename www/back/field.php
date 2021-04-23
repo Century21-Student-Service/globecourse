@@ -140,6 +140,7 @@ getjs("js/layer/layer.js", true);
               anim: 2,
               closeBtn: 0,
               shadeClose: true, //开启遮罩关闭
+              title: "改名",
               content: `<input type="text" class="layui-layer-input" id="name_${pid}" value="" placeholder="请输入中文名">
               <input type="text" class="layui-layer-input" id="name_en_${pid}" value="" placeholder="请输入英文名">
               <div class="layui-layer-btn layui-layer-btn-"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">关闭</a></div>`,
@@ -174,8 +175,6 @@ getjs("js/layer/layer.js", true);
                     });
                   }
                 })
-                layer.close(index);
-
                 layer.close(index);
               }
             });
