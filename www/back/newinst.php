@@ -418,7 +418,8 @@ getjs("js/layer/layer.js", true);
     const inst_id = urlParams.get('inst_id');
     let data_old = {},
       data_new = {
-        pics: []
+        pics: [],
+        video: [],
       };
 
     $(function () {
@@ -536,7 +537,7 @@ getjs("js/layer/layer.js", true);
           });
 
           if (oversize) {
-            layer.alert("文件太大，请选择小于64M的文件", {
+            layer.alert(file.name + " 文件太大，请选择小于64M的文件", {
               title: "错误",
               icon: 2
             });
@@ -588,6 +589,9 @@ getjs("js/layer/layer.js", true);
                 return false;
               });
 
+              data_new.video.push({
+                index: length
+              });
               let el_video_card = $(`#video_card_${length}`),
                 el_progress = $(`#video_card_${length} .progress`),
                 el_img = $(`#video_card_${length} img`),
@@ -611,8 +615,15 @@ getjs("js/layer/layer.js", true);
                   delete res.msg.name;
                   delete res.msg.size;
                   res.msg.video = e.target.result;
-                  data_new.video.push(res.msg);
-                  const duration = Math.floor(res.msg.duration / 60) + ":" + res.msg.duration % 60;
+                  const index = el_video_card.data('index');
+                  for (let i = 0; i < data_new.video.length; i++) {
+                    let v = data_new.video[i];
+                    if (v.index != null && v.index == index) {
+                      data_new.video[i] = res.msg;
+                    }
+                  }
+                  // data_new.video.push(res.msg);
+                  const duration = Math.floor(res.msg.duration / 60) + ":" + ("0" + res.msg.duration % 60).slice(-2);
                   el_video_card.attr('data-vid', res.msg.id);
                   el_progress.remove();
                   el_img.attr('src', 'data:image/jpg;base64,' + res.msg.img);
@@ -805,6 +816,7 @@ getjs("js/layer/layer.js", true);
               data_old = res;
               data_new.pics = [...res.pics];
               data_new.video = JSON.parse(JSON.stringify(data_old.video));
+              if (data_new.video == '') data_new.video = [];
               initImages(data_old.pics);
               initVideo(data_new.video);
             }
@@ -965,7 +977,7 @@ getjs("js/layer/layer.js", true);
       if (videos && Array.isArray(videos)) {
         for (let i = videos.length - 1; i >= 0; i--) {
           let e = videos[i],
-            duration = Math.floor(e.duration / 60) + ":" + e.duration % 60;
+            duration = Math.floor(e.duration / 60) + ":" + ("0" + e.duration % 60).slice(-2);
           str = `<div class="video-card" id="video_card_${i}" data-index="${i}" data-videouri="${e.video}" data-vid="${e.id}">
             <img class="video-img" src="${e.img}">
             <div class="video-bottom">

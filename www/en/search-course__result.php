@@ -18,7 +18,7 @@ define('EMPTY_UNAVAILABLE', 'Unavailable');
 @$searchMode_fees = isset($_REQUEST['searchMode_fees']) ? $_REQUEST['searchMode_fees'] : $_SESSION['searchMode_fees'];
 
 $_SESSION['state'] = $state;
-$_SESSION['level'] = $level;
+$_SESSION['schoolType'] = $level;
 $_SESSION['courseName'] = $courseName;
 $_SESSION['broadField'] = $broadField;
 $_SESSION['narrowField'] = $narrowField;
@@ -153,7 +153,7 @@ while ($row = $dosql->GetArray()) {
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>

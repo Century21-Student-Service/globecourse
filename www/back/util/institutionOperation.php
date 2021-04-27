@@ -524,17 +524,52 @@ function saveInstitution()
             $data['pics'] = serialize($result);
         }
 
+        if (!empty($data['video'])) {
+            $new_video_ids = array_map(function ($e) {return $e['id'];}, $data['video']);
+            if (!empty($oldvideo)) {
+                foreach ($new_video_ids as $new) {
+                    if (!in_array($new, $oldvideo)) {
+                        array_push($video_to_upload, $new);
+                    }
+                }
+                foreach ($oldvideo as $old) {
+                    if (!in_array($old, $new_video_ids)) {
+                        array_push($video_to_delete, $old);
+                    }
+                }
+            }
+            $update_title_param = array_map(function ($e) {
+                return [
+                    'id' => $e['id'],
+                    'title' => empty($e['title']) ? "" : $e['title'],
+                    'title_en' => empty($e['title_en']) ? "" : $e['title_en'],
+                ];
+
+            }, $data['video']);
+
+            $data['video'] = implode(',', $new_video_ids);
+
+        } else {
+            $data['video'] = '';
+        }
+
         foreach ($data as $key => $value) {
+            if ($key == 'video') {
+                continue;
+            }
+
             if ($data[$key] != '0' && empty($data[$key])) {
                 unset($data[$key]);
                 continue;
             }
         }
+
         foreach ($data as $key => $value) {
             if ($key == 'id') {
                 continue;
+            } else {
+                $sql .= "$key=:$key,";
             }
-            $sql .= "$key=:$key,";
         }
         $sql = substr($sql, 0, -1);
         $sql .= " WHERE id=:id";
@@ -552,35 +587,16 @@ function saveInstitution()
         } else {
             $data['pics'] = '';
         }
-    }
 
-    if (!empty($data['video'])) {
-        $new_video_ids = array_map(function ($e) {return $e['id'];}, $data['video']);
-        if (!empty($oldvideo)) {
-            foreach ($new_video_ids as $new) {
-                if (!in_array($new, $oldvideo)) {
-                    array_push($video_to_upload, $new);
-                }
+        if (!empty($data['video'])) {
+            $result = [];
+            foreach (array_filter($data['video']) as $v) {
+                array_push($result, $v['id'] . ",");
             }
-            foreach ($oldvideo as $old) {
-                if (!in_array($old, $new_video_ids)) {
-                    array_push($video_to_delete, $old);
-                }
-            }
+            $data['video'] = implode(',', $result);
+        } else {
+            $data['video'] = '';
         }
-        $update_title_param = array_map(function ($e) {
-            return [
-                'id' => $e['id'],
-                'title' => empty($e['title']) ? "" : $e['title'],
-                'title_en' => empty($e['title_en']) ? "" : $e['title_en'],
-            ];
-
-        }, $data['video']);
-
-        $data['video'] = implode(',', $new_video_ids);
-
-    } else {
-        $data['video'] = '';
     }
 
     $stmt = $conn->prepare($sql);
@@ -590,7 +606,7 @@ function saveInstitution()
 
     try {
         syncVideos($video_to_upload, $video_to_delete);
-        if ($update_title_param) {
+        if (!empty($update_title_param)) {
             foreach ($update_title_param as $p) {
                 $stmt_update_title->execute($p);
             }
@@ -598,7 +614,7 @@ function saveInstitution()
         $stmt->execute($data);
         echo json_encode(['code' => 0, 'msg' => '成功'], JSON_UNESCAPED_UNICODE);
     } catch (Exception $e) {
-        echo json_encode(['code' => -20, 'msg' => '数据库错误' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['code' => -20, 'msg' => '数据库错误' . $e->getMessage(), 'sql' => $sql, 'param' => $data], JSON_UNESCAPED_UNICODE);
     }
 
 }
@@ -607,7 +623,6 @@ function syncVideos($video_to_upload, $video_to_delete)
 {
     global $conn;
     $sync = [];
-    $deletes = [];
     $client = new S3Client([
         'version' => 'latest',
         'region' => 'sgp1',
@@ -676,6 +691,8 @@ function syncVideos($video_to_upload, $video_to_delete)
             $key = str_replace('globecourse/video/', '', $u['Key']);
             @unlink('/tmp/' . $key);
             @unlink('/tmp/' . preg_replace('', '.jpg', $key));
+        } else {
+            error_log(date('Y-m-d H:i:s', time()) . "\t" . print_r($u, 1) . PHP_EOL, 3, '/var/log/php_errors.log');
         }
     }
     return true;

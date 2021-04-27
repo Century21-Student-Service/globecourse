@@ -10,6 +10,11 @@ if (empty($id)) {
 $cid = empty($cid) ? 5 : intval($cid);
 $sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $cid);
 
+if (empty($sch)) {
+    header("Location: search-course");
+    die;
+}
+
 //检测文档正确性
 $row = $dosql->GetOne("SELECT c.id,c.name,c.name_en,c.fees,c.hours,c.months,c.intro,c.description,c.field_id_p,c.field_id_c,l.name AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
 
@@ -196,7 +201,12 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 					<?php
 // foreach($picarr as $k){
 //   $v = explode(',', $k);
-$v = explode(',', $picarr[0]);
+if (!empty($picarr)) {
+    $v = explode(',', $picarr[0]);
+} else {
+    $v = [''];
+}
+
 ?>
 					<div class="kingster-page-title-wrap  kingster-style-medium kingster-left-align" style="height:280px;background-image: url('./../<?php echo $v[0]; ?>');"
 						loading="lazy">

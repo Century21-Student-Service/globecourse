@@ -183,6 +183,31 @@ function getStudySolution_cType($t)
     }
 }
 
+function getStudySolution_cType_en($t)
+{
+    $Db = new MySql(false);
+    $Db->Execute("SELECT * FROM `study_solution` WHERE FIND_IN_SET($t,typeSolution)");
+
+    while ($va = $Db->GetArray()) {
+        /***  (Set) recognition-Name [radio button]  ***/
+        $radio_Name = 'solution';
+        $radio_ID = 'solution';
+
+        /***  (Set) Button-Percentage [radio button]  ***/
+        $radio_Class = 'border-box_100_ext';
+
+        /***  (Insert) State [radio button]  ***/
+        echo ('<label class="">
+					<input type="radio" id="' . $radio_ID . '" name="' . $radio_Name . '" value="' . $va["type"] . '">
+					<div class="' . $radio_Class . '"><div>
+						<span>' . $va["name_en"] . '</span><br>
+						<span>' . $va["brief_en"] . '</span><br>');
+        if ($va["feature"] != '') {echo ('<span><strong>Features: </strong>' . $va["feature_en"] . '</span><br>');}
+        echo ('</div></div>
+			</label>');
+    }
+}
+
 function getStudySolution_cType_old($t)
 {
     $Db = new MySql(false);
@@ -356,7 +381,7 @@ function getStudySolution_schoolAll_old($cType, $width)
 }
 
 /*******提取-留学方案 (英文)*******//*******search-studySolution.php*******/
-function getStudySolution_cType_en($t)
+function getStudySolution_cType_en_old($t)
 {
     $Db = new MySql(false);
     $Db->Execute("SELECT * FROM `#@__study_solution` WHERE FIND_IN_SET($t,typeSolution)");
@@ -380,7 +405,7 @@ function getStudySolution_cType_en($t)
 			</label>');
     }
 }
-function getStudySolution_schoolAll_en($cType, $width)
+function getStudySolution_schoolAll_en_old($cType, $width)
 {
 
     $Db = new MySql(false);
@@ -430,6 +455,55 @@ function getStudySolution_schoolAll_en($cType, $width)
             //     $uniCount = ceil($uniCount /3) *280;
         }
 
+        echo ('<div style="margin-top: ' . $uniCount . 'px;"></div>');
+    }
+}
+
+function getStudySolution_schoolAll_en($cType, $width)
+{
+    require '../../config/conn.php';
+
+    $sql_state = "SELECT id,`name_en` AS `name`  FROM `state` ORDER BY id;";
+    $stmt_state = $conn->prepare($sql_state);
+    $stmt_state->execute();
+
+    $sql_inst = "SELECT id,name_en AS `name`,badge
+								 FROM institution
+								 WHERE `status`>0
+								 AND state_id = ?
+								 AND id IN(
+                                    SELECT c.inst_id
+                                    FROM course c
+                                    INNER JOIN study_solution s ON FIND_IN_SET(c.level_id,s.level_id)
+                                    WHERE s.type = ?) ";
+    $stmt_inst = $conn->prepare($sql_inst);
+
+    foreach ($stmt_state->fetchAll(PDO::FETCH_ASSOC) as $state) {
+        echo ('<h4 class="title-1 bold ctm-widget-title" id="stateTitle_' . $state['id'] . '">' . $state['name'] . '</h4>');
+        $stmt_inst->execute([$state['id'], $cType]);
+        $uniCount = 0;
+        $boxCount = 0;
+        foreach ($stmt_inst->fetchAll(PDO::FETCH_ASSOC) as $inst) {
+            $boxCount++;
+            echo ('<div class="gdlr-core-pbf-column gdlr-core-column-15" style="text-align: center; min-height: 200px; margin-bottom: 10px;" value="' . $boxCount . '">
+	                	<a href="school-info.php?id=' . $inst['id'] . '">
+		                	<div>
+		                		<img src="./../' . $inst['badge'] . '" class="ctm-nearbyUni__img" style="height: 100px !important;" />
+		                	</div>
+		                	<h6 style="margin-top: 10px;">' . $inst['name'] . '</h6>
+		                </a>
+	                </div>');
+            $uniCount++;
+        }
+        if ($width < 750) {
+            $uniCount = $uniCount * 220; // mobile
+        } else {
+            if ($uniCount != 0 && ($uniCount / 4) <= 1) { // only 1 row
+                $uniCount = 280; // original = 300
+            } else {
+                $uniCount = ceil($uniCount / 4) * 260;
+            }
+        }
         echo ('<div style="margin-top: ' . $uniCount . 'px;"></div>');
     }
 }
