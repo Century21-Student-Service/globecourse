@@ -549,15 +549,9 @@ function saveInstitution()
 
             $data['video'] = implode(',', $new_video_ids);
 
-        } else {
-            $data['video'] = '';
         }
 
         foreach ($data as $key => $value) {
-            if ($key == 'video') {
-                continue;
-            }
-
             if ($data[$key] != '0' && empty($data[$key])) {
                 unset($data[$key]);
                 continue;
@@ -604,6 +598,7 @@ function saveInstitution()
     $sql_update_title = "UPDATE upload_video SET title=:title, title_en=:title_en WHERE id=:id ;";
     $stmt_update_title = $conn->prepare($sql_update_title);
 
+    // echo json_encode(['u' => $video_to_upload, 'd' => $video_to_delete]);die;
     try {
         syncVideos($video_to_upload, $video_to_delete);
         if (!empty($update_title_param)) {
@@ -675,14 +670,14 @@ function syncVideos($video_to_upload, $video_to_delete)
             @unlink('/tmp/' . $u['name']);
             @unlink('/tmp/' . preg_replace('/\.[\w\d]{3}$/', '.jpg', $u['name']));
         }
-        array_push($sync,
-            $client->deleteObjectsAsync([
-                'Bucket' => S3BUCKET,
-                'Delete' => [
-                    'Objects' => $objects,
-                ],
-            ])
-        );
+        // array_push($sync,
+        //     $client->deleteObjectsAsync([
+        //         'Bucket' => S3BUCKET,
+        //         'Delete' => [
+        //             'Objects' => $objects,
+        //         ],
+        //     ])
+        // );
     }
 
     $results = Promise\unwrap($sync);

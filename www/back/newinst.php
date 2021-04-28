@@ -178,6 +178,18 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
       opacity: .7;
     }
 
+    .video-top {
+      color:white;
+      position: absolute;
+      top: 2px;
+      left: 0;
+      height: 25px;
+      width: 100%;
+      font-size: 18px;
+      padding: 0 4px;
+      line-height:19px;
+    }
+
     .video-bottom {
       position: absolute;
       bottom: 0;
@@ -369,7 +381,7 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
           <input class="file-upload pics-upload" id="file_upload_pics" type="file" multiple accept="image/*" />
         </div>
       </div>
-      <div class="tab-pane fade " role="tabpanel" aria-labelledby="video_tab" id="input_video" style="height: 342px;">
+      <div class="tab-pane fade " role="tabpanel" aria-labelledby="video_tab" id="input_video" style="height: 342px;overflow: auto;">
         <div class="video-add" onclick="document.getElementById('file_upload_video').click();">
           <i class="fa fa-plus" aria-hidden="true"></i>
           <input class="file-upload pics-upload" id="file_upload_video" type="file" multiple accept="video/*" />
@@ -980,6 +992,7 @@ getjs("js/layer/layer.js", true);
             duration = Math.floor(e.duration / 60) + ":" + ("0" + e.duration % 60).slice(-2);
           str = `<div class="video-card" id="video_card_${i}" data-index="${i}" data-videouri="${e.video}" data-vid="${e.id}">
             <img class="video-img" src="${e.img}">
+            <div class="video-top">${e.title||''}<br>${e.title_en||''}</div>
             <div class="video-bottom">
               <div class="video-duration">${duration}</div>
               <div class="video-control">
