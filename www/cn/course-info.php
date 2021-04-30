@@ -2,21 +2,21 @@
 require_once dirname(__FILE__) . './../include/config.inc.php';
 include_once './../ext/news.php';
 
+// /cn/course-info.php
+
 if (empty($id)) {
     header("Location: search-course");
     die;
 }
+//检测文档正确性
+$row = $dosql->GetOne("SELECT c.id,c.inst_id,c.name,c.name_en,c.fees,c.hours,c.months,c.intro,c.description,c.field_id_p,c.field_id_c,l.name AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
 
-$cid = empty($cid) ? 5 : intval($cid);
-$sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $cid);
-
-if (empty($sch)) {
+if (empty($row)) {
     header("Location: search-course");
     die;
 }
 
-//检测文档正确性
-$row = $dosql->GetOne("SELECT c.id,c.name,c.name_en,c.fees,c.hours,c.months,c.intro,c.description,c.field_id_p,c.field_id_c,l.name AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
+$sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $row['inst_id']);
 
 #region philip 2021-02-19
 if (is_array($row)) {

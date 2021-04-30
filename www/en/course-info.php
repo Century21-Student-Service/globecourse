@@ -4,14 +4,23 @@ include_once './../ext/news.php';
 
 define('EMPTYTMP_UPDATING', 'Updating...');
 define('EMPTYTMP_UNAVAILABLE', 'Unavailable');
-define('EMPTYTMP_UNCLASSIFIED', 'Unclassified');
 
-$cid = empty($cid) ? 5 : intval($cid);
-$sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $cid);
+// /en/course-info.php
+
+if (empty($id)) {
+    header("Location: search-course");
+    die;
+}
 
 //检测文档正确性
-$row = $dosql->GetOne("SELECT c.id,c.name,c.name_en,c.fees,c.hours,c.months,c.intro,c.description,c.description_en,c.field_id_p,c.field_id_c,l.name_en AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
+$row = $dosql->GetOne("SELECT c.id,c.inst_id,c.name,c.name_en,c.fees,c.hours,c.months,c.intro,c.description,c.description_en,c.field_id_p,c.field_id_c,l.name_en AS `level` FROM course c LEFT JOIN level l ON l.id=c.level_id WHERE c.id=$id");
 
+if (empty($row)) {
+    header("Location: search-course");
+    die;
+}
+
+$sch = $dosql->GetOne("SELECT * FROM `institution` WHERE id=" . $row['inst_id']);
 if (is_array($row)) {
     //增加一次点击量
     // $dosql->ExecNoneQuery("UPDATE `#@__infolist` SET hits=hits+1 WHERE id=$id");
@@ -228,8 +237,8 @@ if (!empty($picarr)) {
 								<a href="school-info.php?id=<?php echo ($sch['id']); ?>"><img class="animated fadeIn ctm-header__logo" src="./../<?php echo ($sch['badge']); ?>"
 										width="" height="" style="border-radius: 10px;" loading="lazy" title="Insititution - <?php echo ($sch['name_en']); ?>" /></a>
 								<!-- [Logo] -->
-								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
-								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
+								<!-- <div class="kingster-page-caption"><?php //echo($sch['cname']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+								<!-- <h1 class="kingster-page-title"><?php //echo($sch['title']);;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></h1> -->
 
 							</div>
 						</div>

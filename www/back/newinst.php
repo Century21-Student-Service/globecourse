@@ -8,6 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>添加院校</title>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
   <?php
 
 getcss("ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css");
@@ -179,7 +180,7 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
     }
 
     .video-top {
-      color:white;
+      color: white;
       position: absolute;
       top: 2px;
       left: 0;
@@ -187,7 +188,7 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
       width: 100%;
       font-size: 18px;
       padding: 0 4px;
-      line-height:19px;
+      line-height: 19px;
     }
 
     .video-bottom {
@@ -409,7 +410,7 @@ getjs("ajax/libs/jquery/3.5.1/jquery.min.js");
 getjs("ajax/libs/jqueryui/1.12.1/jquery-ui.min.js");
 getjs("ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js");
 getjs("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.js");
-getjs("js/wangEditor.min.js", true);
+//getjs("js/wangEditor.min.js", true);
 getjs("js/layer/layer.js", true);
 ?>
   <script>
@@ -963,6 +964,7 @@ getjs("js/layer/layer.js", true);
             if (data_new.video[i] != null && data_new.video[i].id == id) {
               data_new.video[i].title = $("#title_" + id).val();
               data_new.video[i].title_en = $("#title_en_" + id).val();
+              $(`.video-card[data-vid=${id}] .video-top`).html(`${data_new.video[i].title}<br>${data_new.video[i].title_en}`);
             }
           }
           layer.close(index);

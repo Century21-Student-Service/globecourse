@@ -8,6 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>添加课程</title>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
   <?php
 
 getcss("ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css");
@@ -142,7 +143,7 @@ getcss("js/layer/theme/default/layer.css", true);
 
 getjs("ajax/libs/jquery/3.5.1/jquery.min.js");
 getjs("ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js");
-getjs("js/wangEditor.min.js", true);
+//getjs("js/wangEditor.min.js", true);
 getjs("js/layer/layer.js", true);
 ?>
   <script>
