@@ -76,6 +76,10 @@ if ($searchMode_fees) {
     $where .= "AND c.fees BETWEEN $feesFrom AND $feesTo ";
 }
 
+if ($courseName) {
+    $where .= "AND (c.name like '%$courseName%' OR c.name_en like '%$courseName%') ";
+}
+
 $sql = "SELECT c.id,
                 c.name,
                 l.name AS `level`,
@@ -151,7 +155,7 @@ while ($row = $dosql->GetArray()) {
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>

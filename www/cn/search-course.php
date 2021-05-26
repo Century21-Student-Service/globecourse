@@ -12,6 +12,13 @@ require_once dirname(__FILE__) . './../include/config.inc.php';
 	<title>课程搜索 | 潮流搜索平台</title>
 	<!-- <title>Kingster &#8211; School, College &amp; University HTML Template</title> -->
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+		integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous"
+		referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css"
+		integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous"
+		referrerpolicy="no-referrer" />
+
 	<!-- (Theme) kingster -->
 	<link rel='stylesheet' href='kingster-plugins/goodlayers-core/plugins/combine/style.css' type='text/css' media='all' />
 	<link rel='stylesheet' href='kingster-plugins/goodlayers-core/include/css/page-builder.min.css' type='text/css' media='all' />
@@ -38,6 +45,8 @@ require_once dirname(__FILE__) . './../include/config.inc.php';
 	<link rel="stylesheet" type="text/css" href="custom-css/map-effect.css">
 
 
+
+
 	<!-- ==========  (custom) Style [only this pg]  ========== -->
 	<style type="text/css">
 		.gdlr-core-item-pdb {
@@ -54,6 +63,30 @@ require_once dirname(__FILE__) . './../include/config.inc.php';
 			border-color: #d6d6d6;
 			border-bottom-width: 2px;
 			margin-top: 40px;
+		}
+
+		.row {
+			display: block;
+		}
+
+		label {
+			display: inline;
+		}
+
+		.dropdown_100 {
+			font-size: 13px;
+		}
+
+		.slider.slider-horizontal {
+			width: 50%;
+		}
+
+		.slider-handle {
+			background: #027dfa;
+		}
+
+		.slider-track .slider-selection {
+			background: rgb(164, 207, 251);
 		}
 	</style>
 	<!-- ==========  (custom) Style [only this pg]  ========== -->
@@ -115,7 +148,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 										<!-- =============================================        Form [for submit button]        ============================================= -->
 
 										<form action="search-course__result" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post">
-											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;?>search-course__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
+											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;?>search-course__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
 
 											<!-- =============================================        Form [for submit button]        ============================================= -->
 											<!-- ================================================================================================================================== -->
@@ -393,7 +426,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 														<!-- ================================================================================================================= -->
 														<!-- =============================================        [Tab 2]        ============================================= -->
 														<!-- ================================================================================================================= -->
-														<div class="animated fadeIn tab-box__hide" id="search_tab2_faculty" style="">
+														<div class="animated fadeIn tab-box__hide" id="search_tab2_faculty">
 
 															<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
 
@@ -481,14 +514,23 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 															<div class="gdlr-core-pbf-element">
 																<div
 																	class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr"
-																	style="padding-bottom: 0 !important">
+																	style="padding-bottom: 0 !important;display: inline-block;">
 																	<div class="gdlr-core-title-item-title-wrap clearfix">
 																		<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
 																			style="font-size: 16px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">学费范围</h3>
 																	</div>
 																	<div><span class="gdlr-core-title-item-caption gdlr-core-info-font gdlr-core-skin-caption"
-																			style="font-size: 12px ;font-style: normal ;color: #6c6c6c ;">Range of Fees</span></div>
+																			style="font-size: 12px ;font-style: normal ;color: #6c6c6c ;">Range of Fees</span>
+																	</div>
 																</div>
+																<select id="selt_currency_dropdown" style="display: inline;width: 111px; height: 35px;padding: 0 0 0 10px;">
+																	<option data-name="澳元" value="AUD">AUD</option>
+																	<option data-name="人民币" value="CNY">CNY</option>
+																	<option data-name="美元" value="USD">USD</option>
+																	<option data-name="纽币" value="NZD">NZD</option>
+																	<option data-name="港币" value="HKD">HKD</option>
+																	<option data-name="新台币" value="TWD">TWD</option>
+																</select>
 															</div>
 															<!-- ====================     << Content >> {1st paragraph}     ==================== -->
 															<div class="gdlr-core-pbf-element">
@@ -529,7 +571,6 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 															<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
 
 															<!-- ====================     << Title >> {3rd paragraph}     ==================== -->
-															<!-- ===== (Category - 课程类别) ===== -->
 															<div class="gdlr-core-pbf-element">
 																<div
 																	class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr"
@@ -547,10 +588,20 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 																<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix " style="text-align: center !important;">
 
 																	<!-- =====  (Insert) Text Field  ===== -->
-																	<span>（澳元）$</span>
-																	<input class="ctm-txtField_25" style="margin-left: 10px;" name="feesFrom" type="text" id="feesFrom" value="0" />至
-																	<input class="ctm-txtField_25" name="feesTo" type="text" id="feesTo" value="0" />
-
+																	<!-- <span>（澳元）$</span> -->
+																	<!-- <input class="ctm-txtField_25" style="margin-left: 10px;" name="feesFrom" type="text" id="feesFrom" value="0" />至
+																	<input class="ctm-txtField_25" name="feesTo" type="text" id="feesTo" value="0" /> -->
+																	<select id="selt_currency_slider"
+																		style="display: inline;width: 111px;position: absolute;left:3%; height: 35px;padding: 0 0 0 10px;">
+																		<option value="AUD">AUD</option>
+																		<option value="CNY">CNY</option>
+																		<option value="USD">USD</option>
+																		<option value="NZD">NZD</option>
+																		<option value="HKD">HKD</option>
+																		<option value="TWD">TWD</option>
+																	</select>
+																	<input id="fee_slider" data-slider-id='feeSlider' type="text" data-slider-min="0" data-slider-max="100000"
+																		data-slider-step="1000" data-slider-value="20000" />
 
 																</div>
 															</div>
@@ -649,6 +700,9 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
     <script type='text/javascript' src='kingster-plugins/goodlayers-core/include/js/page-builder.js'></script> -->
 	<script type='text/javascript' src='kingster-js/jquery/ui/effect.min.js'></script>
 	<script type='text/javascript' src='kingster-js/plugins.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"
+		integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"
+		referrerpolicy="no-referrer"></script>
 
 
 	<!-- ==========  [from-ORIGINAL]  ========== -->
@@ -856,6 +910,28 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			}
 		});
 		//#endregion
+
+		const feeSlider = $("#fee_slider").bootstrapSlider({
+			tooltip: 'always',
+			range: true,
+			value: [0, 20000],
+			tooltip_split: true,
+			formatter: v => {
+				const symble = $("#selt_currency_slider").val() === "CNY" ? "￥" : "$";
+				return symble + v;
+			}
+		});
+		$("#selt_currency_slider").change(ev => feeSlider.bootstrapSlider("setValue", feeSlider.bootstrapSlider("getValue")));
+
+		$("#selt_currency_dropdown").change(ev => {
+			const reg = /^（.*）/g;
+			const name = "（" + $("#selt_currency_dropdown option:selected").data("name") + "）";
+			$("#feesRange option").each((i, e) => {
+				e.innerHTML = e.innerHTML.replace(reg, name);
+				console.log(e);
+			})
+
+		});
 	</script>
 </body>
 

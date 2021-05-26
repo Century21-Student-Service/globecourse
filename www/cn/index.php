@@ -648,7 +648,7 @@ session_unset();
                                             <div class="ctm-qSearch" style="text-align: center; width: 100%; position: absolute;">
                                                 <h4 style="color: white; margin-bottom: 0; line-height: 36px;">课程快搜<br><span id="span_1dd7_0" style="color: #bababa;">输入「名称关键字」快速搜索</span></h4>
                                                 
-                                                <?php $toFile = 'search-school__result' ?>
+                                                <?php $toFile = 'search-course__result' ?>
                                                 <form action="<?php echo $toFile.$fType_php; ?>" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" >
                                                     
                                                     <input class="ctm-txtField" style="width: 60%; min-width: 320px;" name="courseName" id="courseName" type="text" />
