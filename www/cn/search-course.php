@@ -147,8 +147,8 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 										<!-- ================================================================================================================================== -->
 										<!-- =============================================        Form [for submit button]        ============================================= -->
 
-										<form action="search-course__result" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post">
-											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;?>search-course__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
+										<form action="search-course__result" id="showResult" target="Result_Popup" method="post">
+											<!-- <form action="<?php //include('_dynamic_siteSetting/folderLink_cn.php'); ;;;;;;;;;;?>search-course__result.php" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" > -->
 
 											<!-- =============================================        Form [for submit button]        ============================================= -->
 											<!-- ================================================================================================================================== -->
@@ -340,7 +340,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 														<!-- ================================================================================================================= -->
 														<!-- =============================================        [Tab 1]        ============================================= -->
 														<!-- ================================================================================================================= -->
-														<div class="animated fadeIn" id="search_tab1_faculty" style="">
+														<div class="animated fadeIn" id="search_tab1_faculty">
 
 															<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
 
@@ -404,7 +404,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 																	<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix ">
 
 																		<!-- =====  (Insert) State [drop-down list]  ===== -->
-																		<select name="narrowField" class="dropdown_100 ctm-dropdown__hide" id="narrowField" style="">
+																		<select name="narrowField" class="dropdown_100 ctm-dropdown__hide" id="narrowField">
 																			<option value="0">请选择「课程」</option>
 																		</select>
 
@@ -505,7 +505,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 														<!-- ================================================================================================================= -->
 														<!-- =============================================        [Tab 1]        ============================================= -->
 														<!-- ================================================================================================================= -->
-														<div class="animated fadeIn" id="search_tab1_fees" style="">
+														<div class="animated fadeIn" id="search_tab1_fees">
 
 															<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
 
@@ -523,7 +523,8 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 																			style="font-size: 12px ;font-style: normal ;color: #6c6c6c ;">Range of Fees</span>
 																	</div>
 																</div>
-																<select id="selt_currency_dropdown" style="display: inline;width: 111px; height: 35px;padding: 0 0 0 10px;">
+																<select id="selt_currency_dropdown" name="currency_dropdown"
+																	style="display: inline;width: 111px; height: 35px;padding: 0 0 0 10px;">
 																	<option data-name="澳元" value="AUD">AUD</option>
 																	<option data-name="人民币" value="CNY">CNY</option>
 																	<option data-name="美元" value="USD">USD</option>
@@ -566,7 +567,7 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 														<!-- ================================================================================================================= -->
 														<!-- =============================================        [Tab 2]        ============================================= -->
 														<!-- ================================================================================================================= -->
-														<div class="animated fadeIn tab-box__hide" id="search_tab2_fees" style="">
+														<div class="animated fadeIn tab-box__hide" id="search_tab2_fees">
 
 															<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
 
@@ -589,9 +590,9 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 
 																	<!-- =====  (Insert) Text Field  ===== -->
 																	<!-- <span>（澳元）$</span> -->
-																	<!-- <input class="ctm-txtField_25" style="margin-left: 10px;" name="feesFrom" type="text" id="feesFrom" value="0" />至
-																	<input class="ctm-txtField_25" name="feesTo" type="text" id="feesTo" value="0" /> -->
-																	<select id="selt_currency_slider"
+																	<input type="hidden" name="feesFrom" id="feesFrom" />
+																	<input type="hidden" name="feesTo" id="feesTo" />
+																	<select id="selt_currency_slider" name="currency_slider"
 																		style="display: inline;width: 111px;position: absolute;left:3%; height: 35px;padding: 0 0 0 10px;">
 																		<option value="AUD">AUD</option>
 																		<option value="CNY">CNY</option>
@@ -777,71 +778,41 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 	<!-- ______________________________        (custom) Tab-Switch [fees]        ______________________________ -->
 	<!-- ====================================================================================================== -->
 	<script type="text/javascript">
-		jQuery('input[name="searchMode_fees"]').change(function () {
+		$('input[name="searchMode_fees"]').change(function () {
 
-			var value = jQuery("input[name='searchMode_fees']:checked").val();
+			var value = $("input[name='searchMode_fees']:checked").val();
 
 			if (value == 0) {
-				jQuery('#search_tab1_fees').removeClass('tab-box__hide');
-				jQuery('#search_tab2_fees').addClass('tab-box__hide');
+				$('#search_tab1_fees').removeClass('tab-box__hide');
+				$('#search_tab2_fees').addClass('tab-box__hide');
 			}
 
 			if (value == 1) {
-				jQuery('#search_tab1_fees').addClass('tab-box__hide');
-				jQuery('#search_tab2_fees').removeClass('tab-box__hide');
+				$('#search_tab1_fees').addClass('tab-box__hide');
+				$('#search_tab2_fees').removeClass('tab-box__hide');
 			}
+			$('#feesRange').val(0);
 
-			jQuery('#feesRange').val(0);
-			jQuery('#feesFrom').val('0');
-			jQuery('#feesTo').val('0');
+			if (getCookie("gc_currency")) {
+				const currency = getCookie("gc_currency");
+				$("#selt_currency_dropdown").children().each((i, e) => {
+					if (e.value === currency) {
+						$("#selt_currency_dropdown").prop('selectedIndex', i);
+					}
+				});
 
-			jQuery('#feesFrom').addClass('ctm__disable');
-
+				$("#selt_currency_slider").children().each((i, e) => {
+					if (e.value === currency) {
+						$("#selt_currency_slider").prop('selectedIndex', i);
+					}
+				});
+			}
 		});
 	</script>
 
 	<!-- ========================================================================================= -->
 	<!-- ______________________________        (custom) Fees        ______________________________ -->
 	<!-- ========================================================================================= -->
-	<script type="text/javascript">
-		jQuery('#feesFrom').addClass('ctm__disable');
-
-		//  allow user to 'insert' fees-from
-		jQuery('#feesTo').on('change keyup', function () {
-			if (jQuery('#feesTo').val() != '0') {
-				jQuery('#feesFrom').removeClass('ctm__disable');
-			} else {
-				jQuery('#feesFrom').addClass('ctm__disable');
-				jQuery('#feesFrom').val('0');
-			}
-
-			//  validate 'fees-from' is 'smaller' than 'fees-to'
-			if (jQuery('#feesTo').val() < jQuery('#feesFrom').val()) {
-				var feesTo_intVal = parseInt(jQuery('#feesTo').val());
-				jQuery('#feesFrom').val(feesTo_intVal - 1);
-			}
-		});
-
-		//  validate 'fees-from' is 'smaller' than 'fees-to'
-		jQuery('#feesFrom').on('change keyup', function () {
-			if (jQuery('#feesFrom').val() > jQuery('#feesTo').val()) {
-				var feesTo_intVal = parseInt(jQuery('#feesTo').val());
-				jQuery('#feesFrom').val(feesTo_intVal - 1);
-			}
-		});
-
-		jQuery('#feesFrom').focusout(function () {
-			if (jQuery('#feesFrom').val() == '') {
-				jQuery('#feesFrom').val('0');
-			}
-		});
-		jQuery('#feesTo').focusout(function () {
-			if (jQuery('#feesTo').val() == '') {
-				jQuery('#feesTo').val('0');
-			}
-		});
-	</script>
-
 	<script type="text/javascript">
 		//#region 以下代码添加于2021-02-23
 		//载入初始「州」数据
@@ -914,24 +885,75 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 		const feeSlider = $("#fee_slider").bootstrapSlider({
 			tooltip: 'always',
 			range: true,
-			value: [0, 20000],
+			value: [0, 100000],
 			tooltip_split: true,
 			formatter: v => {
 				const symble = $("#selt_currency_slider").val() === "CNY" ? "￥" : "$";
-				return symble + v;
+				return symble + v.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
 			}
 		});
-		$("#selt_currency_slider").change(ev => feeSlider.bootstrapSlider("setValue", feeSlider.bootstrapSlider("getValue")));
+		$("#selt_currency_slider").change(ev => {
+			setCookie("gc_currency", $("#selt_currency_slider option:selected").val(), 30);
+			feeSlider.bootstrapSlider("setValue", feeSlider.bootstrapSlider("getValue"));
+		});
 
 		$("#selt_currency_dropdown").change(ev => {
 			const reg = /^（.*）/g;
 			const name = "（" + $("#selt_currency_dropdown option:selected").data("name") + "）";
+			setCookie("gc_currency", $("#selt_currency_dropdown option:selected").val(), 30);
 			$("#feesRange option").each((i, e) => {
 				e.innerHTML = e.innerHTML.replace(reg, name);
-				console.log(e);
-			})
+			});
 
 		});
+
+		$("#showResult").submit(e => {
+			if ($("input[name='searchMode_fees']:checked").val() == 1) {
+				const range = feeSlider.bootstrapSlider("getValue");
+				$("#feesFrom").val(range[0]);
+				$("#feesTo").val(range[1]);
+			}
+			ShowResult();
+		});
+
+		if (getCookie("gc_currency")) {
+			const currency = getCookie("gc_currency");
+			$("#selt_currency_dropdown").children().each((i, e) => {
+				if (e.value === currency) {
+					$("#selt_currency_dropdown").prop('selectedIndex', i);
+				}
+			});
+
+			$("#selt_currency_slider").children().each((i, e) => {
+				if (e.value === currency) {
+					$("#selt_currency_slider").prop('selectedIndex', i);
+				}
+			});
+		}
+
+
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+			var expires = "expires=" + d.toUTCString();
+			document.cookie = cname + "=" + JSON.stringify(cvalue) + ";" + expires + ";path=/";
+		}
+
+		function getCookie(cname) {
+			var name = cname + "=";
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return JSON.parse(c.substring(name.length, c.length));
+				}
+			}
+			return null;
+		}
 	</script>
 </body>
 

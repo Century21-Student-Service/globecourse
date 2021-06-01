@@ -12,6 +12,13 @@ require_once dirname(__FILE__) . './../include/config.inc.php';
 	<title>Course Search | CT21 Search Platform</title>
 	<!-- <title>Kingster &#8211; School, College &amp; University HTML Template</title> -->
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+		integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous"
+		referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css"
+		integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous"
+		referrerpolicy="no-referrer" />
+
 	<!-- (Theme) custom  ==  << Favicon and touch icons >>  ====================          Icon          -->
 	<?php include_once '_dynamic_siteSetting/icon-setting.php';?>
 	<!-- (Theme) custom  ==  << Favicon and touch icons >>  ====================          Icon          -->
@@ -59,6 +66,30 @@ require_once dirname(__FILE__) . './../include/config.inc.php';
 			border-color: #d6d6d6;
 			border-bottom-width: 2px;
 			margin-top: 40px;
+		}
+
+		.row {
+			display: block;
+		}
+
+		label {
+			display: inline;
+		}
+
+		.dropdown_100 {
+			font-size: 13px;
+		}
+
+		.slider.slider-horizontal {
+			width: 50%;
+		}
+
+		.slider-handle {
+			background: #027dfa;
+		}
+
+		.slider-track .slider-selection {
+			background: rgb(164, 207, 251);
 		}
 	</style>
 	<!-- ==========  (custom) Style [only this pg]  ========== -->
@@ -436,12 +467,21 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 													<div class="gdlr-core-pbf-element">
 														<div
 															class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr"
-															style="padding-bottom: 0 !important">
+															style="padding-bottom: 0 !important;display: inline-block;">
 															<div class="gdlr-core-title-item-title-wrap clearfix">
 																<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
 																	style="font-size: 16px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">Range of Fees</h3>
 															</div>
 														</div>
+														<select id="selt_currency_dropdown" name="currency_dropdown"
+															style="display: inline;width: 111px; height: 35px;padding: 0 0 0 10px;">
+															<option value="AUD">AUD</option>
+															<option value="CNY">CNY</option>
+															<option value="USD">USD</option>
+															<option value="NZD">NZD</option>
+															<option value="HKD">HKD</option>
+															<option value="TWD">TWD</option>
+														</select>
 													</div>
 
 													<!-- ====================     << Content >> {1st paragraph}     ==================== -->
@@ -498,10 +538,20 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 														<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix " style="text-align: center !important;">
 
 															<!-- =====  (Insert) Text Field  ===== -->
-															<span>（AUD）$</span>
-															<input class="ctm-txtField_25" style="margin-left: 10px;" name="feesFrom" type="text" id="feesFrom" value="0" />to
-															<input class="ctm-txtField_25" name="feesTo" type="text" id="feesTo" value="0" />
-
+															<!-- <span>（AUD）$</span> -->
+															<input name="feesFrom" type="hidden" id="feesFrom" />
+															<input name="feesTo" type="hidden" id="feesTo" />
+															<select id="selt_currency_slider" name="currency_slider"
+																style="display: inline;width: 111px;position: absolute;left:3%; height: 35px;padding: 0 0 0 10px;">
+																<option value="AUD">AUD</option>
+																<option value="CNY">CNY</option>
+																<option value="USD">USD</option>
+																<option value="NZD">NZD</option>
+																<option value="HKD">HKD</option>
+																<option value="TWD">TWD</option>
+															</select>
+															<input id="fee_slider" data-slider-id='feeSlider' type="text" data-slider-min="0" data-slider-max="100000" data-slider-step="1000"
+																data-slider-value="20000" />
 
 														</div>
 													</div>
@@ -599,7 +649,9 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
     <script type='text/javascript' src='kingster-plugins/goodlayers-core/include/js/page-builder.js'></script> -->
 	<script type='text/javascript' src='kingster-js/jquery/ui/effect.min.js'></script>
 	<script type='text/javascript' src='kingster-js/plugins.min.js'></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"
+		integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"
+		referrerpolicy="no-referrer"></script>
 
 	<!-- ==========  [from-ORIGINAL]  ========== -->
 	<!-- <script src="./../templates/default/js/jquery.min.js"></script> -->
@@ -687,10 +739,21 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			}
 
 			jQuery('#feesRange').val(0);
-			jQuery('#feesFrom').val('0');
-			jQuery('#feesTo').val('0');
 
-			jQuery('#feesFrom').addClass('ctm__disable');
+			if (getCookie("gc_currency")) {
+				const currency = getCookie("gc_currency");
+				$("#selt_currency_dropdown").children().each((i, e) => {
+					if (e.value === currency) {
+						$("#selt_currency_dropdown").prop('selectedIndex', i);
+					}
+				});
+
+				$("#selt_currency_slider").children().each((i, e) => {
+					if (e.value === currency) {
+						$("#selt_currency_slider").prop('selectedIndex', i);
+					}
+				});
+			}
 
 		});
 	</script>
@@ -805,6 +868,79 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			}
 		});
 		//#endregion
+
+		const feeSlider = $("#fee_slider").bootstrapSlider({
+			tooltip: 'always',
+			range: true,
+			value: [0, 100000],
+			tooltip_split: true,
+			formatter: v => {
+				const symble = $("#selt_currency_slider").val() === "CNY" ? "￥" : "$";
+				return symble + v.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+			}
+		});
+		$("#selt_currency_slider").change(ev => {
+			setCookie("gc_currency", $("#selt_currency_slider option:selected").val(), 30);
+			feeSlider.bootstrapSlider("setValue", feeSlider.bootstrapSlider("getValue"));
+		});
+
+		$("#selt_currency_dropdown").change(ev => {
+			const reg = /^（.*）/g;
+			const name = "（" + $("#selt_currency_dropdown option:selected").val() + "）";
+			setCookie("gc_currency", $("#selt_currency_dropdown option:selected").val(), 30);
+			$("#feesRange option").each((i, e) => {
+				e.innerHTML = e.innerHTML.replace(reg, name);
+			});
+
+		});
+
+		$("#showResult").submit(e => {
+			if ($("input[name='searchMode_fees']:checked").val() == 1) {
+				const range = feeSlider.bootstrapSlider("getValue");
+				$("#feesFrom").val(range[0]);
+				$("#feesTo").val(range[1]);
+			}
+			ShowResult();
+		});
+
+		if (getCookie("gc_currency")) {
+			const currency = getCookie("gc_currency");
+			$("#selt_currency_dropdown").children().each((i, e) => {
+				if (e.value === currency) {
+					$("#selt_currency_dropdown").prop('selectedIndex', i);
+				}
+			});
+
+			$("#selt_currency_slider").children().each((i, e) => {
+				if (e.value === currency) {
+					$("#selt_currency_slider").prop('selectedIndex', i);
+				}
+			});
+		}
+
+
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+			var expires = "expires=" + d.toUTCString();
+			document.cookie = cname + "=" + JSON.stringify(cvalue) + ";" + expires + ";path=/";
+		}
+
+		function getCookie(cname) {
+			var name = cname + "=";
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return JSON.parse(c.substring(name.length, c.length));
+				}
+			}
+			return null;
+		}
 	</script>
 </body>
 

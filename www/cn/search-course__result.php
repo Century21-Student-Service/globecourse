@@ -43,7 +43,7 @@ if ($narrowField) {
 
 if ($searchMode_fees == 0 && $feesRange) {
     $from = 0;
-    $to = 9999;
+    $to = 'max';
     switch ($feesRange) {
         case 1:
             break;
@@ -69,11 +69,28 @@ if ($searchMode_fees == 0 && $feesRange) {
             break;
         default:break;
     }
+    if (!empty($_COOKIE['gc_currency']) && $_COOKIE['gc_currency'] != 'AUD') {
+        $currency_code = str_replace('"', '', $_COOKIE['gc_currency']);
+        $c_base = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE id = 1;");
+        $c_base = $c_base['rate'];
+        $c_target = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE code = '$currency_code' ;");
+        $from = $from * $c_base / $c_target['rate'];
+        $to = $to === "max" ? "max" : $to * $c_base / $c_target['rate'];
+    }
     $where .= "AND c.fees BETWEEN $from AND $to ";
 }
 
 if ($searchMode_fees) {
+    if (!empty($_COOKIE['gc_currency']) && $_COOKIE['gc_currency'] != 'AUD') {
+        $currency_code = str_replace('"', '', $_COOKIE['gc_currency']);
+        $c_base = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE id = 1;");
+        $c_base = $c_base['rate'];
+        $c_target = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE code = '$currency_code' ;");
+        $feesFrom = $feesFrom * $c_base / $c_target['rate'];
+        $feesTo = $feesTo * $c_base / $c_target['rate'];
+    }
     $where .= "AND c.fees BETWEEN $feesFrom AND $feesTo ";
+
 }
 
 if ($courseName) {
@@ -144,18 +161,18 @@ while ($row = $dosql->GetArray()) {
     $months = $row['months'] ? $row['months'] . "个月" : "无";
     ?>
         <li class="ctm-table__row" onclick="parent.location.href='<?php echo $link; ?>';">
-          <div class="ctm-table__col ctm-table__6col-1 ctm-table__col-1" data-label=""><?php echo ($row['name']); ?></div>
-          <div class="ctm-table__col ctm-table__6col-2 ctm-table__embed-courseType" data-label=""><?php echo $row['level']; ?></div>
-          <div class="ctm-table__col ctm-table__6col-3 ctm-table__embed-School" data-label=""><?php echo ($row['inst']); ?></div>
-          <div class="ctm-table__col ctm-table__6col-4 ctm-table__embed-State" data-label=""><?php echo ($row['state']); ?></div>
-          <div class="ctm-table__col ctm-table__6col-5 ctm-table__embed-Duration" data-label=""><?php echo ($months); ?></div>
-          <div class="ctm-table__col ctm-table__6col-6 ctm-table__embed-Fes" data-label=""><?php echo $fees_format; ?></div>
+          <div class="ctm-table__col ctm-table__6col-1 ctm-table__col-1" ><?php echo ($row['name']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-2 ctm-table__embed-courseType" ><?php echo $row['level']; ?></div>
+          <div class="ctm-table__col ctm-table__6col-3 ctm-table__embed-School" ><?php echo ($row['inst']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-4 ctm-table__embed-State" ><?php echo ($row['state']); ?></div>
+          <div class="ctm-table__col ctm-table__6col-5 ctm-table__embed-Duration" ><?php echo ($months); ?></div>
+          <div class="ctm-table__col ctm-table__6col-6 ctm-table__embed-Fes" ><?php echo $fees_format; ?></div>
         </li>
     <?php
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>
