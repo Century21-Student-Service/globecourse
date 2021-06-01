@@ -41,46 +41,7 @@ if ($narrowField) {
     $where .= "AND c.field_id_c = $narrowField ";
 }
 
-if ($searchMode_fees == 0 && $feesRange) {
-    $from = 0;
-    $to = 'max';
-    switch ($feesRange) {
-        case 1:
-            break;
-        case 2:
-            $from = 10000;
-            $to = 19999;
-            break;
-        case 3:
-            $from = 20000;
-            $to = 39999;
-            break;
-        case 4:
-            $from = 40000;
-            $to = 59999;
-            break;
-        case 5:
-            $from = 60000;
-            $to = 79999;
-            break;
-        case 6:
-            $from = 80000;
-            $to = 'max';
-            break;
-        default:break;
-    }
-    if (!empty($_COOKIE['gc_currency']) && $_COOKIE['gc_currency'] != 'AUD') {
-        $currency_code = str_replace('"', '', $_COOKIE['gc_currency']);
-        $c_base = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE id = 1;");
-        $c_base = $c_base['rate'];
-        $c_target = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE code = '$currency_code' ;");
-        $from = $from * $c_base / $c_target['rate'];
-        $to = $to === "max" ? "max" : $to * $c_base / $c_target['rate'];
-    }
-    $where .= "AND c.fees BETWEEN $from AND $to ";
-}
-
-if ($searchMode_fees) {
+if (is_numeric($feesFrom) && is_numeric($feesTo)) {
     if (!empty($_COOKIE['gc_currency']) && $_COOKIE['gc_currency'] != 'AUD') {
         $currency_code = str_replace('"', '', $_COOKIE['gc_currency']);
         $c_base = $dosql->GetOne("SELECT code,name,rate,symbol FROM `currency` WHERE id = 1;");
@@ -90,7 +51,6 @@ if ($searchMode_fees) {
         $feesTo = $feesTo * $c_base / $c_target['rate'];
     }
     $where .= "AND c.fees BETWEEN $feesFrom AND $feesTo ";
-
 }
 
 if ($courseName) {
@@ -172,7 +132,7 @@ while ($row = $dosql->GetArray()) {
 }
 ?>
   </ul>
-  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
+  <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>

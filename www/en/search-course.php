@@ -438,87 +438,17 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 													<div class="gdlr-core-pbf-element">
 														<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix "
 															style="margin-bottom: 20px; padding: 0 !important;">
-
-
-															<!-- =====  (Insert) State [radio buttons]  ===== -->
-															<label>
-																<input type="radio" id="searchMode_fees" name="searchMode_fees" value="0" checked="true">
-																<div class="tab-box_2">
-																	<div><span>Search by "Range of Fees</span><br></div>
-																</div>
-															</label>
-
-															<label>
-																<input type="radio" id="searchMode_fees" name="searchMode_fees" value="1">
-																<div class="tab-box_2">
-																	<div><span>Search by "Fees Amount</span><br></div>
-																</div>
-															</label>
 														</div>
 													</div>
 												</div>
 												<!-- ================================================================================================================= -->
 												<!-- =============================================        [Tab 1]        ============================================= -->
 												<!-- ================================================================================================================= -->
-												<div class="animated fadeIn" id="search_tab1_fees">
-													<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
-													<!-- ====================     << Title >> {1st paragraph}     ==================== -->
-													<!-- ===== (Faculty of Courses - 主要学科) ===== -->
-													<div class="gdlr-core-pbf-element">
-														<div
-															class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr"
-															style="padding-bottom: 0 !important;display: inline-block;">
-															<div class="gdlr-core-title-item-title-wrap clearfix">
-																<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
-																	style="font-size: 16px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">Range of Fees</h3>
-															</div>
-														</div>
-														<select id="selt_currency_dropdown" name="currency_dropdown"
-															style="display: inline;width: 111px; height: 35px;padding: 0 0 0 10px;">
-															<option value="AUD">AUD</option>
-															<option value="CNY">CNY</option>
-															<option value="USD">USD</option>
-															<option value="NZD">NZD</option>
-															<option value="HKD">HKD</option>
-															<option value="TWD">TWD</option>
-														</select>
-													</div>
-
-													<!-- ====================     << Content >> {1st paragraph}     ==================== -->
-													<div class="gdlr-core-pbf-element">
-														<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix ">
-
-
-															<!-- =====  (Insert) State [drop-down list]  ===== -->
-															<select name="feesRange" class="dropdown_100" id="feesRange">
-																<option value="0">Please Choose "Range of Fees</option>
-																<option value="1">（AUD）$10,000 below</option>
-																<option value="2">（AUD）$10,000 - $20,000</option>
-																<option value="3">（AUD）$20,000 - $40,000</option>
-																<option value="4">（AUD）$40,000 - $60,000</option>
-																<option value="5">（AUD）$60,000 - $80,000</option>
-																<option value="6">（AUD）$80,000 above</option>
-															</select>
-
-
-														</div>
-													</div>
-													<!-- ====================     << (Grey) Line >>     ==================== -->
-													<div class="gdlr-core-pbf-element">
-														<div class="gdlr-core-divider-item gdlr-core-divider-item-normal gdlr-core-item-pdlr gdlr-core-center-align"
-															style="margin-bottom: 25px ;">
-															<div class="gdlr-core-divider-line gdlr-core-skin-divider" id="custom_greenLine-style" style="margin-top: 20px !important">
-															</div>
-														</div>
-													</div>
-
-												</div>
-
 
 												<!-- ================================================================================================================= -->
 												<!-- =============================================        [Tab 2]        ============================================= -->
 												<!-- ================================================================================================================= -->
-												<div class="animated fadeIn tab-box__hide" id="search_tab2_fees">
+												<div class="animated fadeIn " id="search_tab2_fees">
 													<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
 													<!-- ====================     << Title >> {3rd paragraph}     ==================== -->
 													<div class="gdlr-core-pbf-element">
@@ -527,14 +457,14 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 															style="padding-bottom: 0 !important">
 															<div class="gdlr-core-title-item-title-wrap clearfix">
 																<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
-																	style="font-size: 16px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">Specific Amount of Fees
+																	style="font-size: 16px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">Range of Fees
 																</h3>
 															</div>
 														</div>
 													</div>
 
 													<!-- ====================     << Content >> {3rd paragraph}     ==================== -->
-													<div class="gdlr-core-pbf-element">
+													<div class="gdlr-core-pbf-element" style="margin-top:25px">
 														<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix " style="text-align: center !important;">
 
 															<!-- =====  (Insert) Text Field  ===== -->
@@ -720,44 +650,6 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 		});
 	</script>
 
-	<!-- ========================================================================================================= -->
-	<!-- ______________________________        (custom) Tab-Switch [faculty]        ______________________________ -->
-	<!-- ========================================================================================================= -->
-	<script type="text/javascript">
-		jQuery('input[name="searchMode_fees"]').change(function () {
-
-			var value = jQuery("input[name='searchMode_fees']:checked").val();
-
-			if (value == 0) {
-				jQuery('#search_tab1_fees').removeClass('tab-box__hide');
-				jQuery('#search_tab2_fees').addClass('tab-box__hide');
-			}
-
-			if (value == 1) {
-				jQuery('#search_tab1_fees').addClass('tab-box__hide');
-				jQuery('#search_tab2_fees').removeClass('tab-box__hide');
-			}
-
-			jQuery('#feesRange').val(0);
-
-			if (getCookie("gc_currency")) {
-				const currency = getCookie("gc_currency");
-				$("#selt_currency_dropdown").children().each((i, e) => {
-					if (e.value === currency) {
-						$("#selt_currency_dropdown").prop('selectedIndex', i);
-					}
-				});
-
-				$("#selt_currency_slider").children().each((i, e) => {
-					if (e.value === currency) {
-						$("#selt_currency_slider").prop('selectedIndex', i);
-					}
-				});
-			}
-
-		});
-	</script>
-
 	<!-- ====================================================================================================== -->
 	<!-- ______________________________        (custom) Tab-Switch [fees]        ______________________________ -->
 	<!-- ====================================================================================================== -->
@@ -884,33 +776,15 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			feeSlider.bootstrapSlider("setValue", feeSlider.bootstrapSlider("getValue"));
 		});
 
-		$("#selt_currency_dropdown").change(ev => {
-			const reg = /^（.*）/g;
-			const name = "（" + $("#selt_currency_dropdown option:selected").val() + "）";
-			setCookie("gc_currency", $("#selt_currency_dropdown option:selected").val(), 30);
-			$("#feesRange option").each((i, e) => {
-				e.innerHTML = e.innerHTML.replace(reg, name);
-			});
-
-		});
-
 		$("#showResult").submit(e => {
-			if ($("input[name='searchMode_fees']:checked").val() == 1) {
-				const range = feeSlider.bootstrapSlider("getValue");
-				$("#feesFrom").val(range[0]);
-				$("#feesTo").val(range[1]);
-			}
+			const range = feeSlider.bootstrapSlider("getValue");
+			$("#feesFrom").val(range[0]);
+			$("#feesTo").val(range[1]);
 			ShowResult();
 		});
 
 		if (getCookie("gc_currency")) {
 			const currency = getCookie("gc_currency");
-			$("#selt_currency_dropdown").children().each((i, e) => {
-				if (e.value === currency) {
-					$("#selt_currency_dropdown").prop('selectedIndex', i);
-				}
-			});
-
 			$("#selt_currency_slider").children().each((i, e) => {
 				if (e.value === currency) {
 					$("#selt_currency_slider").prop('selectedIndex', i);

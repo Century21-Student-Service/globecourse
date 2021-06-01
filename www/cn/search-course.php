@@ -478,23 +478,6 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 																<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix "
 																	style="margin-bottom: 20px; padding: 0 !important;">
 
-
-																	<!-- =====  (Insert) State [radio buttons]  ===== -->
-																	<label>
-																		<input type="radio" id="searchMode_fees" name="searchMode_fees" value="0" checked="true">
-																		<div class="tab-box_2">
-																			<div><span>以选择「学费范围」搜索</span><br></div>
-																		</div>
-																	</label>
-
-																	<label>
-																		<input type="radio" id="searchMode_fees" name="searchMode_fees" value="1">
-																		<div class="tab-box_2">
-																			<div><span>输入「学费额数」搜索</span><br></div>
-																		</div>
-																	</label>
-
-
 																</div>
 															</div>
 
@@ -511,131 +494,84 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 
 															<!-- ====================     << Title >> {1st paragraph}     ==================== -->
 															<!-- ===== (Faculty of Courses - 主要学科) ===== -->
-															<div class="gdlr-core-pbf-element">
-																<div
-																	class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr"
-																	style="padding-bottom: 0 !important;display: inline-block;">
-																	<div class="gdlr-core-title-item-title-wrap clearfix">
-																		<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
-																			style="font-size: 16px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">学费范围</h3>
-																	</div>
-																	<div><span class="gdlr-core-title-item-caption gdlr-core-info-font gdlr-core-skin-caption"
-																			style="font-size: 12px ;font-style: normal ;color: #6c6c6c ;">Range of Fees</span>
-																	</div>
-																</div>
-																<select id="selt_currency_dropdown" name="currency_dropdown"
-																	style="display: inline;width: 111px; height: 35px;padding: 0 0 0 10px;">
-																	<option data-name="澳元" value="AUD">AUD</option>
-																	<option data-name="人民币" value="CNY">CNY</option>
-																	<option data-name="美元" value="USD">USD</option>
-																	<option data-name="纽币" value="NZD">NZD</option>
-																	<option data-name="港币" value="HKD">HKD</option>
-																	<option data-name="新台币" value="TWD">TWD</option>
-																</select>
-															</div>
+
 															<!-- ====================     << Content >> {1st paragraph}     ==================== -->
-															<div class="gdlr-core-pbf-element">
-																<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix ">
 
-
-																	<!-- =====  (Insert) State [drop-down list]  ===== -->
-																	<select name="feesRange" class="dropdown_100" id="feesRange">
-																		<option value="0">请选择「学费范围」</option>
-																		<option value="1">（澳元）$10,000 以下</option>
-																		<option value="2">（澳元）$10,000 - $19,999</option>
-																		<option value="3">（澳元）$20,000 - $39,999</option>
-																		<option value="4">（澳元）$40,000 - $59,999</option>
-																		<option value="5">（澳元）$60,000 - $79,999</option>
-																		<option value="6">（澳元）$80,000 以上</option>
-																	</select>
-
-
-																</div>
-															</div>
 															<!-- ====================     << (Grey) Line >>     ==================== -->
-															<div class="gdlr-core-pbf-element">
-																<div class="gdlr-core-divider-item gdlr-core-divider-item-normal gdlr-core-item-pdlr gdlr-core-center-align"
-																	style="margin-bottom: 25px ;">
-																	<div class="gdlr-core-divider-line gdlr-core-skin-divider" id="custom_greenLine-style" style="margin-top: 20px !important">
+
+
+															<!-- ================================================================================================================= -->
+															<!-- =============================================        [Tab 2]        ============================================= -->
+															<!-- ================================================================================================================= -->
+															<div class="animated fadeIn" id="search_tab2_fees">
+
+																<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
+
+																<!-- ====================     << Title >> {3rd paragraph}     ==================== -->
+																<div class="gdlr-core-pbf-element">
+																	<div
+																		class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr"
+																		style="padding-bottom: 0 !important">
+																		<div class="gdlr-core-title-item-title-wrap clearfix">
+																			<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
+																				style="font-size: 16px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">学费范围</h3>
+																		</div>
+																		<div><span class="gdlr-core-title-item-caption gdlr-core-info-font gdlr-core-skin-caption"
+																				style="font-size: 12px ;font-style: normal ;color: #6c6c6c ;">Range of Fees</span></div>
 																	</div>
 																</div>
-															</div>
+																<!-- ====================     << Content >> {3rd paragraph}     ==================== -->
+																<div class="gdlr-core-pbf-element">
+																	<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix " style="text-align: center !important;">
 
-														</div>
+																		<!-- =====  (Insert) Text Field  ===== -->
+																		<!-- <span>（澳元）$</span> -->
+																		<input type="hidden" name="feesFrom" id="feesFrom" />
+																		<input type="hidden" name="feesTo" id="feesTo" />
+																		<select id="selt_currency_slider" name="currency_slider"
+																			style="display: inline;width: 111px;position: absolute;left:3%; height: 35px;padding: 0 0 0 10px;">
+																			<option value="AUD">AUD</option>
+																			<option value="CNY">CNY</option>
+																			<option value="USD">USD</option>
+																			<option value="NZD">NZD</option>
+																			<option value="HKD">HKD</option>
+																			<option value="TWD">TWD</option>
+																		</select>
+																		<input id="fee_slider" data-slider-id='feeSlider' type="text" data-slider-min="0" data-slider-max="100000"
+																			data-slider-step="1000" data-slider-value="20000" />
 
-
-														<!-- ================================================================================================================= -->
-														<!-- =============================================        [Tab 2]        ============================================= -->
-														<!-- ================================================================================================================= -->
-														<div class="animated fadeIn tab-box__hide" id="search_tab2_fees">
-
-															<!-- ==================================================  << 1st Tab-element >>  ================================================== -->
-
-															<!-- ====================     << Title >> {3rd paragraph}     ==================== -->
-															<div class="gdlr-core-pbf-element">
-																<div
-																	class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr"
-																	style="padding-bottom: 0 !important">
-																	<div class="gdlr-core-title-item-title-wrap clearfix">
-																		<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
-																			style="font-size: 16px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">具体学费</h3>
-																	</div>
-																	<div><span class="gdlr-core-title-item-caption gdlr-core-info-font gdlr-core-skin-caption"
-																			style="font-size: 12px ;font-style: normal ;color: #6c6c6c ;">Specific Amount of Fees</span></div>
-																</div>
-															</div>
-															<!-- ====================     << Content >> {3rd paragraph}     ==================== -->
-															<div class="gdlr-core-pbf-element">
-																<div class="gdlr-core-icon-list-item gdlr-core-item-pdlr gdlr-core-item-pdb clearfix " style="text-align: center !important;">
-
-																	<!-- =====  (Insert) Text Field  ===== -->
-																	<!-- <span>（澳元）$</span> -->
-																	<input type="hidden" name="feesFrom" id="feesFrom" />
-																	<input type="hidden" name="feesTo" id="feesTo" />
-																	<select id="selt_currency_slider" name="currency_slider"
-																		style="display: inline;width: 111px;position: absolute;left:3%; height: 35px;padding: 0 0 0 10px;">
-																		<option value="AUD">AUD</option>
-																		<option value="CNY">CNY</option>
-																		<option value="USD">USD</option>
-																		<option value="NZD">NZD</option>
-																		<option value="HKD">HKD</option>
-																		<option value="TWD">TWD</option>
-																	</select>
-																	<input id="fee_slider" data-slider-id='feeSlider' type="text" data-slider-min="0" data-slider-max="100000"
-																		data-slider-step="1000" data-slider-value="20000" />
-
-																</div>
-															</div>
-															<!-- ====================     << (Green) Line >>     ==================== -->
-															<div class="gdlr-core-pbf-element">
-																<div class="gdlr-core-divider-item gdlr-core-divider-item-normal gdlr-core-item-pdlr gdlr-core-center-align"
-																	style="margin-bottom: 25px ;">
-																	<div class="gdlr-core-divider-line gdlr-core-skin-divider" id="custom_greenLine-style" style="margin-top: 20px !important">
 																	</div>
 																</div>
+																<!-- ====================     << (Green) Line >>     ==================== -->
+																<div class="gdlr-core-pbf-element">
+																	<div class="gdlr-core-divider-item gdlr-core-divider-item-normal gdlr-core-item-pdlr gdlr-core-center-align"
+																		style="margin-bottom: 25px ;">
+																		<div class="gdlr-core-divider-line gdlr-core-skin-divider" id="custom_greenLine-style" style="margin-top: 20px !important">
+																		</div>
+																	</div>
+																</div>
+
 															</div>
 
+
+
+															<!-- ===================================================================================================== -->
+															<!-- ===================================        [Search-button]        =================================== -->
+															<!-- ===================================================================================================== -->
+
+															<!-- 13th Element -->
+															<!-- ====================     << (Search) Button >>     ==================== -->
+															<div class="gdlr-core-pbf-element" style="padding-left: 5%;">
+																<button id="btnSearch" type="submit"
+																	class="gdlr-core-button gdlr-core-button-solid gdlr-core-button-no-border custom-button_noBorder" style="font-weight: bold;"
+																	id="button">立 即 搜 索</button>
+																<!-- <input name="button" type="submit" class="" style="font-weight: bold;" id="button" value="立 即 搜 索"></div> -->
+															</div>
+															<!-- ==========    /Element    ========== -->
 														</div>
-
-
-
-														<!-- ===================================================================================================== -->
-														<!-- ===================================        [Search-button]        =================================== -->
-														<!-- ===================================================================================================== -->
-
-														<!-- 13th Element -->
-														<!-- ====================     << (Search) Button >>     ==================== -->
-														<div class="gdlr-core-pbf-element" style="padding-left: 5%;">
-															<button id="btnSearch" type="submit"
-																class="gdlr-core-button gdlr-core-button-solid gdlr-core-button-no-border custom-button_noBorder" style="font-weight: bold;"
-																id="button">立 即 搜 索</button>
-															<!-- <input name="button" type="submit" class="" style="font-weight: bold;" id="button" value="立 即 搜 索"></div> -->
-														</div>
-														<!-- ==========    /Element    ========== -->
 													</div>
 												</div>
-											</div>
-											<!-- ==========    /(Right) side    ========== -->
+												<!-- ==========    /(Right) side    ========== -->
 										</form>
 
 										<!-- ===============        (Center) below        =============== -->
@@ -774,42 +710,6 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 		});
 	</script>
 
-	<!-- ====================================================================================================== -->
-	<!-- ______________________________        (custom) Tab-Switch [fees]        ______________________________ -->
-	<!-- ====================================================================================================== -->
-	<script type="text/javascript">
-		$('input[name="searchMode_fees"]').change(function () {
-
-			var value = $("input[name='searchMode_fees']:checked").val();
-
-			if (value == 0) {
-				$('#search_tab1_fees').removeClass('tab-box__hide');
-				$('#search_tab2_fees').addClass('tab-box__hide');
-			}
-
-			if (value == 1) {
-				$('#search_tab1_fees').addClass('tab-box__hide');
-				$('#search_tab2_fees').removeClass('tab-box__hide');
-			}
-			$('#feesRange').val(0);
-
-			if (getCookie("gc_currency")) {
-				const currency = getCookie("gc_currency");
-				$("#selt_currency_dropdown").children().each((i, e) => {
-					if (e.value === currency) {
-						$("#selt_currency_dropdown").prop('selectedIndex', i);
-					}
-				});
-
-				$("#selt_currency_slider").children().each((i, e) => {
-					if (e.value === currency) {
-						$("#selt_currency_slider").prop('selectedIndex', i);
-					}
-				});
-			}
-		});
-	</script>
-
 	<!-- ========================================================================================= -->
 	<!-- ______________________________        (custom) Fees        ______________________________ -->
 	<!-- ========================================================================================= -->
@@ -897,33 +797,15 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			feeSlider.bootstrapSlider("setValue", feeSlider.bootstrapSlider("getValue"));
 		});
 
-		$("#selt_currency_dropdown").change(ev => {
-			const reg = /^（.*）/g;
-			const name = "（" + $("#selt_currency_dropdown option:selected").data("name") + "）";
-			setCookie("gc_currency", $("#selt_currency_dropdown option:selected").val(), 30);
-			$("#feesRange option").each((i, e) => {
-				e.innerHTML = e.innerHTML.replace(reg, name);
-			});
-
-		});
-
 		$("#showResult").submit(e => {
-			if ($("input[name='searchMode_fees']:checked").val() == 1) {
-				const range = feeSlider.bootstrapSlider("getValue");
-				$("#feesFrom").val(range[0]);
-				$("#feesTo").val(range[1]);
-			}
+			const range = feeSlider.bootstrapSlider("getValue");
+			$("#feesFrom").val(range[0]);
+			$("#feesTo").val(range[1]);
 			ShowResult();
 		});
 
 		if (getCookie("gc_currency")) {
 			const currency = getCookie("gc_currency");
-			$("#selt_currency_dropdown").children().each((i, e) => {
-				if (e.value === currency) {
-					$("#selt_currency_dropdown").prop('selectedIndex', i);
-				}
-			});
-
 			$("#selt_currency_slider").children().each((i, e) => {
 				if (e.value === currency) {
 					$("#selt_currency_slider").prop('selectedIndex', i);
