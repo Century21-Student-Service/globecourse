@@ -137,10 +137,6 @@
 
 <body>
   <div class="container">
-    <header>
-      <h1>个人资料</h1>
-    </header>
-
     <table class="tbl-app">
       <tr>
         <td class="app-title right">申请院校</td>
@@ -198,6 +194,10 @@
       <tr>
         <td class="app-title right">雅思分数</td>
         <td class="left"><input type="text" class="form-control for-submit" aria-label="雅思分数" id="input_ielts"></td>
+      </tr>
+      <tr>
+        <td class="app-title right">备注</td>
+        <td class="left"><textarea type="text" rows="3" class="form-control for-submit" aria-label="备注" id="input_comment" style=" resize: none;"></textarea></td>
       </tr>
     </table>
 
@@ -327,7 +327,7 @@
             return;
           }
           if (res.code == 0) {
-            parent.layer.alert('已收到您的申请\n我们已经给您发了一封确认邮件\n同时我们的工作人员会很快联系您', {
+            parent.layer.alert('已收到您的申请<br>我们的工作人员会很快联系您', {
               title: "成功",
               icon: 1
             });

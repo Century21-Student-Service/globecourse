@@ -137,10 +137,6 @@
 
 <body>
   <div class="container">
-    <header>
-      <h1>Profile</h1>
-    </header>
-
     <table class="tbl-app">
       <tr>
         <td class="app-title right">Institution</td>
@@ -198,6 +194,10 @@
       <tr>
         <td class="app-title right">IELTS Score</td>
         <td class="left"><input type="text" class="form-control for-submit" aria-label="IELTS Score" id="input_ielts"></td>
+      </tr>
+      <tr>
+        <td class="app-title right">Comment</td>
+        <td class="left"><textarea type="text" rows="3" class="form-control for-submit" aria-label="comment" id="input_comment" style=" resize: none;"></textarea></td>
       </tr>
     </table>
 

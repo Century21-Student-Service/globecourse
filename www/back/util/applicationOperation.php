@@ -55,6 +55,7 @@ function getApplications()
     $sql = "SELECT a.id,
                   a.name,
                   a.birth,
+                  a.comment,
                   a.phone,
                   l.`level`,
                   l.grade,

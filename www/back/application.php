@@ -29,6 +29,15 @@ getcss("js/layer/theme/default/layer.css", true);
     table {
       font-weight: bold;
     }
+
+    .cell-detail-title {
+      width: 150px;
+      text-align: center;
+    }
+
+    .cell-detail-data {
+      font-weight: 400;
+    }
   </style>
 </head>
 
@@ -135,9 +144,9 @@ getjs("js/layer/layer.js", true);
         contentType: "application/x-www-form-urlencoded",
         locale: 'zh-CN',
         columns: columns_app,
-        // detailView: true,
-        // detailViewByClick: false,
-        // detailViewIcon: false,
+        detailView: true,
+        detailViewByClick: true,
+        detailViewIcon: false,
         onPostBody: function () {
           $('a.file.img').magnificPopup({
             type: 'image',
@@ -154,22 +163,17 @@ getjs("js/layer/layer.js", true);
             return false;
           });
         },
-        // detailFormatter: function (index, row) {
-        //   var str = '';
-        //   str += '<div style="float:right;">';
-        //   str +=
-        //     `<button type="button" class="btn btn-success" onclick="FormCourse(${row.id})"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b> 添加课程</b></button>`;
-        //   str += '</div>';
-        //   str +=
-        //     '<ul class="nav nav-tabs" role="tablist"><li role="presentation" class="active"><a href="#detail_course" class="port-tab" data-toggle="tab" id="tab_detail_course">课程</a></li></ul>';
-        //   str += '<div role="tabpanel" class="tab-pane active" id="detail_course">';
-        //   str += `<table class='tbl-course' id='tbl_course_${row.id}'></table>`;
-        //   str += '</div>';
-        //   return str;
-        // }
+        detailFormatter: function (index, row) {
+          var str = '';
+          str += `<table class='tbl-detail'><tr>`;
+          str += `<th class='cell-detail-title'>备注</th>`;
+          str += `<td class='cell-detail-data'>${row.comment===null ? "无" : row.comment}</td>`;
+          str += `</tr></table>`;
+
+          return str;
+        }
       });
     }
-
 
     $(() => {
       refresh();
