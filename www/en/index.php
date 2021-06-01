@@ -1,7 +1,7 @@
 <?php session_start();
-require_once(dirname(__FILE__).'./../include/config.inc.php');
+require_once dirname(__FILE__) . './../include/config.inc.php';
 //include_once('ext/news.php');
-include('_dynamic_siteSetting/directoryLang.php');  /***  '$directory' / '$fType_php' from 'directoryLang.php'  ***/
+include '_dynamic_siteSetting/directoryLang.php'; /***  '$directory' / '$fType_php' from 'directoryLang.php'  ***/
 session_unset();
 
 $nameEn_tmp = 'Updating...';
@@ -17,7 +17,7 @@ $nameEn_tmp = 'Updating...';
     <!-- <title>Kingster &#8211; School, College &amp; University HTML Template</title> -->
 
     <!-- (Theme) custom  ==  << Favicon and touch icons >>  ====================          Icon          -->
-    <?php include_once('_dynamic_siteSetting/icon-setting.php'); ?>
+    <?php include_once '_dynamic_siteSetting/icon-setting.php';?>
     <!-- (Theme) custom  ==  << Favicon and touch icons >>  ====================          Icon          -->
 
 
@@ -43,7 +43,7 @@ $nameEn_tmp = 'Updating...';
     <link rel="stylesheet" type="text/css" href="custom-css/drop-down.css">
     <link rel="stylesheet" type="text/css" href="custom-css/map-effect.css">
 
-    
+
     <!-- ==========  (custom) Style [only this pg]  ========== -->
     <style type="text/css">
         /*.gdlr-core-item-pdb{ padding-bottom: 15px !important; }*/
@@ -170,47 +170,47 @@ $nameEn_tmp = 'Updating...';
         @media only screen and (max-width: 1100px) {  /* mobile */
             .ctm-boxContent_50 { padding-left: 0; padding-right: 0; }
         }
-        
+
     </style>
     <!-- ==========  (custom) Style [only this pg]  ========== -->
-    
+
 </head>
 <body class="home page-template-default page page-id-2039 gdlr-core-body woocommerce-no-js tribe-no-js kingster-body kingster-body-front kingster-full  kingster-with-sticky-navigation  kingster-blockquote-style-1 gdlr-core-link-to-lightbox">
 
 	<!-- ______________________________        NavBar [mobile]        ______________________________ -->
 	<!-- =========================================================================================== -->
     <?php
-        include_once('_dynamic_siteSetting/navbar-mobile.php');
-    ?>
+include_once '_dynamic_siteSetting/navbar-mobile.php';
+?>
 
     <!-- ======================================================================================== -->
 	<!-- ______________________________        Body [outer]        ______________________________ -->
 	<!-- ======================================================================================== -->
     <div class="kingster-body-outer-wrapper ">
         <div class="kingster-body-wrapper clearfix  kingster-with-frame">
-            
+
             <!-- ______________________________        NavBar        ______________________________ -->
 			<!-- ================================================================================== -->
-            <?php include_once('_dynamic_siteSetting/navbar.php'); ?>
+            <?php include_once '_dynamic_siteSetting/navbar.php';?>
 
             <!-- ======================================================================================== -->
 			<!-- ______________________________        Body [inner]        ______________________________ -->
 			<!-- ======================================================================================== -->
             <div class="kingster-page-wrapper" id="kingster-page-wrapper">
                 <div class="gdlr-core-page-builder-body">
-                    
+
                     <!-- ===============        (theme) custom        =============== -->
                     <div class="gdlr-core-pbf-wrapper ctm-btn5_top " style="padding: 0px 0px 0px 0px;" loading="lazy">  <!-- padding: 70px 0px 100px 0px; -->
                         <div class="gdlr-core-pbf-background-wrap"></div>
                         <div class="gdlr-core-pbf-wrapper-content gdlr-core-js ">
                             <div class="gdlr-core-pbf-wrapper-container clearfix gdlr-core-pbf-wrapper-full-no-space">
-                                
+
                                 <!-- 1st Element -->
                                 <!-- ====================     << Study Solution >> {1st button}     ==================== -->
                                 <div class="gdlr-core-pbf-column gdlr-core-column-12 gdlr-core-column-first" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-1" style="height: 140px; padding: 70px 0px 70px 0px;" data-sync-height-center>  <!-- data-sync-height="column-height"  -->
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home1_sSolution_q1.jpg) ;background-size: cover ;background-position: center ;background-repeat: no-repeat;" data-parallax-speed="0.1">  <!-- gdlr-core-parallax -->
 
@@ -218,7 +218,7 @@ $nameEn_tmp = 'Updating...';
                                                 <div style="position: absolute; width: 100%; height: 100%; background-color: #0000005c; opacity: .5; backdrop-filter: blur(3px);"></div>
                                                 <!-- =====  Content  ===== -->
                                                 <div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr" style="padding-top: 55px; padding-bottom: 0px !important;">
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">
@@ -228,7 +228,7 @@ $nameEn_tmp = 'Updating...';
                                                 </div>
                                                 <!-- =====  Link Direction  ===== -->
                                                 <a class="gdlr-core-pbf-column-link" href="../en/search-studySolution.php" target="_self"></a>
-                                                
+
                                             </div>
 
                                         </div>
@@ -239,7 +239,7 @@ $nameEn_tmp = 'Updating...';
                                 <div class="gdlr-core-pbf-column gdlr-core-column-12" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-2" style="height: 140px; padding: 70px 0px 70px 0px;" data-sync-height-center>
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home2_course_q1.jpg) ;background-size: cover ;background-position: center ;" data-parallax-speed="0.1">
 
@@ -247,7 +247,7 @@ $nameEn_tmp = 'Updating...';
                                                 <div style="position: absolute; width: 100%; height: 100%; background-color: #0000005c; opacity: .5; backdrop-filter: blur(3px);"></div>
                                                 <!-- =====  Content  ===== -->
                                                 <div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr" style="padding-top: 55px; padding-bottom: 0px !important;">
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">
@@ -257,7 +257,7 @@ $nameEn_tmp = 'Updating...';
                                                 </div>
                                                 <!-- =====  Link Direction  ===== -->
                                                 <a class="gdlr-core-pbf-column-link" href="../en/search-course.php" target="_self"></a>
-                                                
+
                                             </div>
 
                                         </div>
@@ -268,7 +268,7 @@ $nameEn_tmp = 'Updating...';
                                 <div class="gdlr-core-pbf-column gdlr-core-column-12" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-3" style="height: 140px; padding: 70px 0px 70px 0px;" data-sync-height-center>
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home3_school_q1.jpg) ;background-size: cover ;background-position: center ;" data-parallax-speed="0.1">
 
@@ -276,7 +276,7 @@ $nameEn_tmp = 'Updating...';
                                                 <div style="position: absolute; width: 100%; height: 100%; background-color: #0000005c; opacity: .5; backdrop-filter: blur(3px);"></div>
                                                 <!-- =====  Content  ===== -->
                                                 <div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr" style="padding-top: 55px; padding-bottom: 0px !important;">
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">
@@ -286,7 +286,7 @@ $nameEn_tmp = 'Updating...';
                                                 </div>
                                                 <!-- =====  Link Direction  ===== -->
                                                 <a class="gdlr-core-pbf-column-link" href="../en/search-school.php" target="_self"></a>
-                                                
+
                                             </div>
 
                                         </div>
@@ -297,7 +297,7 @@ $nameEn_tmp = 'Updating...';
                                 <div class="gdlr-core-pbf-column gdlr-core-column-12" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-4" style="height: 140px; padding: 70px 0px 70px 0px;" data-sync-height-center>
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home4_immigration_q1.jpg) ;background-size: cover ;background-position: center ;" data-parallax-speed="0.1">
 
@@ -305,7 +305,7 @@ $nameEn_tmp = 'Updating...';
                                                 <div style="position: absolute; width: 100%; height: 100%; background-color: #0000005c; opacity: .5; backdrop-filter: blur(3px);"></div>
                                                 <!-- =====  Content  ===== -->
                                                 <div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr" style="padding-top: 55px; padding-bottom: 0px !important;">
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">
@@ -326,15 +326,15 @@ $nameEn_tmp = 'Updating...';
                                 <div class="gdlr-core-pbf-column gdlr-core-column-12" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-4" style="height: 140px; padding: 70px 0px 70px 0px;" data-sync-height-center>
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home5_fees_q1.jpg) ;background-size: cover ;background-position: center ;" data-parallax-speed="0.1">
-                                                
+
                                                 <!-- =====  Overlay  ===== -->
                                                 <div style="position: absolute; width: 100%; height: 100%; background-color: #0000005c; opacity: .5; backdrop-filter: blur(3px);"></div>
                                                 <!-- =====  Content  ===== -->
                                                 <div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr" style="padding-top: 55px; padding-bottom: 0px !important;">
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">
@@ -354,11 +354,11 @@ $nameEn_tmp = 'Updating...';
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- ===============        (Upper) Map        =============== -->
                     <div id="map-section">
                     	<div id="map-section_inner">
-                    		
+
                             <!-- ====================     << Slider >>     ==================== -->
 	                    	<div class="gdlr-core-pbf-wrapper " style="padding: 0px 0px 0px 0px;">
                                 <div class="gdlr-core-pbf-background-wrap" style="background-color: #192f59 ;"></div>
@@ -371,7 +371,7 @@ $nameEn_tmp = 'Updating...';
                                                     <div id="rev_slider_1_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.8">
                                                         <ul>
                                                             <!-- ====================     << 1 >>     ==================== -->
-                                                            <li data-index="rs-3" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="upload/slider-1-2-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description=""> 
+                                                            <li data-index="rs-3" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="upload/slider-1-2-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                                                                 <!-- =====  Image  ===== -->
                                                                 <img src="custom-images-slider/slider-1_q10.jpg" alt="" title="slider-1-2" width="1800" height="1119" data-bgposition="center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
                                                                 <!-- =====  Overlay  ===== -->
@@ -385,7 +385,7 @@ $nameEn_tmp = 'Updating...';
                                                                 <div class="tp-caption rev-btn rev-hiddenicon " id="slide-3-layer-6" data-x="34" data-y="center" data-voffset="80" data-width="['auto']" data-height="['auto']" data-type="button" data-responsive_offset="on" data-frames='[{"delay":660,"speed":300,"frame":"0","from":"x:-50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(1,61,135);bg:rgba(255,255,255,1);bw:0 0 0 5px;"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[19,19,19,19]" data-paddingright="[21,21,21,21]" data-paddingbottom="[19,19,19,19]" data-paddingleft="[21,21,21,21]" style="z-index: 9; white-space: nowrap; font-size: 17px; line-height: 16px; font-weight: 600; color: #2d2d2d; letter-spacing: 0px;font-family:Poppins;background-color:rgb(255,255,255);border-color:rgb(2, 125, 250);border-style:solid;border-width:0px 0px 0px 5px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;"><a href="info-university-ranking.php">大学排名 / 专业表现</a></div>
                                                             </li>
                                                             <!-- ====================     << 2 >>     ==================== -->
-                                                            <li data-index="rs-1" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="upload/slider-2-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description=""> 
+                                                            <li data-index="rs-1" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="upload/slider-2-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                                                                 <!-- =====  Image  ===== -->
                                                                 <img src="custom-images-slider/slider-2_q10.jpg" alt="" title="slider-2" width="1800" height="1119" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina loading="lazy"> <!-- data-bgposition="center center" -->
                                                                 <!-- =====  Overlay  ===== -->
@@ -396,7 +396,7 @@ $nameEn_tmp = 'Updating...';
                                                                 <div class="tp-caption rev-btn rev-hiddenicon " id="slide-1-layer-6" data-x="34" data-y="center" data-voffset="80" data-width="['auto']" data-height="['auto']" data-type="button" data-responsive_offset="on" data-frames='[{"delay":740,"speed":300,"frame":"0","from":"x:-50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(0,64,132);bg:rgba(255,255,255,1);bw:0 0 0 5px;"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[19,19,19,19]" data-paddingright="[21,21,21,21]" data-paddingbottom="[19,19,19,19]" data-paddingleft="[21,21,21,21]" style="z-index: 7; white-space: nowrap; font-size: 17px; line-height: 16px; font-weight: 600; color: #2d2d2d; letter-spacing: 0px;font-family:Poppins;background-color:rgb(255,255,255);border-color:rgb(2, 125, 250);border-style:solid;border-width:0px 0px 0px 5px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;"><a href="search-immigration.php">移民搜索</a></div>
                                                             </li>
                                                             <!-- ====================     << 3 >>     ==================== -->
-                                                            <li data-index="rs-2" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="upload/slider-2-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description=""> 
+                                                            <li data-index="rs-2" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="upload/slider-2-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                                                                 <!-- =====  Image  ===== -->
                                                                 <img src="custom-images-slider/slider-3-1_q50.jpg" alt="" title="slider-2" width="1800" height="1119" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina loading="lazy"> <!-- data-bgposition="center center" -->
                                                                 <!-- =====  Overlay  ===== -->
@@ -407,7 +407,7 @@ $nameEn_tmp = 'Updating...';
                                                                 <div class="tp-caption rev-btn rev-hiddenicon " id="slide-1-layer-6" data-x="34" data-y="center" data-voffset="80" data-width="['auto']" data-height="['auto']" data-type="button" data-responsive_offset="on" data-frames='[{"delay":740,"speed":300,"frame":"0","from":"x:-50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(0,64,132);bg:rgba(255,255,255,1);bw:0 0 0 5px;"}]' data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[19,19,19,19]" data-paddingright="[21,21,21,21]" data-paddingbottom="[19,19,19,19]" data-paddingleft="[21,21,21,21]" style="z-index: 7; white-space: nowrap; font-size: 17px; line-height: 16px; font-weight: 600; color: #2d2d2d; letter-spacing: 0px;font-family:Poppins;background-color:rgb(255,255,255);border-color:rgb(2, 125, 250);border-style:solid;border-width:0px 0px 0px 5px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;"><a href="info-budget-courses.php">特价课程</a></div>
                                                             </li>
                                                             <!-- ====================     << 4 >>     ==================== -->
-                                                            <li data-index="rs-4" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="upload/slider-2-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description=""> 
+                                                            <li data-index="rs-4" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="300" data-thumb="upload/slider-2-100x50.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                                                                 <!-- =====  Image  ===== -->
                                                                 <img src="custom-images-slider/slider-4-1_q50.jpg" alt="" title="slider-2" width="1800" height="1119" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina loading="lazy"> <!-- data-bgposition="center center" -->
                                                                 <!-- =====  Overlay  ===== -->
@@ -441,7 +441,7 @@ $nameEn_tmp = 'Updating...';
 
                                     <div class="gdlr-core-pbf-wrapper-container clearfix gdlr-core-pbf-wrapper-full-no-space ctm-boxTab_wrap">
                                         <div class=" gdlr-core-pbf-wrapper-container-inner gdlr-core-item-mglr clearfix ctm-boxTab_wrapInner" id="div_1dd7_0">
-                                            
+
 
                                             <div class="gdlr-core-pbf-column gdlr-core-column-15 gdlr-core-column-first box_tab" id="box_tab1">
                                                 <div class="gdlr-core-pbf-column-content-margin gdlr-core-js " id="div_1dd7_1">
@@ -550,7 +550,7 @@ $nameEn_tmp = 'Updating...';
                                         <!-- << Budget/Popular Course >> -->
                                         <div class="row" id="box_tab1_content" style="display: none;" loading="lazy">
                                             <div class="animated fadeIn ctm-bgSearch_2 gdlr-core-pbf-column gdlr-core-column-30" style="background-image: url(custom-images/home4_immigration_q1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                                                
+
                                                 <!-- =====  Overlay  ===== -->
                                                 <div class="ctm-bgSearch_overlay"></div>
                                                 <!-- =====  Content  ===== -->
@@ -570,9 +570,9 @@ $nameEn_tmp = 'Updating...';
 
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="animated fadeIn ctm-bgSearch_2 gdlr-core-pbf-column gdlr-core-column-30" style="background-image: url(custom-images/home1_sSolution_q1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                                                
+
                                                 <!-- =====  Overlay  ===== -->
                                                 <div class="ctm-bgSearch_overlay" style="background-color: #0062a9 !important;"></div>
                                                 <!-- =====  Content  ===== -->
@@ -607,32 +607,32 @@ $nameEn_tmp = 'Updating...';
                                                 <div class="gdlr-core-button-item gdlr-core-item-pdlr gdlr-core-item-pdb" style="padding-top: 20px;">
                                                     <a class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" style="width: 140px; border-radius: 6px;" href="school-info.php?id=23" id="a_1dd7_0"><span class="gdlr-core-content" >搜 索</span></a>
                                                 </div> -->
-                                                
+
                                                 <div class="gdlr-core-course-item gdlr-core-item-pdlr gdlr-core-item-pdb gdlr-core-course-style-list" style="text-align: left; padding: 50px 15% 0;">
                                                     <?php
-                                                        $id = empty($id) ? 9 : intval($id);
-                                                        
-                                                        $Db=new MySql(false);
-                                                        $Db->Execute("SELECT * FROM `#@__infolist` WHERE classid=$id AND delstate='' AND checkinfo=true ORDER BY id DESC, orderid DESC LIMIT 0,4");   //LIMIT 0,8
+$id = empty($id) ? 9 : intval($id);
 
-                                                        while ( $row = $Db->GetArray() ){
-                                                            //获取链接地址
-                                                            $gourl = 'info-immigration-article.php?cid='.$row['id'];
-                                                            $time = MyDate('Y-m-d', $row['posttime']);
-                                                            // $time='<span class="R1">'.MyDate('Y-m-d', $row['posttime']).'</span>';
-                                                    ?>
+$Db = new MySql(false);
+$Db->Execute("SELECT * FROM `#@__infolist` WHERE classid=$id AND delstate='' AND checkinfo=true ORDER BY id DESC, orderid DESC LIMIT 0,4"); //LIMIT 0,8
+
+while ($row = $Db->GetArray()) {
+    //获取链接地址
+    $gourl = 'info-immigration-article.php?cid=' . $row['id'];
+    $time = MyDate('Y-m-d', $row['posttime']);
+    // $time='<span class="R1">'.MyDate('Y-m-d', $row['posttime']).'</span>';
+    ?>
                                                             <div class="gdlr-core-course-item-list ctm-itemList">
                                                                 <a class="gdlr-core-course-item-link" href="<?php echo $gourl; ?>">
-                                                                
-                                                                    <?php $titleEn = empty($row['ename']) ? $nameEn_tmp : ReStrLen($row['ename'],30); ?>
-                                                                    <span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo($titleEn);?></span>
+
+                                                                    <?php $titleEn = empty($row['ename']) ? $nameEn_tmp : ReStrLen($row['ename'], 30);?>
+                                                                    <span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($titleEn); ?></span>
                                                                     <dateArrow><span style="float: right;" ><?php echo $time; ?></span><i class="gdlr-core-course-item-icon gdlr-core-skin-icon fa fa-long-arrow-right" style="font-size: 16px;" ></i></dateArrow>
 
                                                                 </a>
                                                             </div>
                                                     <?php
-                                                      }
-                                                    ?>
+}
+?>
                                                 </div>
                                             </div>
                                         </div>
@@ -649,7 +649,7 @@ $nameEn_tmp = 'Updating...';
                                                 <div class="gdlr-core-button-item gdlr-core-item-pdlr gdlr-core-item-pdb" style="padding-top: 20px;">
                                                     <a class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" style="width: 140px; border-radius: 6px;" href="school-info.php?id=23" id="a_1dd7_0"><span class="gdlr-core-content" >搜 索</span></a>
                                                 </div> -->
-                                                
+
                                                 <div style="margin-top: 20px;"><a class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" href="info-university-ranking" id="a_1dd7_0"><span class="gdlr-core-content" >Learn more</span></a></div>
                                             </div>
                                         </div>
@@ -661,28 +661,28 @@ $nameEn_tmp = 'Updating...';
                                             <!-- =====  (Insert) Text Field  ===== -->
                                             <div class="ctm-qSearch" style="text-align: center; width: 100%; position: absolute;">
                                                 <h4 style="color: white; margin-bottom: 0; line-height: 36px;">Course <small>(quick search)</small><br><span id="span_1dd7_0" style="color: #bababa;">Please enter "keyword" of the name</span></h4>
-                                                
-                                                <?php $toFile = 'search-course__result' ?>
-                                        
-                                                <form action="<?php echo $toFile.$fType_php; ?>" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" >
-                                                    
+
+                                                <?php $toFile = 'search-course__result';?>
+
+                                                <form action="<?php echo $toFile . $fType_php; ?>" id="showResult" target="Result_Popup" onsubmit="ShowResult()" method="post" >
+
                                                     <input class="ctm-txtField" style="width: 60%; min-width: 320px;" name="courseName" id="courseName" type="text" />
-                                                    
+
                                                     <div class="gdlr-core-button-item gdlr-core-item-pdlr gdlr-core-item-pdb" style="padding-top: 20px;">
                                                         <button id="btnSearch" type="submit" class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" style="width: 140px; border: 0; border-radius: 6px; cursor: pointer;">Search</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
-                                        
-                                        
+
+
                                         <!-- << TAFE >> -->
                                         <!-- <div class="row" id="box_tab4_content" style="display: none;" loading="lazy">
-                                            
+
                                             <div class="animated fadeIn ctm-bgSearch gdlr-core-pbf-column gdlr-core-column-30" style="background-image: url(custom-logo/logo_Tafe_WSI.jpg); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
-                                            
+
                                             <div class="animated fadeIn ctm-bgSearch gdlr-core-pbf-column gdlr-core-column-30" style="background-image: url(custom-images/school-TAFE_pic1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;"> -->
-                                                
+
                                                 <!-- =====  Overlay  ===== -->
                                                 <!-- <div class="ctm-bgSearch_overlay"></div> -->
                                                 <!-- =====  (Insert) Text Field  ===== -->
@@ -695,7 +695,7 @@ $nameEn_tmp = 'Updating...';
                                                         <div><a class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" href="school-info.php?id=23" id="a_1dd7_0"><span class="gdlr-core-content" >了解更多</span></a></div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
 
                                         </div> -->
@@ -712,17 +712,17 @@ $nameEn_tmp = 'Updating...';
                     <!-- ================================================================================================== -->
                     <!-- ______________________________        (Lower) Search Buttons        ______________________________ -->
                     <!-- ================================================================================================== -->
-                    <div class="gdlr-core-pbf-wrapper " style="padding: 0px 0px 0px 0px;" loading="lazy">  <!-- padding: 70px 0px 100px 0px; -->
+                    <div class="gdlr-core-pbf-wrapper " style="display:none; padding: 0px 0px 0px 0px;" loading="lazy">  <!-- padding: 70px 0px 100px 0px; -->
                         <div class="gdlr-core-pbf-background-wrap"></div>
                         <div class="gdlr-core-pbf-wrapper-content gdlr-core-js ">
                             <div class="gdlr-core-pbf-wrapper-container clearfix gdlr-core-pbf-wrapper-full-no-space">
-                                
+
                                 <!-- 1st Element -->
                                 <!-- ====================     << Study Solution >> {1st button}     ==================== -->
                                 <div class="gdlr-core-pbf-column gdlr-core-column-20 gdlr-core-column-first" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-1 ctm-lowerSection__searchBtn" style="padding: 70px 0px 70px 0px;" data-sync-height-center>  <!-- data-sync-height="column-height"  -->
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home1_sSolution_q1.jpg) ;background-size: cover ;background-position: center ;background-repeat: no-repeat;" data-parallax-speed="0.1">  <!-- gdlr-core-parallax -->
 
@@ -732,7 +732,7 @@ $nameEn_tmp = 'Updating...';
                                             	<div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr ctm-lowerSection__searchBtn_txt" style="padding-bottom: 0px !important;">
                                                     <!-- <div class="gdlr-core-column-service-media gdlr-core-media-image" style="margin-bottom: 20px;"><img src="upload/hp2-col-4-icon.png" alt="" width="41" height="41" title="hp2-col-4-icon" /></div> -->
                                                     <div class="gdlr-core-column-service-media gdlr-core-media-image" style="margin-bottom: 20px;"><i class="fa fa-file-text-o" aria-hidden="true" style="font-size: 40px; color: white;"></i></div>
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">Study Plan</h3>
@@ -742,7 +742,7 @@ $nameEn_tmp = 'Updating...';
                                                 </div>
                                                 <!-- =====  Link Direction  ===== -->
                                                 <a class="gdlr-core-pbf-column-link" href="../en/search-studySolution.php" target="_self"></a>
-                                            	
+
                                             </div>
 
                                         </div>
@@ -753,7 +753,7 @@ $nameEn_tmp = 'Updating...';
                                 <div class="gdlr-core-pbf-column gdlr-core-column-20" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-2 ctm-lowerSection__searchBtn" style="padding: 70px 0px 70px 0px;" data-sync-height-center>
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home2_course_q1.jpg) ;background-size: cover ;background-position: center ;" data-parallax-speed="0.1">
 
@@ -762,7 +762,7 @@ $nameEn_tmp = 'Updating...';
                                                 <!-- =====  Content  ===== -->
                                             	<div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr ctm-lowerSection__searchBtn_txt" style="padding-bottom: 0px !important;">
                                                     <div class="gdlr-core-column-service-media gdlr-core-media-image" style="margin-bottom: 20px;"><img src="upload/hp2-col-2-icon.png" alt="" width="49" height="45" title="hp2-col-2-icon" /></div>
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">Course</h3>
@@ -772,7 +772,7 @@ $nameEn_tmp = 'Updating...';
                                                 </div>
                                                 <!-- =====  Link Direction  ===== -->
                                                 <a class="gdlr-core-pbf-column-link" href="../en/search-course.php" target="_self"></a>
-                                            	
+
                                             </div>
 
                                         </div>
@@ -783,7 +783,7 @@ $nameEn_tmp = 'Updating...';
                                 <div class="gdlr-core-pbf-column gdlr-core-column-20" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-3 ctm-lowerSection__searchBtn" style="padding: 70px 0px 70px 0px;" data-sync-height-center>
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home3_school_q1.jpg) ;background-size: cover ;background-position: center ;" data-parallax-speed="0.1">
 
@@ -792,7 +792,7 @@ $nameEn_tmp = 'Updating...';
                                                 <!-- =====  Content  ===== -->
                                             	<div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr ctm-lowerSection__searchBtn_txt" style="padding-bottom: 0px !important;">
                                                     <div class="gdlr-core-column-service-media gdlr-core-media-image" style="margin-bottom: 20px;"><img src="upload/hp2-col-1-icon.png" alt="" width="40" height="40" title="hp2-col-1-icon" /></div>
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">School</h3>
@@ -802,7 +802,7 @@ $nameEn_tmp = 'Updating...';
                                                 </div>
                                                 <!-- =====  Link Direction  ===== -->
                                                 <a class="gdlr-core-pbf-column-link" href="../en/search-school.php" target="_self"></a>
-                                            	
+
                                             </div>
 
                                         </div>
@@ -813,7 +813,7 @@ $nameEn_tmp = 'Updating...';
                                 <div class="gdlr-core-pbf-column gdlr-core-column-30" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-4 ctm-lowerSection__searchBtn" style="padding: 70px 0px 70px 0px;" data-sync-height-center>
                                         <div class="gdlr-core-pbf-background-wrap">
-                                            
+
                                             <!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home4_immigration_q1.jpg) ;background-size: cover ;background-position: center ;" data-parallax-speed="0.1">
 
@@ -823,7 +823,7 @@ $nameEn_tmp = 'Updating...';
                                             	<div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr ctm-lowerSection__searchBtn_txt" style="padding-bottom: 0px !important;">
                                                     <!-- <div class="gdlr-core-column-service-media gdlr-core-media-image" style="margin-bottom: 20px;"><img src="upload/hp2-col-4-icon.png" alt="" width="41" height="41" title="hp2-col-4-icon" /></div> -->
                                                     <div class="gdlr-core-column-service-media gdlr-core-media-image" style="margin-bottom: 20px;"><i class="fa fa-globe" aria-hidden="true" style="font-size: 40px; color: white;"></i></div>
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">Immigration</h3>
@@ -844,17 +844,17 @@ $nameEn_tmp = 'Updating...';
                                 <div class="gdlr-core-pbf-column gdlr-core-column-30" data-skin="Column White">
                                     <div class="gdlr-core-pbf-column-content-margin gdlr-core-js  slider-link-4 ctm-lowerSection__searchBtn" style="padding: 70px 0px 70px 0px;" data-sync-height-center>
                                         <div class="gdlr-core-pbf-background-wrap">
-                                        	
+
                                         	<!-- =====  Background-Image  ===== -->
                                             <div class="gdlr-core-pbf-background gdlr-core-js ctm-lowerSection__searchBtn_img" style="background-image: url(custom-images/home5_fees_q1.jpg) ;background-size: cover ;background-position: center ;" data-parallax-speed="0.1">
-                                            	
+
                                             	<!-- =====  Overlay  ===== -->
                                                 <div style="position: absolute; width: 100%; height: 100%; background-color: #000000a8; opacity: .5;"></div>
                                                 <!-- =====  Content  ===== -->
                                             	<div class="gdlr-core-column-service-item gdlr-core-item-pdb  gdlr-core-center-align gdlr-core-with-caption gdlr-core-item-pdlr ctm-lowerSection__searchBtn_txt" style="padding-bottom: 0px !important;">
                                                     <!-- <div class="gdlr-core-column-service-media gdlr-core-media-image" style="margin-bottom: 20px;"><img src="custom-icon/icon-dollar-48.png" alt="" width="41" height="41" title="hp2-col-4-icon" /></div> -->
                                                     <div class="gdlr-core-column-service-media gdlr-core-media-image" style="margin-bottom: 20px;"><i class="fa fa-usd" aria-hidden="true" style="font-size: 40px; color: white;"></i></div>
-                                                    
+
                                                     <div class="gdlr-core-column-service-content-wrapper" style="position: relative;">
                                                         <div class="gdlr-core-column-service-title-wrap">
                                                             <h3 class="gdlr-core-column-service-title gdlr-core-skin-title" style="font-size: 24px ;font-weight: 700 ;letter-spacing: 0px ;text-transform: none ;">Fees</h3>
@@ -883,7 +883,7 @@ $nameEn_tmp = 'Updating...';
                     <!-- ============================================================================================================== -->
                     <!-- ===================================        [(Pop-up) Search Result]        =================================== -->
                     <!-- ============================================================================================================== -->
-                    <?php echo include('custom-append/append_Popup__searchResult.php'); ?>
+                    <?php echo include 'custom-append/append_Popup__searchResult.php'; ?>
 
                 </div>
             </div>
@@ -891,7 +891,7 @@ $nameEn_tmp = 'Updating...';
             <!-- ================================================================================== -->
 			<!-- ______________________________        Footer        ______________________________ -->
 			<!-- ================================================================================== -->
-            <?php include_once('_dynamic_siteSetting/footer.php'); ?>
+            <?php include_once '_dynamic_siteSetting/footer.php';?>
 
             <!-- ============================================================================================== -->
 			<!-- ______________________________        (end) Body [outer]        ______________________________ -->
@@ -908,8 +908,8 @@ $nameEn_tmp = 'Updating...';
     <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.layeranimation.min.js"></script>
     <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.kenburn.min.js"></script>
     <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.navigation.min.js"></script>
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.parallax.min.js"></script>  
-    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.actions.min.js"></script> 
+    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.actions.min.js"></script>
     <!-- <script type="text/javascript" src="kingster-plugins/revslider/public/assets/js/extensions/revolution.extension.video.min.js"></script> -->
 
 
@@ -958,12 +958,12 @@ $nameEn_tmp = 'Updating...';
     	responsive_LowerSection();
 
     	//responsive_Scroll_Size();
-    	
+
     	// function responsive_Scroll_Size(){
     	// 	/** ==== Scrolling | Resizing ==== **/
 	    // 	// jQuery(window).on("load resize"/**scroll**/,function() {
      //        jQuery(window).resize(function() {
-	    		
+
 	    // 		w = window.innerWidth /2;
      //            h = window.innerHeight *0.8;
 
@@ -982,7 +982,7 @@ $nameEn_tmp = 'Updating...';
 
     		/** [set] Map Frame Height **/
     		var section_H = window.innerHeight *0.9;
-    		
+
     		/** [calculate margin] to set position [to center] **/
     		var empty_Margin = jQuery('#map-section').height() - jQuery('#map-section_inner').height();
     		var usable_Margin = empty_Margin /2;
@@ -990,7 +990,7 @@ $nameEn_tmp = 'Updating...';
     		jQuery('#map-section').css( {'height': section_H} );
     		jQuery('#map-section_inner').css( {'padding-top': usable_Margin, 'padding-bottom': usable_Margin} );
     		jQuery('.ctm-map-svg').css( {'margin-right': '', 'margin': '0 auto'} );
-    		
+
     		/** [set] Map Size **/
     		if (w > 630){
     			jQuery('.ctm-map-svg').css( {'width': '', 'height': h, 'padding': '5%'} );
@@ -1018,7 +1018,7 @@ $nameEn_tmp = 'Updating...';
     <!-- ______________________________        (custom) Tab-button        ______________________________ -->
     <!-- =============================================================================================== -->
     <script type="text/javascript">
-        
+
         var btnTab_all = [jQuery('#box_tab1'), jQuery('#box_tab2'), jQuery('#box_tab3'), jQuery('#box_tab4')];
         var tab_content = [jQuery('#box_tab1_content'), jQuery('#box_tab2_content'), jQuery('#box_tab3_content'), jQuery('#box_tab4_content')];
 
@@ -1029,12 +1029,12 @@ $nameEn_tmp = 'Updating...';
         function tabSwitch(btnTab_id) {
             jQuery.each(btnTab_id, function(index, value){
                 this.click(function(mouseI, mouseV){
-                    
+
                     //  hide current page
                     jQuery.each(tab_content, function(cI, cV){
                         this.hide();
                     });
-                    
+
                     //  show target page
                     tab_content[index].show();
                     // tab_content[index].addClass('animated fadeInLeft');
@@ -1155,7 +1155,7 @@ $nameEn_tmp = 'Updating...';
         } /*]]>*/
     </script>
 
-    
+
     <script type='text/javascript'>
         var gdlr_core_pbf = {
             "admin": "",
@@ -1169,13 +1169,13 @@ $nameEn_tmp = 'Updating...';
 
 
 
-    
+
     <script type='text/javascript'>
         var kingster_script_core = {
             "home_url": "https:\/\/demo.goodlayers.com\/kingster\/"
         };
     </script>
-    
+
     <script>
 	    /*<![CDATA[*/
 	    var htmlDiv = document.getElementById("rs-plugin-settings-inline-css");

@@ -702,7 +702,7 @@ while ($row = $Db->GetArray()) {
                     <!-- ================================================================================================== -->
                     <!-- ______________________________        (Lower) Search Buttons        ______________________________ -->
                     <!-- ================================================================================================== -->
-                    <div class="gdlr-core-pbf-wrapper " style="padding: 0px 0px 0px 0px;" loading="lazy">  <!-- padding: 70px 0px 100px 0px; -->
+                    <div class="gdlr-core-pbf-wrapper " style="display:none;padding: 0px 0px 0px 0px;" loading="lazy">  <!-- padding: 70px 0px 100px 0px; -->
                         <div class="gdlr-core-pbf-background-wrap"></div>
                         <div class="gdlr-core-pbf-wrapper-content gdlr-core-js ">
                             <div class="gdlr-core-pbf-wrapper-container clearfix gdlr-core-pbf-wrapper-full-no-space">
