@@ -34,7 +34,7 @@
             <!-- ==============================        Logo        ============================== -->
             <div class="animated fadeInUp kingster-logo  kingster-item-pdlr">
                 <div class="kingster-logo-inner">
-                    <a class="" href="./../en/"><img src="custom-logo/logo_ct21.png" alt="" loading="lazy" /></a>
+                    <a class="" href="./../en/"><img src="custom-logo/logo_ct21.png" style="width:275px" alt="" loading="lazy" /></a>
                 </div>
             </div>
             <!-- ==============================        Logo        ============================== -->
@@ -99,10 +99,10 @@ $verCn = str_replace('en', 'cn', $_SERVER['REQUEST_URI']);
                         </li>
                         <!-- 2nd Menu [button] -->
                         <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_studySolu; ?>"><a
-                                href="./../en/search-studySolution.php" class="sf-with-ul-pre">Study Plan</a></li>
+                                href="./../en/search-studySolution.php" class="sf-with-ul-pre">Pathway Search</a></li>
                         <!-- 3rd Menu [button] -->
                         <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Course; ?>"><a
-                                href="./../en/search-course.php" class="sf-with-ul-pre">Course Search</a>
+                                href="./../en/search-course.php" class="sf-with-ul-pre">Courses Search</a>
                             <!-- <ul class="sub-menu">
                                 <li class="menu-item" data-size="60"><a href="./../en/search-course2.php">课程 2</a></li>
                                 <li class="menu-item" data-size="60"><a href="./../en/search-course3.php">课程 3</a></li>
@@ -110,13 +110,13 @@ $verCn = str_replace('en', 'cn', $_SERVER['REQUEST_URI']);
                         </li>
                         <!-- 4th Menu [button] -->
                         <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_School; ?>"><a
-                                href="./../en/search-school.php" class="sf-with-ul-pre">School Search</a></li>
+                                href="./../en/search-school.php" class="sf-with-ul-pre">Institutes Search</a></li>
                         <!-- 5th Menu [button] -->
                         <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Immi; ?>"><a
-                                href="./../en/search-immigration.php" class="sf-with-ul-pre">Immi. Search</a></li>
+                                href="./../en/search-immigration.php" class="sf-with-ul-pre">Courses for Migration</a></li>
                         <!-- 6th Menu [button] -->
                         <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Fees; ?>"><a
-                                href="./../en/search-fees.php" class="sf-with-ul-pre">Fees Search</a></li>
+                                href="./../en/search-fees.php" class="sf-with-ul-pre">Tuition Search</a></li>
                         <!-- 7th Menu [button] -->
                         <li class="menu-item menu-item-has-children kingster-normal-menu <?php echo $class_ausInfo; ?>"><a href="#" class="sf-with-ul-pre">Aus.
                                 Info</a>
@@ -138,7 +138,7 @@ $verCn = str_replace('en', 'cn', $_SERVER['REQUEST_URI']);
                     <div class="kingster-navigation-slide-bar" id="kingster-navigation-slide-bar"></div>
                 </div>
                 <!-- ====================  Search  ==================== -->
-                <?php //include_once('navbar-search.php'); ;?>
+                <?php //include_once('navbar-search.php'); ;;;;?>
             </div>
         </div>
     </div>

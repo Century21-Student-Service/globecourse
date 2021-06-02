@@ -70,10 +70,26 @@ function GetRealSize($size)
 function getStates()
 {
     global $conn;
-    $sql = "SELECT id,name FROM `state` WHERE id IN(SELECT state_id FROM institution);";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    echo json_encode(['code' => 0, 'states' => $stmt->fetchAll(PDO::FETCH_ASSOC)], JSON_UNESCAPED_UNICODE);
+    $sql_country = "SELECT id,name FROM country;";
+    $stmt_country = $conn->prepare($sql_country);
+    $stmt_country->execute();
+    $result_country = $stmt_country->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql_state = "SELECT id,name,country_id FROM `state`;";
+    $stmt_state = $conn->prepare($sql_state);
+    $stmt_state->execute();
+    $result_state = $stmt_state->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($result_country as &$c) {
+        $c['states'] = [];
+        foreach ($result_state as &$s) {
+            if ($c['id'] == $s['country_id']) {
+                array_push($c['states'], $s);
+            }
+        }
+    }
+
+    echo json_encode(['code' => 0, 'states' => $result_country], JSON_UNESCAPED_UNICODE);
 
 }
 
@@ -94,7 +110,8 @@ function getInstitutionById()
                             i.video,
                             i.regional,
                             i.state_id,
-                            s.name AS `state`
+                            s.name AS `state`,
+                            s.country_id
                     FROM institution i
                     LEFT JOIN `state` s ON s.id = i.state_id
                     WHERE i.id = ?

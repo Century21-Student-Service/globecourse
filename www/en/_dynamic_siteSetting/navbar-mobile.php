@@ -11,54 +11,54 @@
             <!-- ==============================        Logo        ============================== -->
             <!-- ================================================================================ -->
             <div class="kingster-mobile-menu-right">
-                
+
                 <!-- ====================  Search  ==================== -->
-                <?php //include_once('navbar-search-mobile.php'); ?>
+                <?php //include_once('navbar-search-mobile.php'); ;;;?>
 
                 <!-- Check current page [for nav-item] --> <!-- [make blue line below] -->
-                <?php 
-                    
-                    $class_Home = '';
-                    $class_studySolu = '';
-                    $class_Course = '';
-                    $class_School = '';
-                    $class_Immi = '';
-                    $class_Fees = '';
-                    if ( strpos($_SERVER['PHP_SELF'], '/en/index') !== false ){
-                        $class_Home = 'current-menu-item';
-                    }
-                    if ( strpos($_SERVER['PHP_SELF'], '/en/search-studySolution') !== false ){
-                        $class_studySolu = 'current-menu-item';
-                    }
-                    if ( strpos($_SERVER['PHP_SELF'], '/en/search-course') !== false 
-                        || strpos($_SERVER['PHP_SELF'], '/en/course') !== false ){
-                        $class_Course = 'current-menu-item';
-                    }
-                    if ( strpos($_SERVER['PHP_SELF'], '/en/search-school') !== false 
-                        || strpos($_SERVER['PHP_SELF'], '/en/school-info') !== false ){
-                        $class_School = 'current-menu-item';
-                    }
-                    if ( strpos($_SERVER['PHP_SELF'], '/en/search-immigration') !== false ){
-                        $class_Immi = 'current-menu-item';
-                    }
-                    if ( strpos($_SERVER['PHP_SELF'], '/en/search-fees') !== false ){
-                        $class_Fees = 'current-menu-item';
-                    }
+                <?php
 
-                    $class_ausInfo = '';
-                    $allow = array('/en/info-', '/en/info-immigration-list', '/en/info-immigration-article', '/en/info-budget-courses', '/en/info-popular-courses');
-                    
-                    foreach($allow as $arrValue) {
-                        if ( strpos($_SERVER['REQUEST_URI'], $arrValue) !== false ){
-                            $class_ausInfo = 'current-menu-item';
-                        }
-                    }
+$class_Home = '';
+$class_studySolu = '';
+$class_Course = '';
+$class_School = '';
+$class_Immi = '';
+$class_Fees = '';
+if (strpos($_SERVER['PHP_SELF'], '/en/index') !== false) {
+    $class_Home = 'current-menu-item';
+}
+if (strpos($_SERVER['PHP_SELF'], '/en/search-studySolution') !== false) {
+    $class_studySolu = 'current-menu-item';
+}
+if (strpos($_SERVER['PHP_SELF'], '/en/search-course') !== false
+    || strpos($_SERVER['PHP_SELF'], '/en/course') !== false) {
+    $class_Course = 'current-menu-item';
+}
+if (strpos($_SERVER['PHP_SELF'], '/en/search-school') !== false
+    || strpos($_SERVER['PHP_SELF'], '/en/school-info') !== false) {
+    $class_School = 'current-menu-item';
+}
+if (strpos($_SERVER['PHP_SELF'], '/en/search-immigration') !== false) {
+    $class_Immi = 'current-menu-item';
+}
+if (strpos($_SERVER['PHP_SELF'], '/en/search-fees') !== false) {
+    $class_Fees = 'current-menu-item';
+}
 
-                    $verCn = str_replace('en', 'cn', $_SERVER['PHP_SELF']);
-                    // basename(__FILE__) = current file {navbar.php}
-                    // $_SERVER['PHP_SELF'] = after .com {/en/index.php}, without any after '?'
-                    // $_SERVER['REQUEST_URI'] = after .com {/en/index.php}
-                ?>
+$class_ausInfo = '';
+$allow = array('/en/info-', '/en/info-immigration-list', '/en/info-immigration-article', '/en/info-budget-courses', '/en/info-popular-courses');
+
+foreach ($allow as $arrValue) {
+    if (strpos($_SERVER['REQUEST_URI'], $arrValue) !== false) {
+        $class_ausInfo = 'current-menu-item';
+    }
+}
+
+$verCn = str_replace('en', 'cn', $_SERVER['PHP_SELF']);
+// basename(__FILE__) = current file {navbar.php}
+// $_SERVER['PHP_SELF'] = after .com {/en/index.php}, without any after '?'
+// $_SERVER['REQUEST_URI'] = after .com {/en/index.php}
+?>
                 <div class="kingster-mobile-menu"><a class="kingster-mm-menu-button kingster-mobile-menu-button kingster-mobile-button-hamburger" href="#kingster-mobile-menu"><span></span></a>
                     <div class="kingster-mm-menu-wrap kingster-navigation-font" id="kingster-mobile-menu" data-slide="right">
                         <ul id="menu-main-navigation" class="m-menu">
@@ -69,15 +69,15 @@
                                 </ul> -->
                             </li>
                             <!-- 2nd Menu [button] -->
-                            <li class="menu-item menu-item-has-children <?php echo $class_studySolu; ?>"><a href="./../en/search-studySolution.php">Study Plan</a></li>
+                            <li class="menu-item menu-item-has-children <?php echo $class_studySolu; ?>"><a href="./../en/search-studySolution.php">Pathway Search</a></li>
                             <!-- 3rd Menu [button] -->
-                            <li class="menu-item menu-item-has-children <?php echo $class_Course; ?>"><a href="./../en/search-course.php">Course Search</a></li>
+                            <li class="menu-item menu-item-has-children <?php echo $class_Course; ?>"><a href="./../en/search-course.php">Courses Search</a></li>
                             <!-- 4th Menu [button] -->
-                            <li class="menu-item menu-item-has-children <?php echo $class_School; ?>"><a href="./../en/search-school.php">School Search</a></li>
+                            <li class="menu-item menu-item-has-children <?php echo $class_School; ?>"><a href="./../en/search-school.php">Institutes Search</a></li>
                             <!-- 5th Menu [button] -->
-                            <li class="menu-item menu-item-has-children <?php echo $class_Immi; ?>"><a href="./../en/search-immigration.php">Immi. Search</a></li>
+                            <li class="menu-item menu-item-has-children <?php echo $class_Immi; ?>"><a href="./../en/search-immigration.php">Courses for Migration</a></li>
                             <!-- 6th Menu [button] -->
-                            <li class="menu-item menu-item-has-children <?php echo $class_Fees; ?>"><a href="./../en/search-fees.php">Fees Search</a></li>
+                            <li class="menu-item menu-item-has-children <?php echo $class_Fees; ?>"><a href="./../en/search-fees.php">Tuition Search</a></li>
                             <!-- 7th Menu [button] -->
                             <li class="menu-item menu-item-has-children <?php echo $class_ausInfo; ?>"><a href="#">Aus. Info</a>
                                 <ul class="sub-menu">

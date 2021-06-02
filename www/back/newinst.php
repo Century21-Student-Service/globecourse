@@ -433,7 +433,8 @@ getjs("js/layer/layer.js", true);
       data_new = {
         pics: [],
         video: [],
-      };
+      },
+      states = [];
 
     $(function () {
       $("#img_badge").on('error', function (e) {
@@ -798,10 +799,14 @@ getjs("js/layer/layer.js", true);
         }
       });
 
-      $.get("util/institutionOperation?op=1", states => {
-        states = JSON.parse(states)
+      $.get("util/institutionOperation?op=1", res => {
+        res = JSON.parse(res)
+        if (res.code === 0) {
+          states = res.states;
+        }
+        $("#input_inst_country").html(states.map(s => "<option value='" + s.id + "'>" + s.name + "</option>").join(''))
         $("#input_inst_state").html("");
-        $("#input_inst_state").html(states.states.map(s => "<option value='" + s.id + "'>" + s.name + "</option>").join(''));
+        $("#input_inst_state").html(states[0].states.map(s => "<option value='" + s.id + "'>" + s.name + "</option>").join(''));
         if (inst_id) {
           $.get(
             "util/institutionOperation?op=4&instid=" + inst_id,
@@ -816,6 +821,13 @@ getjs("js/layer/layer.js", true);
               $("#img_badge").attr('src', (res.badge.split('')[0] == '/') ? res.badge : ('/' + res.badge));
               $("#input_inst_name").val(res.name);
               $("#input_inst_ename").val(res.name_en);
+              $("#input_inst_country>option").each((i, e) => {
+                e.removeAttribute("selected");
+                if (e.value == res.country_id) {
+                  e.setAttribute('selected', 'selected');
+                  $("#input_inst_country").change();
+                }
+              });
               $("#input_inst_state>option").each((i, e) => {
                 e.removeAttribute("selected");
                 if (e.value == res.state_id)
@@ -835,7 +847,15 @@ getjs("js/layer/layer.js", true);
             }
           );
         }
-      })
+        $("#input_inst_country").change(e => {
+          const country_id = e.target.value;
+          states.forEach(e => {
+            if (e.id == country_id) {
+              $("#input_inst_state").html(e.states.map(s => "<option value='" + s.id + "'>" + s.name + "</option>").join(''));
+            }
+          });
+        });
+      });
     });
 
     function samePics(picsA, picsB) {
