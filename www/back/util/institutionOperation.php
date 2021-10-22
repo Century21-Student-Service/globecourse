@@ -200,9 +200,11 @@ function getInstitutions()
                            i.name_en,
                            i.badge,
                            i.status,
+                           c.name as `country`,
                            s.name AS `state`
                     FROM institution i
                     LEFT JOIN `state` s ON s.id = i.state_id
+                    LEFT JOIN `country` c ON s.country_id = c.id
                     WHERE i.id IN REPLACEME
                     ORDER BY $orderName $sortOrder, i.id DESC
                     LIMIT $offset, $limit ;";

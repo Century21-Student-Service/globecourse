@@ -110,7 +110,7 @@ getjs("js/layer/layer.js", true);
         align: 'left',
         valign: 'middle',
         sortable: true,
-        width: 400,
+        width: 300,
         cellStyle: cellStyle
       }, {
         title: '英文名称',
@@ -118,9 +118,16 @@ getjs("js/layer/layer.js", true);
         align: 'left',
         valign: 'middle',
         sortable: true,
-        width: 400,
+        width: 300,
         cellStyle: cellStyle
       },
+      {
+          title: '所在国家',
+          field: 'country',
+          align: 'center',
+          valign: 'middle',
+          sortable: true,
+        },
       {
         title: '所在州',
         field: 'state',
@@ -133,7 +140,7 @@ getjs("js/layer/layer.js", true);
         field: 'id',
         align: 'center',
         valign: 'middle',
-        width: 90,
+        width: 100,
         sortable: true,
         formatter: function (value, row, index) {
           var edit =
