@@ -54,7 +54,7 @@ getcss("js/layer/theme/default/layer.css", true);
 <body>
   <div class="container">
     <header>
-      <h1>院校管理</h1>
+      <h1>院校管理2</h1>
     </header>
     <div class="input-group" style="float:left; margin-top: 10px; margin-bottom: 10px;">
       <span class="input-group-btn">
