@@ -74,7 +74,7 @@ $sql = "SELECT c.id,
         LEFT JOIN `state` s ON s.id = i.state_id
         WHERE c.status > 0
         $where
-        ORDER BY id ";
+        ORDER BY c.name_en desc";
 $dopage->GetPage($sql, 10);
 
 ?>
