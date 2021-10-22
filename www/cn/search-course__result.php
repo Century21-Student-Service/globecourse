@@ -83,6 +83,17 @@ $dopage->GetPage($sql, 10);
 <link rel='stylesheet' href='kingster-css/kingster-style-custom.min.css' type='text/css' media='all' />
 <link rel="stylesheet" type="text/css" href="custom-css/table.css">
 
+<?php 
+	$count = $dopage->GetResult_num();
+	if ($count == 0){
+?>
+		<div class="ctm-table__container">
+			<h2>暂无相关课程</h2>
+		</div>
+<?php 
+	}
+	else{
+?>
 
 <div class="ctm-table__container">
   <h2><small>为您找到</small>"<?php echo $dopage->GetResult_num(); ?>"<small>个相关结果</small></h2>
@@ -135,4 +146,7 @@ while ($row = $dosql->GetArray()) {
   <!-- <div style="display: flex; justify-content: center; align-items: center; line-height:30px; height:30px; padding-left:20px; font-size:14px;"><?php //echo $dopage->GetList(); ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></div> -->
 </div>
 
+
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>
+
+<?php } ?>

@@ -85,6 +85,17 @@ $dopage->GetPage($sql, 10);
 <link rel='stylesheet' href='kingster-css/kingster-style-custom.min.css' type='text/css' media='all' />
 <link rel="stylesheet" type="text/css" href="custom-css/table.css">
 
+<?php 
+	$count = $dopage->GetResult_num();
+	if ($count == 0){
+?>
+		<div class="ctm-table__container">
+			<h2>No relevant courses</h2>
+		</div>
+<?php 
+	}
+	else{
+?>
 
 <div class="ctm-table__container">
   <h2><small>Found </small> <?php echo $dopage->GetResult_num(); ?> <small> results</small></h2>
@@ -138,3 +149,5 @@ while ($row = $dosql->GetArray()) {
 </div>
 
 <div class="ctm-table__pageBtn" style=""><?php echo $dopage->GetList(); ?></div>
+
+<?php } ?>

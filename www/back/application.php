@@ -165,8 +165,24 @@ getjs("js/layer/layer.js", true);
         },
         detailFormatter: function (index, row) {
           var str = '';
-          str += `<table class='tbl-detail'><tr>`;
-          str += `<th class='cell-detail-title'>备注</th>`;
+          str += `<table class='tbl-detail'>`;
+          str += `<tr>`;
+          str += `<th class='cell-detail-title'>联系电话</th>`;
+          str += `<td class='cell-detail-data'>${row.phone===null ? "无" : row.phone}</td>`;
+          str += `</tr>`;
+          str += `<tr>`;
+          str += `<th class='cell-detail-title'>电子邮件</th>`;
+          str += `<td class='cell-detail-data'>${row.email===null ? "无" : row.email}</td>`;
+          str += `</tr>`;
+          str += `<tr>`;
+          str += `<th class='cell-detail-title'>毕业或在读院校名称</th>`;
+          str += `<td class='cell-detail-data'>${row.entry_inst===null ? "无" : row.entry_inst}</td>`;
+          str += `</tr>`;
+          str += `<tr>`;
+          str += `<th class='cell-detail-title'>雅思分数</th>`;
+          str += `<td class='cell-detail-data'>${row.ielts===null ? "无" : row.ielts}</td>`;
+          str += `</tr>`;
+          str += `<tr><th class='cell-detail-title'>备注</th>`;
           str += `<td class='cell-detail-data'>${row.comment===null ? "无" : row.comment}</td>`;
           str += `</tr></table>`;
 

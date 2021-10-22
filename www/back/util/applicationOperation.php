@@ -57,6 +57,8 @@ function getApplications()
                   a.birth,
                   a.comment,
                   a.phone,
+                  a.email,
+                  a.entry_inst,
                   l.`level`,
                   l.grade,
                   a.apply_time,
