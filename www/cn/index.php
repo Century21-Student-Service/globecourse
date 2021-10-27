@@ -168,7 +168,7 @@ session_unset();
         @media only screen and (max-width: 1100px) {  /* mobile */
             .ctm-boxContent_50 { padding-left: 0; padding-right: 0; }
         }
-
+		.hide{display:none;}
     </style>
     <!-- ==========  (custom) Style [only this pg]  ========== -->
 

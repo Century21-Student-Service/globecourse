@@ -7,6 +7,7 @@ $funcArr = [
     'getStates',
     'getFields',
     'getFieldsCOnly',
+	'getCountry',
 ];
 
 $op = 0;
@@ -55,6 +56,7 @@ function getLevels()
 function getStates()
 {
     global $conn;
+    $country_id = isset($_REQUEST['country_id']) ? $_REQUEST['country_id'] : 0;
     if (isset($_REQUEST['regional'])) {
         $regional = $_REQUEST['regional'];
     }
@@ -64,11 +66,23 @@ function getStates()
         $stmt->execute([$regional]);
     } else {
         $sql = "SELECT `id`,IF(name_en IS NULL OR name_en = '', `name`, name_en) AS `name`,code FROM `state` ORDER BY id";
+    if ($country_id){
+        	$sql = "SELECT `id`,IF(name_en IS NULL OR name_en = '', `name`, name_en) AS `name`,code FROM `state` where country_id = '{$country_id}' ORDER BY id";
+        }
         $stmt = $conn->prepare($sql);
         $stmt->execute();
     }
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);
 }
+
+function getCountry(){
+	global $conn;
+	$sql = "SELECT `id`,IF(name_en IS NULL OR name_en = '', `name`, name_en) AS `name` FROM `country` ORDER BY id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC), JSON_UNESCAPED_UNICODE);
+}
+
 
 function getFields($return = false)
 {

@@ -491,11 +491,12 @@ while ($row = $dosql->GetArray()) {
     }
 
     $nameEn = empty($row['name_en']) ? EMPTYTMP_UPDATING : $row['name_en'];
+    
     ?>
 											<div class="gdlr-core-course-item-list ctm-itemList__sidebar"><a class="gdlr-core-course-item-link"
 													href="course-info.php?cid=<?php echo ($id); ?>&id=<?php echo ($row['id']); ?>">
 													<!-- <span class="gdlr-core-course-item-id gdlr-core-skin-caption" ></span> -->
-													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($nameEn); ?></span>
+													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($row['title']); ?></span>
 													<!-- <span><?php //echo(getCType($row['type']));;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;?></span> -->
 													<i class="gdlr-core-course-item-icon gdlr-core-skin-icon fa fa-long-arrow-right" style="font-size: 16px;"></i></a>
 											</div>
@@ -526,7 +527,7 @@ while ($row = $dosql->GetArray()) {
     ?>
 											<div class="gdlr-core-course-item-list ctm-itemList__sidebar"><a class="gdlr-core-course-item-link"
 													href="info-immigration-article.php?cid=<?php echo ($row['id']); ?>">
-													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($nameEn); ?></span>
+													<span class="gdlr-core-course-item-title gdlr-core-skin-title" style="font-weight: bold;"><?php echo ($row['title']); ?></span>
 													<i class="gdlr-core-course-item-icon gdlr-core-skin-icon fa fa-long-arrow-right" style="font-size: 16px;"></i></a>
 											</div>
 											<?php

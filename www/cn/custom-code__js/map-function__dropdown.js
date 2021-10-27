@@ -145,7 +145,18 @@ function fromMap__setValue(index) {
     /* ====  (Select) radio button & dropdown  ==== */
     //jQuery('input[name="state"][value='+ (index+1) +']').prop('checked',true);
     console.log(index);
-    jQuery('#state').val(index + 1);
+    //jQuery('#state').val(index + 1);
+    //国家选项
+    if(index == 8 || index == 9){
+    	jQuery('#country').val(2);
+    }
+    else{
+    	jQuery('#country').val(1);
+    }
+	jQuery('#country').change();
+    
+	setTimeout("jQuery('#state').val("+index+" + 1)", 600);
+    
 }
 
 

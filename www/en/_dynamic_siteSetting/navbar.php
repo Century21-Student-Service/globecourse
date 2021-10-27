@@ -115,7 +115,7 @@ $verCn = str_replace('en', 'cn', $_SERVER['REQUEST_URI']);
                         <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Immi; ?>"><a
                                 href="./../en/search-immigration.php" class="sf-with-ul-pre">Courses for Migration</a></li>
                         <!-- 6th Menu [button] -->
-                        <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Fees; ?>"><a
+                        <li class="hide menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Fees; ?>"><a
                                 href="./../en/search-fees.php" class="sf-with-ul-pre">Tuition Search</a></li>
                         <!-- 7th Menu [button] -->
                         <li class="menu-item menu-item-has-children kingster-normal-menu <?php echo $class_ausInfo; ?>"><a href="#" class="sf-with-ul-pre">Aus.
