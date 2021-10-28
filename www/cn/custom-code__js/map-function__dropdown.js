@@ -147,6 +147,7 @@ function fromMap__setValue(index) {
     console.log(index);
     //jQuery('#state').val(index + 1);
     //国家选项
+    
     if(index == 8 || index == 9){
     	jQuery('#country').val(2);
     }
@@ -155,8 +156,8 @@ function fromMap__setValue(index) {
     }
 	jQuery('#country').change();
     
-	setTimeout("jQuery('#state').val("+index+" + 1)", 600);
-    
+	setTimeout("jQuery('#state').val("+index+" + 1);stateToDark__specific(jQuery('#state').val() - 1);changeState();", 600);
+	
 }
 
 

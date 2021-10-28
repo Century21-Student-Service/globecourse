@@ -390,6 +390,16 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			});
 		});
 		//#endregion
+
+		function changeState(){
+			$.get(`util/search-immigrationOperation?state=`+$("#state").val(), res => {
+				res = JSON.parse(res);
+				$("#schoolType").html(`<option value="0">Please Choose "Type of Courses"</option>`);
+				res.forEach(e => {
+					$("#schoolType").append(`<option value='${e.id}'>${e.name}</option>`);
+				});
+			});
+		}
 	</script>
 </body>
 

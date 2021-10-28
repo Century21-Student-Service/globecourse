@@ -161,7 +161,7 @@ function fromMap__setValue(index) {
     }
 	jQuery('#country').change();
     
-	setTimeout("jQuery('#state').val("+index+" + 1)", 600);
+	setTimeout("jQuery('#state').val("+index+" + 1);stateToDark__specific(jQuery('#state').val() - 1);changeState();", 600);
 }
 
 

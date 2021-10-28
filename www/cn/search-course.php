@@ -196,6 +196,59 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 																</div>
 															</div>
 														</div>
+														
+														<!-- =========================================================================================== -->
+														<!-- ===================================        [国家]        =================================== -->
+														<!-- =========================================================================================== -->
+														<div class="gdlr-core-pbf-column gdlr-core-column-30">
+															<div class="gdlr-core-pbf-column-content-margin gdlr-core-js " style="margin: 0px 0px 20px 0px;padding: 0px 0px 0px 0px;">
+																<div class="gdlr-core-pbf-column-content clearfix gdlr-core-js ">
+
+
+																	<!-- 4th Element -->
+																	<!-- ====================     << Title >> {1st paragraph}     ==================== -->
+																	<!-- ===== (Country - 国家) ===== -->
+																	<div class="gdlr-core-pbf-element">
+																		<div
+																			class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr"
+																			style="padding-bottom: 0 !important">
+																			<div class="gdlr-core-title-item-title-wrap clearfix">
+																				<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
+																					style="font-size: 20px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">国家</h3>
+																			</div>
+																			<div><span class="gdlr-core-title-item-caption gdlr-core-info-font gdlr-core-skin-caption"
+																					style="font-size: 14px ;font-style: normal ;color: #6c6c6c ;">Country</span></div>
+																		</div>
+																	</div>
+
+																	<!-- 5th Element -->
+																	<!-- ====================     << Content >> {1st paragraph}     ==================== -->
+																	<div class="gdlr-core-pbf-element">
+																		<div class="gdlr-core-text-box-item gdlr-core-item-pdlr gdlr-core-item-pdb gdlr-core-left-align"
+																			style="padding-bottom: 20px ;">
+																			<div class="gdlr-core-text-box-item-content" style="font-size: 17px ;letter-spacing: 0px ;text-transform: none ;">
+																				<!-- <div class="border-box_100">
+						                                                        	<input type="radio" id="" name="state" value="0">
+						                                                        	<div class="border-box_100_label">
+						                                                        		<label for="state"><span>--请选择大州--</span></label><br>
+						                                                        	</div>
+						                                                        </div> -->
+
+
+																				<!-- =====  (Get) State list [from database]  ===== -->
+
+																				<!-- =====  (Insert) State [drop-down list]  ===== -->
+																				<select name="country" class="dropdown_100" id="country">
+																					<option value="0" id="">请选择「国家」</option>
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+
+
+																</div>
+															</div>
+														</div>
 
 														<!-- =========================================================================================== -->
 														<!-- ===================================        [州名]        =================================== -->
@@ -714,14 +767,34 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 	<!-- ______________________________        (custom) Fees        ______________________________ -->
 	<!-- ========================================================================================= -->
 	<script type="text/javascript">
+		//加入国家
+		$.get("util/search-immigrationOperation?op=5", res => {
+			res = JSON.parse(res);
+			res.forEach(e => {
+				$("#country").append(`<option value='${e.id}'>${e.name}</option>`);
+			});
+		});
+	
+		$("#country").change(e => {
+			$.get(`util/search-immigrationOperation?op=1&country_id=${e.currentTarget.value}`, res => {
+				res = JSON.parse(res);
+				$("#state").html(`<option value="0">请选择「大州」</option>`);
+				res.forEach(e => {
+					$("#state").append(`<option value='${e.id}'>${e.name}</option>`);
+				});
+			});
+		});
+		
 		//#region 以下代码添加于2021-02-23
 		//载入初始「州」数据
+		/*
 		$.get("util/search-immigrationOperation?op=1", res => {
 			res = JSON.parse(res);
 			res.forEach(e => {
 				$("#state").append(`<option value='${e.id}'>${e.name}</option>`);
 			});
 		});
+		*/
 
 		//载入「课程类别」类别数据
 		$.get("util/search-immigrationOperation", res => {
@@ -742,6 +815,16 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 				});
 			});
 		});
+
+		function changeState(){
+			$.get(`util/search-immigrationOperation?op=4&state=`+$("#state").val(), res => {
+				res = JSON.parse(res);
+				$("#schoolType").html(`<option value="0">请选择「课程类别」</option>`);
+				res.forEach(e => {
+					$("#schoolType").append(`<option value='${e.id}'>${e.name}</option>`);
+				});
+			});
+		}
 
 		//课程类别时，选项对应变化
 		$("#schoolType").change(e => {

@@ -423,6 +423,15 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 		});
 
 		//#endregion
+		function changeState(){
+			$.get(`util/search-immigrationOperation?op=4&state=`+$("#state").val(), res => {
+				res = JSON.parse(res);
+				$("#schoolType").html(`<option value="0">请选择「课程类别」</option>`);
+				res.forEach(e => {
+					$("#schoolType").append(`<option value='${e.id}'>${e.name}</option>`);
+				});
+			});
+		}
 	</script>
 </body>
 
