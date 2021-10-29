@@ -1,3 +1,6 @@
+<style>
+.hide{display:none !important;}
+</style>
 <div class="kingster-mobile-header-wrap">
     <div class="kingster-mobile-header kingster-header-background kingster-style-slide kingster-sticky-mobile-navigation " id="kingster-mobile-header">
         <div class="kingster-mobile-header-container kingster-container clearfix">
@@ -77,7 +80,7 @@ $verCn = str_replace('en', 'cn', $_SERVER['PHP_SELF']);
                             <!-- 5th Menu [button] -->
                             <li class="menu-item menu-item-has-children <?php echo $class_Immi; ?>"><a href="./../en/search-immigration.php">Courses for Migration</a></li>
                             <!-- 6th Menu [button] -->
-                            <li class="menu-item menu-item-has-children <?php echo $class_Fees; ?>"><a href="./../en/search-fees.php">Tuition Search</a></li>
+                            <li class="hide menu-item menu-item-has-children <?php echo $class_Fees; ?>"><a href="./../en/search-fees.php">Tuition Search</a></li>
                             <!-- 7th Menu [button] -->
                             <li class="menu-item menu-item-has-children <?php echo $class_ausInfo; ?>"><a href="#">Aus. Info</a>
                                 <ul class="sub-menu">

@@ -1,3 +1,6 @@
+<style>
+.hide{display:none !important;}
+</style>
 <div class="kingster-mobile-header-wrap">
     <div class="kingster-mobile-header kingster-header-background kingster-style-slide kingster-sticky-mobile-navigation " id="kingster-mobile-header">
         <div class="kingster-mobile-header-container kingster-container clearfix">
@@ -77,7 +80,7 @@
                             <!-- 5th Menu [button] -->
                             <li class="menu-item menu-item-has-children <?php echo $class_Immi; ?>"><a href="./../cn/search-immigration.php">移民搜索</a></li>
                             <!-- 6th Menu [button] -->
-                            <li class="menu-item menu-item-has-children <?php echo $class_Fees; ?>"><a href="./../cn/search-fees.php">学费搜索</a></li>
+                            <li class="hide menu-item menu-item-has-children <?php echo $class_Fees; ?>"><a href="./../cn/search-fees.php">学费搜索</a></li>
                             <!-- 7th Menu [button] -->
                             <li class="menu-item menu-item-has-children <?php echo $class_ausInfo; ?>"><a href="#">澳洲有关资讯</a>
                                 <ul class="sub-menu">

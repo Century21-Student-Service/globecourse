@@ -3,6 +3,9 @@
         font-size: 14px !important;
     }
 </style>
+<style>
+.hide{display:none !important;}
+</style>
 
 <!-- ===============        (dark) Top Bar        =============== -->
 <div class="kingster-top-bar">

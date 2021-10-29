@@ -1,3 +1,7 @@
+<style>
+.hide{display:none !important;}
+</style>
+
 <!-- ===============        (dark) Top Bar        =============== -->
 <div class="kingster-top-bar">
     <div class="kingster-top-bar-background"></div>
