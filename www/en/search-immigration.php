@@ -211,6 +211,32 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 																	<div class="gdlr-core-pbf-column gdlr-core-column-60" id="div_state">
 																		<div class="gdlr-core-pbf-column-content-margin gdlr-core-js " style="margin: 0px 0px 20px 0px;padding: 0px 0px 0px 0px;">
 																			<div class="gdlr-core-pbf-column-content clearfix gdlr-core-js ">
+																			
+																				<!-- 4th Element -->
+																				<!-- ====================     << Title >> {1st paragraph}     ==================== -->
+																				<!-- ===== (Country - 国家) ===== -->
+																				<div class="gdlr-core-pbf-element">
+																					<div
+																						class="gdlr-core-title-item gdlr-core-item-pdb clearfix  gdlr-core-left-align gdlr-core-title-item-caption-top gdlr-core-item-pdlr">
+																						<div class="gdlr-core-title-item-title-wrap clearfix">
+																							<h3 class="gdlr-core-title-item-title gdlr-core-skin-title "
+																								style="font-size: 20px ;font-weight: 600 ;letter-spacing: 0px ;text-transform: none ;color: #464646 ;">
+																								<small>Country</small></h3>
+																						</div>
+																					</div>
+																				</div>
+
+																				<!-- 5th Element -->
+																				<!-- ====================     << Content >> {1st paragraph}     ==================== -->
+																				<div class="gdlr-core-pbf-element">
+																					<div class="gdlr-core-text-box-item gdlr-core-item-pdlr gdlr-core-item-pdb gdlr-core-left-align"
+																						style="padding: 0 30px;">
+																						<div class="gdlr-core-text-box-item-content" style="font-size: 17px ;letter-spacing: 0px ;text-transform: none ;">
+																							<select name="country" class="dropdown_100" id="country"></select>
+
+																						</div>
+																					</div>
+																				</div>
 
 
 																				<!-- 4th Element -->
@@ -679,6 +705,26 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 	<!-- ===================================================================================================== -->
 	<script>
 		//#region 以下代码添加于2021-02-23
+		
+		$("#country").change(e => {
+			const regional = $(".radio-area:checked")[0].value;
+			$("#i_regional").val(regional);
+			$.post(`util/search-immigrationOperation?op=1&country_id=${e.currentTarget.value}`, {regional}, res => {
+				res = JSON.parse(res);
+				$("#state").html(`<option value="0">Please choose "State"</option>`);
+				res.forEach(el => {
+					if (regional == 0) {
+						//根据要求，非偏远地区要显示城市而不是州
+						//还好一个州只有一个非偏远城市。
+						//如果一个州有两个的话，可能需要更改数据库结构
+							if (el.id == 1) el.name = "Sydney";
+							else if (el.id == 2) el.name = "Brisbane";
+							else if (el.id == 5) el.name = "Melbourne";
+					}
+					$("#state").append(`<option value='${el.id}'>${el.name}</option>`);
+				});
+			});
+		});
 
 		$(".radio-area").change(e => {
 			//更新州
@@ -687,6 +733,17 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			$("#state").html(`<option value='0'>Please choose "State"</option>`);
 			const regional = e.currentTarget.value;
 			$("#i_regional").val(regional);
+			
+			//加入国家
+			$.get("util/search-immigrationOperation?op=4", res => {
+				res = JSON.parse(res);
+				$("#country").html(`<option value="0">Please choose "Country"</option>`);
+				res.forEach(e => {
+					$("#country").append(`<option value='${e.id}'>${e.name}</option>`);
+				});
+			});
+			
+			/*
 			$.post("util/search-immigrationOperation?op=1", {
 					regional
 				},
@@ -703,9 +760,10 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 						}
 						$("#state").append(`<option value='${el.id}'>${el.name}</option>`);
 					});
-					/** ====  Clear Map  ==== **/
-					stateToLight__init();
+					* ====  Clear Map  ==== *
+					//stateToLight__init();
 				});
+			*/
 
 			//更新课程类别
 			$.ajax({

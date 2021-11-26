@@ -105,7 +105,7 @@
                         <!-- 5th Menu [button] -->
                         <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Immi; ?>"><a href="./../cn/search-immigration.php" class="sf-with-ul-pre">移民搜索</a></li>
                         <!-- 6th Menu [button] -->
-                        <li class="hide menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Fees; ?>"><a href="./../cn/search-fees.php" class="sf-with-ul-pre">学费搜索</a></li>
+                        <li class="menu-item menu-item-home menu-item-has-children kingster-normal-menu <?php echo $class_Fees; ?>"><a href="./../cn/search-fees.php" class="sf-with-ul-pre">学费搜索</a></li>
                         <!-- 7th Menu [button] -->
                         <li class="menu-item menu-item-has-children kingster-normal-menu <?php echo $class_ausInfo; ?>"><a href="#" class="sf-with-ul-pre">澳洲有关资讯</a>
                             <ul class="sub-menu">

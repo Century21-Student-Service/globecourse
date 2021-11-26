@@ -61,7 +61,14 @@ function getStates()
         $regional = $_REQUEST['regional'];
     }
     if (isset($regional)) {
-        $sql = "SELECT `id`,IF(name_en IS NULL OR name_en = '', `name`, name_en) AS `name`,code FROM `state` WHERE id IN(SELECT state_id FROM institution WHERE regional=?) ORDER BY id";
+		$where = "";
+		if($regional == 0){
+			$where = " and state_id != 4";
+		}
+        $sql = "SELECT `id`,IF(name_en IS NULL OR name_en = '', `name`, name_en) AS `name`,code FROM `state` WHERE id IN(SELECT state_id FROM institution WHERE regional=? {$where}) ORDER BY id";
+		if ($country_id){
+			$sql = "SELECT `id`,IF(name_en IS NULL OR name_en = '', `name`, name_en) AS `name`,code FROM `state` WHERE id IN(SELECT state_id FROM institution WHERE regional=? {$where}) and country_id = '{$country_id}' ORDER BY id";
+		}
         $stmt = $conn->prepare($sql);
         $stmt->execute([$regional]);
     } else {
