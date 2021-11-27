@@ -872,7 +872,8 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
 			tooltip_split: true,
 			formatter: v => {
 				const symble = $("#selt_currency_slider").val() === "CNY" ? "￥" : "$";
-				return symble + v.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+				//return symble + v.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+				return symble + v.toString();
 			}
 		});
 		$("#selt_currency_slider").change(ev => {
