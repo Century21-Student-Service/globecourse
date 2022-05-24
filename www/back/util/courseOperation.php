@@ -63,6 +63,7 @@ function getCourses()
                            c.hours,
                            c.months,
                            c.fees,
+                           c.author,
                            c.immigration,
                            c.status
                     FROM course c
@@ -187,6 +188,7 @@ function getCoursesById()
                     c.hours,
                     c.months,
                     c.fees,
+    				c.author,
                     c.immigration,
                     c.intro,
                     c.description,
@@ -277,7 +279,7 @@ function saveCourse()
         // echo $sql;die;
     } else {
         // 插入新数据
-        $sql = "INSERT INTO course (`name`,`name_en`,`level_id`,`field_id_p`,`field_id_c`,`months`,`fees`,`intro`,`description`,`intro_en`,`description_en`,`inst_id`)VALUE(:name,:name_en,:level_id,:field_id_p,:field_id_c,:months,:fees,:intro,:description,:intro_en,:description_en,:inst_id);";
+        $sql = "INSERT INTO course (`name`,`name_en`,`level_id`,`field_id_p`,`field_id_c`,`months`,`fees`,`author`,`intro`,`description`,`intro_en`,`description_en`,`inst_id`)VALUE(:name,:name_en,:level_id,:field_id_p,:field_id_c,:months,:fees,:author,:intro,:description,:intro_en,:description_en,:inst_id);";
     }
 
     try {

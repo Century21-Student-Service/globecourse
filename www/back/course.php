@@ -227,6 +227,13 @@ getjs("js/layer/layer.js", true);
                 title="修改学费" data-content="${content}">${result}</span>`;
       }
     }, {
+        title: '添加人',
+        field: 'author',
+        align: 'left',
+        valign: 'middle',
+        width: 90,
+        sortable: true,
+      }, {
       title: '操作',
       field: 'id',
       align: 'center',

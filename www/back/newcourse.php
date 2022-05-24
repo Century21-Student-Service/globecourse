@@ -8,7 +8,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>添加课程</title>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
   <?php
 
 getcss("ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css");
@@ -105,6 +104,13 @@ getcss("js/layer/theme/default/layer.css", true);
       <input type="text" class="form-control" aria-label="学费(AUD)" id="input_course_fees">
     </div>
 
+    <div class="input-group " style="width: 20%; min-width:200px;">
+      <div class="input-group-prepend">
+        <span class="input-group-text">添加人</span>
+      </div>
+      <input type="text" class="form-control" aria-label="添加人" id="input_course_author">
+    </div>
+
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item" style="display:none">
         <a class="nav-link " id="tab_intro" data-toggle="tab" href="#input_intro" role="tab" aria-controls="intro" aria-selected="true">简介</a>
@@ -146,7 +152,17 @@ getjs("ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js");
 //getjs("js/wangEditor.min.js", true);
 getjs("js/layer/layer.js", true);
 ?>
+
+<script type="text/javascript" src="./lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="./lib/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="./lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
   <script>
+	var opts = {elementPathEnabled : false, wordCount:false, textarea:'content'};
+    var editor_intro = UE.getEditor('input_intro',opts);
+    var editor_description = UE.getEditor('input_description',opts);
+    var editor_intro_en = UE.getEditor('input_intro_en',opts);
+    var editor_description_en = UE.getEditor('input_description_en',opts);
+    /*
     const E = window.wangEditor
     const editor_intro = new E(document.getElementById('input_intro'))
     editor_intro.config.placeholder = '请输入简介';
@@ -160,6 +176,7 @@ getjs("js/layer/layer.js", true);
     const editor_description_en = new E(document.getElementById('input_description_en'))
     editor_description_en.config.placeholder = '请输入详细介绍(英文)';
     editor_description_en.create();
+    */
     const urlParams = new URLSearchParams(window.location.search);
     const inst_id = urlParams.get('inst_id');
     const course_id = urlParams.get('id');
@@ -260,13 +277,18 @@ getjs("js/layer/layer.js", true);
             $("#input_course_level").val(res.level_id);
             $("#input_course_hours").val(res.months);
             $("#input_course_fees").val(res.fees);
+            $("#input_course_author").val(res.author);
             $("#input_course_state_id").val(res.state_id);
             $("#input_course_state_id").change();
             $("#input_course_inst_id").val(res.inst_id);
-            editor_description.txt.html(res.description || "");
-            editor_description_en.txt.html(res.description_en || "");
-            editor_intro.txt.html(res.intro || "");
-            editor_intro_en.txt.html(res.intro_en || "");
+//             editor_description.txt.html(res.description || "");
+//             editor_description_en.txt.html(res.description_en || "");
+//             editor_intro.txt.html(res.intro || "");
+//             editor_intro_en.txt.html(res.intro_en || "");
+            editor_description.setContent(res.description || "");
+            editor_description_en.setContent(res.description_en || "");
+            editor_intro.setContent(res.intro || "");
+            editor_intro_en.setContent(res.intro_en || "");
           });
         if (inst_id) {
           $.get('util/institutionOperation.php?op=4&instid=' + inst_id, function (res) {
@@ -298,10 +320,14 @@ getjs("js/layer/layer.js", true);
 
       $("#btn_save").click(e => {
         data_new.id = data_old.id;
-        data_new.description = editor_description.txt.html().trim();
-        data_new.intro = editor_intro.txt.html().trim();
-        data_new.description_en = editor_description_en.txt.html().trim();
-        data_new.intro_en = editor_intro_en.txt.html().trim();
+//         data_new.description = editor_description.txt.html().trim();
+//         data_new.intro = editor_intro.txt.html().trim();
+//         data_new.description_en = editor_description_en.txt.html().trim();
+//         data_new.intro_en = editor_intro_en.txt.html().trim();
+        data_new.description = editor_description.getContent();
+        data_new.intro = editor_intro.getContent();
+        data_new.description_en = editor_description_en.getContent();
+        data_new.intro_en = editor_intro_en.getContent();
         data_new.inst_id = $("#input_course_inst_id").val();
         data_new.name = $("#input_course_name").val().trim();
         data_new.name_en = $("#input_course_ename").val().trim();
@@ -310,6 +336,7 @@ getjs("js/layer/layer.js", true);
         data_new.level_id = $("#input_course_level").val();
         data_new.months = $("#input_course_hours").val();
         data_new.fees = $("#input_course_fees").val();
+        data_new.author = $("#input_course_author").val();
 
         let error = false;
 
@@ -351,6 +378,7 @@ getjs("js/layer/layer.js", true);
         if (sameValue(data_new.level_id, data_old.level_id)) data_new.level_id = null;
         if (sameValue(data_new.months, data_old.months)) data_new.months = null;
         if (sameValue(data_new.fees, data_old.fees)) data_new.fees = null;
+        if (sameValue(data_new.author, data_old.author)) data_new.author = null;
 
         if (
           data_new.name == null &&
@@ -364,7 +392,8 @@ getjs("js/layer/layer.js", true);
           data_new.description_en == null &&
           data_new.level_id == null &&
           data_new.months == null &&
-          data_new.fees == null
+          data_new.fees == null &&
+          data_new.author == null
         ) {
           parent.layer.close(parent.form);
           parent.scrollTo(parent.current_scroll.x, parent.current_scroll.y);
@@ -399,10 +428,14 @@ getjs("js/layer/layer.js", true);
 
       $("#btn_close").click(e => {
         data_new.id = data_old.id;
-        data_new.description = editor_description.txt.html().trim();
-        data_new.intro = editor_intro.txt.html().trim();
-        data_new.description_en = editor_description_en.txt.html().trim();
-        data_new.intro_en = editor_intro_en.txt.html().trim();
+//         data_new.description = editor_description.txt.html().trim();
+//         data_new.intro = editor_intro.txt.html().trim();
+//         data_new.description_en = editor_description_en.txt.html().trim();
+//         data_new.intro_en = editor_intro_en.txt.html().trim();
+        data_new.description = editor_description.getContent();
+        data_new.intro = editor_intro.getContent();
+        data_new.description_en = editor_description_en.getContent();
+        data_new.intro_en = editor_intro_en.getContent();
         data_new.name = $("#input_course_name").val().trim();
         data_new.name_en = $("#input_course_ename").val().trim();
         data_new.field_id_p = $("#input_course_field_p").val();
@@ -410,6 +443,7 @@ getjs("js/layer/layer.js", true);
         data_new.level_id = $("#input_course_level").val();
         data_new.hours = $("#input_course_hours").val();
         data_new.fees = $("#input_course_fees").val();
+        data_new.author = $("#input_course_author").val();
 
         if (data_old.id) {
           if (
@@ -421,7 +455,8 @@ getjs("js/layer/layer.js", true);
             !sameValue(data_new.intro, data_old.intro) ||
             !sameValue(data_new.level_id, data_old.level_id) ||
             !sameValue(data_new.hours, data_old.hours) ||
-            !sameValue(data_new.fees, data_old.fees)
+            !sameValue(data_new.fees, data_old.fees) ||
+            !sameValue(data_new.author, data_old.author)
           ) {
             if (!sameValue(data_new.name, data_old.name)) console.log('name', data_new.name, data_old.name);
             if (!sameValue(data_new.name_en, data_old.name_en)) console.log('name_en', data_new.name_en, data_old.name_en);
@@ -432,6 +467,7 @@ getjs("js/layer/layer.js", true);
             if (!sameValue(data_new.level_id, data_old.level_id)) console.log('level_id', data_new.level_id, data_old.level_id);
             if (!sameValue(data_new.hours, data_old.hours)) console.log('hours', data_new.hours, data_old.hours);
             if (!sameValue(data_new.fees, data_old.fees)) console.log('fees', data_new.fees, data_old.fees);
+            if (!sameValue(data_new.author, data_old.author)) console.log('author', data_new.author, data_old.author);
             layer.confirm('关闭后修改不会被保存，确定关闭？', {
               btn: ['关闭', '取消'] //按钮
             }, function () {
