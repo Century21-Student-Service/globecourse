@@ -75,6 +75,9 @@ getjs("js/layer/layer.js", true);
       valign: 'middle',
       width: 100,
       sortable: true,
+      formatter: function (value, row, index) {
+          return `<a href='application_detail.php?id=${row.id}' target='_blank'>${value}</a>`;
+        }
     }, {
       title: '出生年月',
       field: 'birth',
