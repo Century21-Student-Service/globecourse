@@ -143,7 +143,7 @@ function testEmail(){
 		$mail->CharSet    = 'UTF-8';
 		$mail->Encoding   = 'base64';
 		//Recipients
-		$mail->setFrom('392318709@qq.com');
+		$mail->setFrom('noreplyglobalcourse@gmail.com');
 		$mail->addAddress('361231134@qq.com');     // Add a recipient
 		//$mail->addAddress('ellen@example.com');               // Name is optional
 		//$mail->addReplyTo('info@example.com', 'Information');
