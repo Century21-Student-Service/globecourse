@@ -132,12 +132,10 @@ function testEmail(){
 		$mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
 		
 		$mail->isSMTP();                                            // Send using SMTP
-		$mail->Host       = 'smtp.qq.com';                    // Set the SMTP server to send through
+		$mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
 		$mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-		$mail->Username   = '392318709@qq.com';                     // SMTP username
-		$mail->Password   = 'ktggputxmqwebicj';                               // SMTP password
-		//cqbdwscytbphbhbh
-		//zjduifnnrhqobhdd
+		$mail->Username   = 'noreplyglobalcourse@gmail.com';                     // SMTP username
+		$mail->Password   = 'Global2022';                               // SMTP password
 		
 		$mail->SMTPSecure = 'ssl';
 		$mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
@@ -162,7 +160,7 @@ function testEmail(){
 		 
 		
 		 $result = $mail->send();
-		 var_dump($result);
+		 
 		echo 'Message has been sent';
 	} catch (\Exception $e) {
 		echo "Message could not be sent. Mailer Error: {$e->ErrorInfo}";
