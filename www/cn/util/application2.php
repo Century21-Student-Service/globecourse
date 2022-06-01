@@ -125,11 +125,77 @@ function getCourseName()
 }
 
 function testEmail(){
+	$sql = "SELECT a.id,
+	a.name,
+	a.birth,
+	a.comment,
+	a.address,
+	a.phone,
+	a.email,
+	a.entry_inst,
+	l.`level`,
+	l.grade,
+	a.apply_time,
+	a.ielts,
+	a.passport_photo AS `passport`,
+	a.graduated_photo AS `graduated`,
+	a.diploma_photo AS `diploma`,
+	a.scoresheet_photo AS `scoresheet`,
+	a.ielts_photo AS `ielts_photo`,
+	i.name AS `institution`,
+	c.name AS `course`
+	FROM `application` a
+	LEFT JOIN institution i ON i.id = a.inst_id
+	LEFT JOIN course c ON c.id = a.c_id
+	LEFT JOIN app_level l ON l.id = a.entry_level
+	where a.id = 19;";
+	
+	$row = $dosql->GetOne($sql);
+	
+	$html = '<table class="table">';
+	$html .= "<tr><td width='200px'>申请时间：</td><td>{$row['apply_time']}</td></tr>";
+	$html .= "<tr><td>申请人姓名：</td><td>{$row['name']}</td></tr>";
+	$html .= "<tr><td>出生年月：</td><td>{$row['birth']}</td></tr>";
+	$html .= "<tr><td>联系电话：</td><td>{$row['phone']}</td></tr>";
+	$html .= "<tr><td>电子邮件：</td><td>{$row['email']}</td></tr>";
+	$html .= "<tr><td>申请院校：</td><td>{$row['institution']}</td></tr>";
+	$html .= "<tr><td>申请课程：</td><td>{$row['course']}</td></tr>";
+	$html .= "<tr><td>最高学历或在读年级：</td><td>{$row['level']} {$row['grade']}</td></tr>";
+	$html .= "<tr><td>毕业或在读院校：</td><td>{$row['entry_inst']}</td></tr>";
+	$html .= "<tr><td>雅思分数：</td><td>{$row['ielts']}</td></tr>";
+	$html .= "<tr><td>备注：</td><td>" . nl2br($row['comment']). "</td></tr>";
+	
+	$html .= "<tr><td>护照：</td><td>";
+	if ($row['passport'] != ''){
+		$html .= "<a target='_blank' href='{$row['passport']}' >点击查看</a>";
+	}
+	$html .= "</td></tr>";
+	$html .= "<tr><td>学历毕业证书：</td><td>";
+	if ($row['passport'] != ''){
+		$html .= "<a target='_blank' href='{$row['graduated']}' >点击查看</a>";
+	}
+	$html .= "</td></tr>";
+	$html .= "<tr><td>学位证：</td><td>";
+	if ($row['passport'] != ''){
+		$html .= "<a target='_blank' href='{$row['diploma']}' >点击查看</a>";
+	}
+	$html .= "</td></tr>";
+	$html .= "<tr><td>毕业成绩单：</td><td>";
+	if ($row['passport'] != ''){
+		$html .= "<a target='_blank' href='{$row['scoresheet']}' >点击查看</a>";
+	}
+	$html .= "</td></tr>";
+	$html .= "<tr><td>雅思成绩单：</td><td>";
+	if ($row['passport'] != ''){
+		$html .= "<a target='_blank' href='{$row['ielts_photo']}' >点击查看</a>";
+	}
+	$html .= "</td></tr>";
+	$html .= '</table>';
 	
 	$mail = new PHPMailer();
 	try {
 		//Server settings
-		$mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
+		//$mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
 		
 		$mail->isSMTP();                                            // Send using SMTP
 		$mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
@@ -149,14 +215,12 @@ function testEmail(){
 		//$mail->addReplyTo('info@example.com', 'Information');
 		//$mail->addCC('cc@example.com');
 		//$mail->addBCC('bcc@example.com');
+		
+		
 	
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-	
-		/*Content
-		 */
 		 $mail->isHTML(true);                                  // Set email format to HTML
-		 $mail->Subject = 'Here is the subject';
-		 $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+		 $mail->Subject = '新的课程申请';
+		 $mail->Body    = $html;
 		 
 		
 		 $result = $mail->send();
