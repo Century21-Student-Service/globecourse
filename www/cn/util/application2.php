@@ -150,7 +150,9 @@ function testEmail(){
 	LEFT JOIN app_level l ON l.id = a.entry_level
 	where a.id = 19;";
 	
-	$row = $dosql->GetOne($sql);
+	$stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 	
 	$html = '<table class="table">';
 	$html .= "<tr><td width='200px'>申请时间：</td><td>{$row['apply_time']}</td></tr>";
