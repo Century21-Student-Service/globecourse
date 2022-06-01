@@ -1,4 +1,9 @@
 {
+	"autoload": {
+        "psr-4": {
+            "PHPMailer\\PHPMailer\\": "./vendor/phpmailer/phpmailer/src/"
+        }
+    },
     "require": {
         "catfan/medoo": "^1.7",
         "geoip2/geoip2": "^2.11",
