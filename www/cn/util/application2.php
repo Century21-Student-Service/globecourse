@@ -125,6 +125,7 @@ function getCourseName()
 }
 
 function testEmail(){
+	global $conn;
 	$sql = "SELECT a.id,
 	a.name,
 	a.birth,
