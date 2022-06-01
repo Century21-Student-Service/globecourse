@@ -172,27 +172,27 @@ function testEmail(){
 	
 	$html .= "<tr><td>护照：</td><td>";
 	if ($row['passport'] != ''){
-		$html .= "<a target='_blank' href='{$row['passport']}' >点击查看</a>";
+		$html .= "<a target='_blank' href='{$row['passport']}' >{$row['passport']}</a>";
 	}
 	$html .= "</td></tr>";
 	$html .= "<tr><td>学历毕业证书：</td><td>";
-	if ($row['passport'] != ''){
-		$html .= "<a target='_blank' href='{$row['graduated']}' >点击查看</a>";
+	if ($row['graduated'] != ''){
+		$html .= "<a target='_blank' href='{$row['graduated']}' >{$row['graduated']}</a>";
 	}
 	$html .= "</td></tr>";
 	$html .= "<tr><td>学位证：</td><td>";
-	if ($row['passport'] != ''){
-		$html .= "<a target='_blank' href='{$row['diploma']}' >点击查看</a>";
+	if ($row['diploma'] != ''){
+		$html .= "<a target='_blank' href='{$row['diploma']}' >{$row['diploma']}</a>";
 	}
 	$html .= "</td></tr>";
 	$html .= "<tr><td>毕业成绩单：</td><td>";
-	if ($row['passport'] != ''){
-		$html .= "<a target='_blank' href='{$row['scoresheet']}' >点击查看</a>";
+	if ($row['scoresheet'] != ''){
+		$html .= "<a target='_blank' href='{$row['scoresheet']}' >{$row['scoresheet']}</a>";
 	}
 	$html .= "</td></tr>";
 	$html .= "<tr><td>雅思成绩单：</td><td>";
-	if ($row['passport'] != ''){
-		$html .= "<a target='_blank' href='{$row['ielts_photo']}' >点击查看</a>";
+	if ($row['ielts_photo'] != ''){
+		$html .= "<a target='_blank' href='{$row['ielts_photo']}' >{$row['ielts_photo']}</a>";
 	}
 	$html .= "</td></tr>";
 	$html .= '</table>';
