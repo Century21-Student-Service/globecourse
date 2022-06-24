@@ -4,6 +4,18 @@
   // include_once('./../ext/news.php');
 
   // $id = empty($id) ? 9 : intval($id);
+
+
+require_once dirname(__FILE__) . './../include/config.inc.php';
+
+$course_hot_list = array();
+$dosql->Execute("select id, title, tag, image from course_hot order by sort desc, id desc");
+while(1){
+	$item = $dosql->GetArray();
+	if($item == null) break;
+	$course_hot_list[] = $item;
+}
+//var_dump($course_hot_list);exit();
 ?>
 
 <!DOCTYPE html>
@@ -128,6 +140,30 @@
 
                                         
                                         <!-- 1st row -->
+                                        <?php 
+                                        foreach ($course_hot_list as $item){
+										?>
+										
+                                        <div class="gdlr-core-pbf-column gdlr-core-column-30" style="padding: 20px;" onclick="parent.location.href='course-hot-info.php?id=<?php echo $item['id']; ?>';">
+                                            <div class="ctm-boxImg_wrapper" style="padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #d1d1d1;">
+                                            
+                                                <div class="gdlr-core-pbf-column gdlr-core-column-30" style="text-align: center;">
+                                                    <div class="ctm-boxImg" style="object-fit: contain; width: 90% !important; height: 160px !important; border-radius: 10px; box-shadow: 0px 0px 10px #00000060; transition: all .2s ease; cursor: pointer; background-image: url(<?php echo $item['image']; ?>); background-size: cover; background-repeat: no-repeat; background-position: center;" loading="lazy">
+                                                            <div class="img_overlay"></div>
+                                                            <div class="eleTitle"><?php echo $item['tag']; ?></div>
+                                                        </div>
+                                                </div>
+
+                                                <div class="gdlr-core-pbf-column gdlr-core-column-30" style="">
+                                                    <h6 style="margin-top: 10px;"><?php echo $item['title']; ?></h6>
+                                                </div>
+
+                                            </div>
+                                        </div>
+										<?php 
+										}
+                                        ?>
+                                        <!-- 
                                         <div class="gdlr-core-pbf-column gdlr-core-column-30" style="padding: 20px;" onclick="parent.location.href='http://www.ct21.com.cn/newsshow.php?cid=5&id=1132';">
                                             <div class="ctm-boxImg_wrapper" style="padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #d1d1d1;">
                                             
@@ -144,7 +180,9 @@
 
                                             </div>
                                         </div>
+                                        -->
 
+                                        <!-- 
                                         <div class="gdlr-core-pbf-column gdlr-core-column-30" style="padding: 20px;" onclick="parent.location.href='http://www.ct21.com.cn/newsshow.php?cid=5&id=1204';">
                                             <div class="ctm-boxImg_wrapper" style="padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #d1d1d1;">
                                             
@@ -161,8 +199,10 @@
 
                                             </div>
                                         </div>
+                                         -->
 
                                         <!-- 2nd row -->
+                                        <!-- 
                                         <div class="gdlr-core-pbf-column gdlr-core-column-30" style="padding: 20px;" onclick="parent.location.href='http://www.ct21.com.cn/newsshow.php?cid=5&id=1132';">
                                             <div class="ctm-boxImg_wrapper" style="padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #d1d1d1;">
                                             
@@ -196,8 +236,10 @@
 
                                             </div>
                                         </div>
+                                         -->
 
                                         <!-- 3rd row -->
+                                        <!-- 
                                         <div class="gdlr-core-pbf-column gdlr-core-column-30" style="padding: 20px;" onclick="parent.location.href='http://www.ct21.com.cn/newsshow.php?cid=53&id=1063';">
                                             <div class="ctm-boxImg_wrapper" style="padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #d1d1d1;">
                                             
@@ -214,6 +256,7 @@
 
                                             </div>
                                         </div>
+                                        -->
 
 
                                     </div>
