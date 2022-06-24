@@ -3,6 +3,23 @@ require_once dirname(__FILE__) . './../include/config.inc.php';
 //include_once('ext/news.php');
 include '_dynamic_siteSetting/directoryLang.php'; /***  '$directory' / '$fType_php' from 'directoryLang.php'  ***/
 session_unset();
+
+$course_spe_list = array(); 
+$dosql->Execute("select id, title, tag from course_spe order by sort desc, id desc limit 0,4");
+while(1){
+	$item = $dosql->GetArray();
+	if($item == null) break;
+	$course_spe_list[] = $item;
+}
+
+$course_hot_list = array(); 
+$dosql->Execute("select id, title, tag from course_hot order by sort desc, id desc limit 0,4");
+while(1){
+	$item = $dosql->GetArray();
+	if($item == null) break;
+	$course_hot_list[] = $item;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -545,10 +562,11 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
                                                         <h4 style="color: white; margin-bottom: 0; line-height: 36px;">特价课程<br><span id="span_1dd7_0">享受超优惠课程</span></h4>
                                                         <div class="gdlr-core-text-box-item-content" id="div_1dd7_20" style="margin-top: 20px;">
                                                             <p>
-                                                                <b>1.</b>「证书」和「文凭课程」, 全年整付仅AU$3,900<br>
-                                                                <b>2.</b>「超值英语课程」每周仅$145<br>
-                                                                <b>3.</b> 悉尼特价大学预科课程，一年学费仅AU$17,400<br>
-                                                                <b>4.</b>「会计PY课程」特价一年学费仅$4,350(原价$6,500-$13,000)
+                                                            	<?php 
+                                                            	for ($i = 1; $i < sizeof($course_spe_list)+1; $i++){
+                                                            		echo "<b>{$i}.</b> {$course_spe_list[$i-1]['title']}<br>"; 
+                                                            	}
+                                                            	?>
                                                             </p>
                                                         </div>
                                                         <div><a class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" href="info-budget-courses.php" id="a_1dd7_0"><span class="gdlr-core-content" >了解更多</span></a></div>
@@ -567,10 +585,17 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
                                                         <h4 style="color: white; margin-bottom: 0; line-height: 36px;">热门课程<br><span id="span_1dd7_0" style="color: #192f59;">透过热门课程了解趋势</span></h4>
                                                         <div class="gdlr-core-text-box-item-content" id="div_1dd7_20" style="margin-top: 20px;">
                                                             <p>
+                                                            	<?php 
+                                                            	for ($i = 1; $i < sizeof($course_hot_list)+1; $i++){
+                                                            		echo "<b>{$i}.</b> {$course_hot_list[$i-1]['title']}<br>"; 
+                                                            	}
+                                                            	?>
+                                                            	<!-- 
                                                                 <b>1.</b>「酒店管理」和「会展管理」双高级文凭,居住酒店带薪实习<br>
                                                                 <b>2.</b>「超值塔大大学预科课程」一年仅$13,596<br>
                                                                 <b>3.</b> IT和会计「本科学士」课程每年学费仅$16,800<br>
                                                                 <b>4.</b> IT和会计「硕士课程」每年学费仅$17,800, IT硕士毕业可获一年带薪实习机会
+                                                                 -->
                                                             </p>
                                                         </div>
                                                         <div><a class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" href="info-popular-courses.php" id="a_1dd7_0"><span class="gdlr-core-content" >了解更多</span></a></div>

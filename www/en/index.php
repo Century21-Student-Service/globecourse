@@ -5,6 +5,24 @@ include '_dynamic_siteSetting/directoryLang.php'; /***  '$directory' / '$fType_p
 session_unset();
 
 $nameEn_tmp = 'Updating...';
+
+
+$course_spe_list = array();
+$dosql->Execute("select id, title_en, tag_en from course_spe order by sort desc, id desc limit 0,4");
+while(1){
+	$item = $dosql->GetArray();
+	if($item == null) break;
+	$course_spe_list[] = $item;
+}
+
+$course_hot_list = array();
+$dosql->Execute("select id, title_en, tag_en from course_hot order by sort desc, id desc limit 0,4");
+while(1){
+	$item = $dosql->GetArray();
+	if($item == null) break;
+	$course_hot_list[] = $item;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -566,10 +584,11 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
                                                         <h4 style="color: white; margin-bottom: 0; line-height: 36px;">Special Tuition Courses<br><span id="span_1dd7_0">Enjoy the most discounted course</span></h4>
                                                         <div class="gdlr-core-text-box-item-content" id="div_1dd7_20" style="margin-top: 20px;">
                                                             <p style="font-size: 15px;">
-                                                                <b>1. </b>"Certificate" and "Diploma", only AU$3,900 a year<br>
-                                                                <b>2. </b>"English Course" in discount, only $145 per week<br>
-                                                                <b>3. </b>"Sydney Foundation Course", only AU$17,400 a year<br>
-                                                                <b>4. </b>"Accounting PY Course" in special offer, only for $4,350 (original price $6,500-$13,000)
+                                                            	<?php 
+                                                            	for ($i = 1; $i < sizeof($course_spe_list)+1; $i++){
+                                                            		echo "<b>{$i}. </b>{$course_spe_list[$i-1]['title_en']}<br>"; 
+                                                            	}
+                                                            	?>
                                                             </p>
                                                         </div>
                                                         <div><a class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" href="info-budget-courses.php" id="a_1dd7_0"><span class="gdlr-core-content" >Learn more</span></a></div>
@@ -588,10 +607,17 @@ include_once '_dynamic_siteSetting/navbar-mobile.php';
                                                         <h4 style="color: white; margin-bottom: 0; line-height: 36px;">Popular Courses<br><span id="span_1dd7_0" style="color: #192f59;">Get into the trend with the popular course</span></h4>
                                                         <div class="gdlr-core-text-box-item-content" id="div_1dd7_20" style="margin-top: 20px;">
                                                             <p style="font-size: 15px;">
+                                                            	<?php 
+                                                            	for ($i = 1; $i < sizeof($course_hot_list)+1; $i++){
+                                                            		echo "<b>{$i}. </b>{$course_hot_list[$i-1]['title_en']}<br>"; 
+                                                            	}
+                                                            	?>
+                                                            	<!-- 
                                                                 <b>1. </b>Double Higher Diploma "Hotel Management & Convention and Exhibition Management", including paid internship in residence hotel<br>
                                                                 <b>2. </b>"Foundation Courses" in super discount, only Au$13,596 a year<br>
                                                                 <b>3. </b>IT & Accounting "Bachelor degree", only AU$16,800 per year<br>
                                                                 <b>4. </b>IT & Accounting "Master degree", only AU$17,800 per year. Including 1 year paid internship after graduation
+                                                                 -->
                                                             </p>
                                                         </div>
                                                         <div><a class="gdlr-core-button  gdlr-core-button-solid gdlr-core-button-no-border" href="info-popular-courses.php" id="a_1dd7_0"><span class="gdlr-core-content" >Learn more</span></a></div>
