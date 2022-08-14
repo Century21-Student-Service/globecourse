@@ -27,7 +27,7 @@ $_SESSION['feesFrom'] = $feesFrom;
 $_SESSION['feesTo'] = $feesTo;
 $_SESSION['searchMode_fees'] = $searchMode_fees;
 
-$where = '';
+$where = 'AND c.is_valid = 1 ';
 if ($state) {
     $where .= "AND i.state_id = $state ";
 }

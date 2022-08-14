@@ -353,6 +353,7 @@ if (!empty($videos)) {
 										<div class="gdlr-core-portfolio-item-holder gdlr-core-js-2  filter-container clearfix" data-layout="fitrows">
 
 											<?php
+if(is_array($picarr)){
 foreach ($picarr as $k) {
     $v = explode(',', $k);
     ?>
@@ -384,6 +385,7 @@ foreach ($picarr as $k) {
 												</div>
 											</div>
 											<?php
+}
 }
 ?>
 

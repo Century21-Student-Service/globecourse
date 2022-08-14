@@ -65,7 +65,8 @@ function getCourses()
                            c.fees,
                            c.author,
                            c.immigration,
-                           c.status
+                           c.status,
+                           c.is_valid
                     FROM course c
                     LEFT JOIN `level` l ON c.level_id = l.id
                     LEFT JOIN `institution` i ON i.id = c.inst_id
@@ -194,7 +195,8 @@ function getCoursesById()
                     c.description,
                     c.intro_en,
                     c.description_en,
-                    c.status
+                    c.status,
+    				c.is_valid
             FROM course c
             LEFT JOIN institution i ON c.inst_id = i.id
             WHERE c.id = ?";
@@ -263,7 +265,7 @@ function saveCourse()
         $sql = "UPDATE course SET ";
 
         foreach ($data as $key => $value) {
-            if (empty($data[$key])) {
+            if ($data[$key] != '0' && empty($data[$key])) {
                 unset($data[$key]);
                 continue;
             }
@@ -279,7 +281,7 @@ function saveCourse()
         // echo $sql;die;
     } else {
         // 插入新数据
-        $sql = "INSERT INTO course (`name`,`name_en`,`level_id`,`field_id_p`,`field_id_c`,`months`,`fees`,`author`,`intro`,`description`,`intro_en`,`description_en`,`inst_id`)VALUE(:name,:name_en,:level_id,:field_id_p,:field_id_c,:months,:fees,:author,:intro,:description,:intro_en,:description_en,:inst_id);";
+        $sql = "INSERT INTO course (`name`,`name_en`,`level_id`,`field_id_p`,`field_id_c`,`months`,`fees`,`author`,`intro`,`description`,`intro_en`,`description_en`,`inst_id`,`is_valid`)VALUE(:name,:name_en,:level_id,:field_id_p,:field_id_c,:months,:fees,:author,:intro,:description,:intro_en,:description_en,:inst_id,:is_valid);";
     }
 
     try {

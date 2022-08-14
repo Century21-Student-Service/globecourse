@@ -48,13 +48,36 @@ getcss("js/layer/theme/default/layer.css", true);
     .tbl-course {
       min-height: 200px;
     }
+.label.radius {
+    border-radius: 3px;
+}
+
+.label, .badge {
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #fff;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #999;
+    overflow: hidden;
+}
+.label-success, .badge-success {
+    background-color: #5eb95e;
+}
+.label-default, .badge-default {
+    background-color: #e6e6e6;
+    color: #333;
+}
   </style>
 </head>
 
 <body>
   <div class="container">
     <header>
-      <h1>院校管理2</h1>
+      <h1>院校管理</h1>
     </header>
     <div class="input-group" style="float:left; margin-top: 10px; margin-bottom: 10px;">
       <span class="input-group-btn">
@@ -136,6 +159,17 @@ getjs("js/layer/layer.js", true);
         sortable: true,
       },
       {
+          title: '是否显示',
+          field: 'is_valid',
+          align: 'center',
+          valign: 'middle',
+          formatter: function (value, row, index) {
+              if (value == '1')
+              	return "<span class='label label-success radius'>是</span>";
+              else return "<span class='label label-default radius'>否</span>";
+            }
+      },
+      {
         title: '操作',
         field: 'id',
         align: 'center',
@@ -177,7 +211,19 @@ getjs("js/layer/layer.js", true);
       align: 'center',
       valign: 'middle',
       width: 150,
-    }, {
+    }, 
+    {
+        title: '是否显示',
+        field: 'is_valid',
+        align: 'center',
+        valign: 'middle',
+        formatter: function (value, row, index) {
+            if (value == '1')
+            	return "<span class='label label-success radius'>是</span>";
+            else return "<span class='label label-default radius'>否</span>";
+          }
+    },
+    {
       title: '领域',
       field: 'field',
       align: 'center',

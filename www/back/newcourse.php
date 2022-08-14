@@ -111,6 +111,16 @@ getcss("js/layer/theme/default/layer.css", true);
       <input type="text" class="form-control" aria-label="添加人" id="input_course_author">
     </div>
 
+    <div class="input-group input-select" style="width: 20%;">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="input_course_is_valid">是否显示</label>
+      </div>
+      <select class="custom-select" id="input_course_is_valid">
+        <option value="1" selected>是</option>
+        <option value="0">否</option>
+      </select>
+    </div>
+
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item" style="display:none">
         <a class="nav-link " id="tab_intro" data-toggle="tab" href="#input_intro" role="tab" aria-controls="intro" aria-selected="true">简介</a>
@@ -281,6 +291,7 @@ getjs("js/layer/layer.js", true);
             $("#input_course_state_id").val(res.state_id);
             $("#input_course_state_id").change();
             $("#input_course_inst_id").val(res.inst_id);
+            $("#input_course_is_valid").val(res.is_valid);
 //             editor_description.txt.html(res.description || "");
 //             editor_description_en.txt.html(res.description_en || "");
 //             editor_intro.txt.html(res.intro || "");
@@ -337,6 +348,7 @@ getjs("js/layer/layer.js", true);
         data_new.months = $("#input_course_hours").val();
         data_new.fees = $("#input_course_fees").val();
         data_new.author = $("#input_course_author").val();
+        data_new.is_valid = $("#input_course_is_valid").val();
 
         let error = false;
 
@@ -379,6 +391,7 @@ getjs("js/layer/layer.js", true);
         if (sameValue(data_new.months, data_old.months)) data_new.months = null;
         if (sameValue(data_new.fees, data_old.fees)) data_new.fees = null;
         if (sameValue(data_new.author, data_old.author)) data_new.author = null;
+        if (sameValue(data_new.is_valid, data_old.is_valid)) data_new.is_valid = null;
 
         if (
           data_new.name == null &&
@@ -393,7 +406,8 @@ getjs("js/layer/layer.js", true);
           data_new.level_id == null &&
           data_new.months == null &&
           data_new.fees == null &&
-          data_new.author == null
+          data_new.author == null && 
+          data_new.is_valid == null
         ) {
           parent.layer.close(parent.form);
           parent.scrollTo(parent.current_scroll.x, parent.current_scroll.y);
@@ -444,6 +458,7 @@ getjs("js/layer/layer.js", true);
         data_new.hours = $("#input_course_hours").val();
         data_new.fees = $("#input_course_fees").val();
         data_new.author = $("#input_course_author").val();
+        data_new.is_valid = $("#input_course_is_valid").val();
 
         if (data_old.id) {
           if (
@@ -456,7 +471,8 @@ getjs("js/layer/layer.js", true);
             !sameValue(data_new.level_id, data_old.level_id) ||
             !sameValue(data_new.hours, data_old.hours) ||
             !sameValue(data_new.fees, data_old.fees) ||
-            !sameValue(data_new.author, data_old.author)
+            !sameValue(data_new.author, data_old.author) || 
+            !sameValue(data_new.is_valid, data_old.is_valid)
           ) {
             if (!sameValue(data_new.name, data_old.name)) console.log('name', data_new.name, data_old.name);
             if (!sameValue(data_new.name_en, data_old.name_en)) console.log('name_en', data_new.name_en, data_old.name_en);

@@ -69,6 +69,29 @@ getcss("js/layer/theme/default/layer.css", true);
       border: solid 2px red;
       box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px pink
     }
+.label.radius {
+    border-radius: 3px;
+}
+
+.label, .badge {
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #fff;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #999;
+    overflow: hidden;
+}
+.label-success, .badge-success {
+    background-color: #5eb95e;
+}
+.label-default, .badge-default {
+    background-color: #e6e6e6;
+    color: #333;
+}    
   </style>
 </head>
 
@@ -233,7 +256,19 @@ getjs("js/layer/layer.js", true);
         valign: 'middle',
         width: 90,
         sortable: true,
-      }, {
+      },
+      {
+          title: '是否显示',
+          field: 'is_valid',
+          align: 'center',
+          valign: 'middle',
+          formatter: function (value, row, index) {
+              if (value == '1')
+              	return "<span class='label label-success radius'>是</span>";
+              else return "<span class='label label-default radius'>否</span>";
+            }
+      },
+      {
       title: '操作',
       field: 'id',
       align: 'center',

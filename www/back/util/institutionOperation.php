@@ -110,6 +110,7 @@ function getInstitutionById()
                             i.video,
                             i.regional,
                             i.state_id,
+    						i.is_valid,
                             s.name AS `state`,
                             s.country_id
                     FROM institution i
@@ -200,6 +201,7 @@ function getInstitutions()
                            i.name_en,
                            i.badge,
                            i.status,
+                           i.is_valid,
                            c.name as `country`,
                            s.name AS `state`
                     FROM institution i
@@ -590,7 +592,7 @@ function saveInstitution()
 
     } else {
         // 插入新数据
-        $sql = "INSERT INTO institution (`name`,`name_en`,`intro`,`description`,`intro_en`,`description_en`,`state_id`,`badge`,`pics`,`video`,`regional`)VALUE(:name,:name_en,:intro,:description,:intro_en,:description_en,:state_id,:badge,:pics,:video,:regional);";
+        $sql = "INSERT INTO institution (`name`,`name_en`,`intro`,`description`,`intro_en`,`description_en`,`state_id`,`badge`,`pics`,`video`,`regional`,`is_valid`)VALUE(:name,:name_en,:intro,:description,:intro_en,:description_en,:state_id,:badge,:pics,:video,:regional,:is_valid);";
         if (!empty($data['pics'])) {
             $result = [];
             foreach (array_filter($data['pics']) as $v) {

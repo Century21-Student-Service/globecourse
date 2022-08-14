@@ -341,6 +341,15 @@ getcss("ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.css");
       <input type="checkbox" id="input_inst_regional" data-on="偏远地区" data-off="非偏远地区">
     </div>
 
+    <div class="input-group input-select" style="width: 20%;">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="input_inst_is_valid">是否显示</label>
+      </div>
+      <select class="custom-select" id="input_inst_is_valid">
+        <option value="1" selected>是</option>
+        <option value="0">否</option>
+      </select>
+    </div>
     <!-- <div class="input-group">
       <div class="input-group-prepend">
         <label class="input-group-text" for="input_inst_state">偏远地区</label>
@@ -675,6 +684,7 @@ getjs("js/layer/layer.js", true);
         data_new.name_en = $("#input_inst_ename").val().trim();
         data_new.state_id = $("#input_inst_state").val();
         data_new.regional = $("#input_inst_regional")[0].checked ? "1" : "0";
+        data_new.is_valid = $("#input_inst_is_valid").val();
 
         data_new.video = data_new.video.filter(e => e != null);
         data_new.video = data_new.video.map(e => {
@@ -688,6 +698,7 @@ getjs("js/layer/layer.js", true);
           if (sameValue(data_new.name, data_old.name)) data_new.name = null;
           if (sameValue(data_new.name_en, data_old.name_en)) data_new.name_en = null;
           if (sameValue(data_new.state_id, data_old.state_id)) data_new.state_id = null;
+          if (sameValue(data_new.is_valid, data_old.is_valid)) data_new.is_valid = null;
           if (sameValue(data_new.description, data_old.description)) data_new.description = null;
           if (sameValue(data_new.intro, data_old.intro)) data_new.intro = null;
           if (sameValue(data_new.description_en, data_old.description_en)) data_new.description_en = null;
@@ -701,6 +712,7 @@ getjs("js/layer/layer.js", true);
             data_new.name == null &&
             data_new.name_en == null &&
             data_new.state_id == null &&
+            data_new.is_valid == null &&
             data_new.description == null &&
             data_new.intro == null &&
             data_new.description_en == null &&
@@ -759,6 +771,7 @@ getjs("js/layer/layer.js", true);
         data_new.state_id = $("#input_inst_state").val();
         data_new.video = $("#input_inst_video").val().trim();
         data_new.regional = $("#input_inst_regional")[0].checked ? "1" : "0";
+        data_new.is_valid = $("#input_inst_is_valid").val();
         if (data_old.id) {
           if (
             data_new.badge.length > 0 ||
@@ -766,6 +779,7 @@ getjs("js/layer/layer.js", true);
             !sameValue(data_new.name, data_old.name) ||
             !sameValue(data_new.name_en, data_old.name_en) ||
             !sameValue(data_new.state_id, data_old.state_id) ||
+            !sameValue(data_new.is_valid, data_old.is_valid) ||
             !sameValue(data_new.description, data_old.description) ||
             !sameValue(data_new.intro, data_old.intro) ||
             !sameValue(data_new.description_en, data_old.description_en) ||
@@ -821,6 +835,7 @@ getjs("js/layer/layer.js", true);
               $("#img_badge").attr('src', (res.badge.split('')[0] == '/') ? res.badge : ('/' + res.badge));
               $("#input_inst_name").val(res.name);
               $("#input_inst_ename").val(res.name_en);
+              $("#input_inst_is_valid").val(res.is_valid);
               $("#input_inst_country>option").each((i, e) => {
                 e.removeAttribute("selected");
                 if (e.value == res.country_id) {

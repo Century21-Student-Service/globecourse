@@ -6,7 +6,7 @@ require_once '../../../config/conn.php';
 $inst_id = $_REQUEST['iid'];
 $en = empty($_REQUEST['en']);
 
-$sql_course = "SELECT `id`,IF(name_en IS NULL or name_en = '', `name`, name_en) AS `name`,`level_id`,`field_id_p`,`field_id_c`,`hours`,`months`,`fees` FROM course WHERE inst_id=? AND `status` > 0 ORDER BY id;";
+$sql_course = "SELECT `id`,IF(name_en IS NULL or name_en = '', `name`, name_en) AS `name`,`level_id`,`field_id_p`,`field_id_c`,`hours`,`months`,`fees` FROM course WHERE inst_id=? AND `status` > 0 AND is_valid = 1 ORDER BY id;";
 $sql_levels = "SELECT `id`,IFNULL(name_en,`name`) AS `name` FROM `level` WHERE id IN (SELECT level_id FROM course WHERE inst_id=?) ORDER BY id;";
 $sql_fields_c = "SELECT `id`,IFNULL(name_en,`name`) AS `name`, `p_id` FROM field WHERE id IN(SELECT field_id_c FROM course WHERE inst_id=?) ORDER BY id;";
 $sql_fields_p = "SELECT `id`,IFNULL(name_en,`name`) AS `name` FROM field WHERE deep = 0 AND id IN(SELECT field_id_p FROM course WHERE inst_id=?) ORDER BY id;";

@@ -10,7 +10,7 @@ require_once dirname(__FILE__) . './../../config/conn.php';
 $_SESSION['state'] = $state;
 $_SESSION['level'] = $level;
 
-$where = " WHERE 1 = 1 ";
+$where = " WHERE 1 = 1 and i.is_valid = 1";
 if ($state) {
     $where .= " AND s.id = $state ";
 }
