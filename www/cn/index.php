@@ -28,7 +28,7 @@ while(1){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>潮流搜索平台</title>
+    <title>潮流搜索平台 | Century 21</title>
     <!-- <title>Kingster &#8211; School, College &amp; University HTML Template</title> -->
 
     <!-- (Theme) custom  ==  << Favicon and touch icons >>  ====================          Icon          -->
